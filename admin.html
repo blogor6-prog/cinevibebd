@@ -134,11 +134,11 @@
       <div class="login-card">
         <div class="form-group">
           <label>GitHub Username</label>
-          <input type="text" id="ghUser" class="wp-input" placeholder="যেমন: suaib5249">
+          <input type="text" id="ghUser" class="wp-input" value="blogor6-prog" placeholder="যেমন: blogor6-prog">
         </div>
         <div class="form-group">
           <label>GitHub Repository নাম</label>
-          <input type="text" id="ghRepo" class="wp-input" placeholder="যেমন: cinevibebd">
+          <input type="text" id="ghRepo" class="wp-input" value="cinevibebd" placeholder="যেমন: cinevibebd">
         </div>
         <div class="form-group">
           <label>GitHub Token (ghp_...)</label>
@@ -397,7 +397,7 @@
       document.getElementById("ghUser").value = ghConfig.user;
       document.getElementById("ghRepo").value = ghConfig.repo;
       document.getElementById("ghToken").value = ghConfig.token;
-      if (sessionStorage.getItem("cine_gh_logged") === "1") {
+      if (localStorage.getItem("cine_gh_logged") === "1") {
         openAdminFromSaved();
       }
     }
@@ -444,7 +444,7 @@
 
       if (ok) {
         localStorage.setItem("cine_gh_config", JSON.stringify(ghConfig));
-        sessionStorage.setItem("cine_gh_logged", "1");
+        localStorage.setItem("cine_gh_logged", "1");
       }
     }
 
@@ -517,7 +517,6 @@
       });
 
       if (res.status === 409) {
-        // Refresh sha and retry once
         const cur = await (await fetch(`https://api.github.com/repos/${ghConfig.user}/${ghConfig.repo}/contents/movies.json?ref=${defaultBranch}&t=${Date.now()}`, {
           headers: { Authorization: `Bearer ${ghConfig.token}` }, cache: "no-store"
         })).json();
@@ -531,7 +530,7 @@
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.message || "GitHub সেভ ব্যর্থ!");
+        throw new Error(err.message || "GitHub Token-এ repo পারমিশন নেই!");
       }
       const out = await res.json();
       fileSha = out.content?.sha || null;
@@ -542,13 +541,13 @@
       const btn = document.getElementById("btnImportSheet");
       btn.disabled = true; btn.innerText = "⏳ ইমপোর্ট হচ্ছে...";
       try {
-        const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
+        const url = `https://docs.google.com/spreadsheets/d/${GOOGLE_SHEET_ID}/gviz/tq?tqx=out:json&headers=0&t=${Date.now()}`;
         const data = await (await fetch(url)).text();
         const json = JSON.parse(data.substring(data.indexOf('{'), data.lastIndexOf('}') + 1));
         const rows = json.table?.rows || [];
         const imported = [];
 
-        const cell = (c, idx) => (!c || !c[idx] || c[idx].v === null || c[idx].v === undefined) ? "" : String(c[idx].v).trim();
+        const cell = (c, idx) => (!c || !c[idx]) ? "" : String(c[idx].v ?? c[idx].f ?? "").trim();
         for (let i = 0; i < rows.length; i++) {
           const c = rows[i]?.c;
           if (!c) continue;
@@ -593,10 +592,16 @@
           });
         }
         imported.reverse();
-        await pushMoviesToGitHub(imported, "Import movies from Google Sheet");
+
+        // Safe Merge: keep existing movies added in Admin + add missing ones from Google Sheet
+        const existingTitles = new Set(allMovies.map(m => (m.title || "").trim().toLowerCase()));
+        const onlyNewFromSheet = imported.filter(m => !existingTitles.has((m.title || "").trim().toLowerCase()));
+        const merged = [...allMovies, ...onlyNewFromSheet];
+
+        await pushMoviesToGitHub(merged, "Import movies from Google Sheet");
         renderDashboardStats();
         renderMoviesTable();
-        showToast(`✅ ${imported.length}টি মুভি সফলভাবে ইমপোর্ট হয়েছে!`);
+        showToast(`✅ মোট ${merged.length}টি মুভি সেভ হয়েছে! (নতুন ইমপোর্ট: ${onlyNewFromSheet.length}টি)`);
       } catch (e) {
         showToast("ইমপোর্ট ব্যর্থ: " + e.message, true);
       }
@@ -604,7 +609,7 @@
     }
 
     function logoutAdmin() {
-      sessionStorage.removeItem("cine_gh_logged");
+      localStorage.removeItem("cine_gh_logged");
       document.getElementById("adminShell").style.display = "none";
       document.getElementById("loginView").style.display = "flex";
       document.getElementById("loginPassword").value = "";
@@ -898,7 +903,7 @@
         await pushMoviesToGitHub(updated, (editingIndex !== null ? "Edit: " : "Add: ") + title);
         renderDashboardStats();
         renderMoviesTable();
-        showToast("✅ GitHub-এ সেভ হয়েছে! (৩০-৪৫ সেকেন্ডে সাইটে দেখাবে)");
+        showToast("✅ GitHub-এ সেভ হয়েছে! ৩০-৪৫ সেকেন্ড পর সাইটে দেখাবে।");
         switchTab("allMovies", "All");
       } catch (e) {
         showToast("সেভ ব্যর্থ: " + e.message, true);
@@ -986,4 +991,4 @@
     function escapeHtml(str) { return String(str || "").replace(/[&<>"']/g, s => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[s])); }
   </script>
 </body>
-  </html>
+</html>
