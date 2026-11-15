@@ -1,47 +1,9 @@
 [
   {
-    "id": 1794734788748,
-    "title": "Parivarik ManuRanjan (2026)",
-    "category": "Bollywood, Hindi, Romance, Comedy",
-    "rating": "6.0",
-    "sortOrder": null,
-    "image": "https://image.tmdb.org/t/p/w500/2gKGkD0pN2Ss9LrHA6tv5hEjHOs.jpg",
-    "ad1": "",
-    "ad2": "",
-    "links": [],
-    "badge": "1080p",
-    "episodes": "",
-    "cast": "Pankaj Tripathi, Aditi Rao Hydari, Brijendra Kala, Sunita Rajwar, Vijayant Kohli, Mukesh Tiwari",
-    "trailer": "https://www.youtube.com/watch?v=ym4y_aPk0io",
-    "watchUrl": "",
-    "language": "Hindi (हिंदी)",
-    "releaseDate": "2026-11-12",
-    "genre": "Romance, Comedy"
-  },
-  {
-    "id": 1794733101357,
-    "title": "Akka (2026)",
-    "category": "Series, South Indian, Drama, Crime, Bangla",
-    "rating": "7.6",
-    "sortOrder": null,
-    "image": "https://image.tmdb.org/t/p/w500/tdnHaR0vlKMQbjmaCs2V3LDmzSd.jpg",
-    "ad1": "",
-    "ad2": "",
-    "links": [],
-    "badge": "SERIES",
-    "episodes": "",
-    "cast": "Keerthy Suresh, Radhika Apte, Tanvi Azmi, B. Jayashree, Nivedita Bhargava, Anshumaan Pushkar",
-    "trailer": "https://www.youtube.com/watch?v=NwJhml1_D54",
-    "watchUrl": "",
-    "language": "Tamil (தமிழ்)",
-    "releaseDate": "2026-10-30",
-    "genre": "Drama, Crime"
-  },
-  {
-    "id": 1794732562914,
+    "id": 1794734822936,
     "title": "Ranabaali (2026)",
     "category": "All",
-    "rating": "5",
+    "rating": "",
     "image": "https://image.tmdb.org/t/p/w500/cXaCyYYbafVyMrs8rwKmxezBYPJ.jpg",
     "ad1": "",
     "ad2": "",
@@ -57,7 +19,7 @@
     "genre": ""
   },
   {
-    "id": 1794732562913,
+    "id": 1794734822935,
     "title": "Alindog Ni Aiko",
     "category": "All",
     "rating": "",
@@ -76,7 +38,7 @@
     "genre": ""
   },
   {
-    "id": 1794732562912,
+    "id": 1794734822934,
     "title": "Khalifa: The Ruler (2026)",
     "category": "Hindi",
     "rating": "5.2",
@@ -95,7 +57,7 @@
     "genre": ""
   },
   {
-    "id": 1794732562911,
+    "id": 1794734822933,
     "title": "Ranabaali (2026)",
     "category": "Hindi",
     "rating": "5",
@@ -114,16 +76,16 @@
     "genre": ""
   },
   {
-    "id": 1794732562910,
+    "id": 1794734822932,
     "title": "DeSu7 (2026)",
     "category": "Bangla",
     "rating": "7.5",
-    "sortOrder": 1,
     "image": "https://image.tmdb.org/t/p/w500/w9yI1qXn3yPzQeAr72Y6QZeHZ5z.jpg",
     "ad1": "",
     "ad2": "",
     "links": [],
     "badge": "1080p",
+    "sortOrder": null,
     "episodes": "",
     "cast": "Dev, Subhashree Ganguly, Anirban Bhattacharya, Parthasarathi Chakraborty, Rajatabha Dutta, Aparajita Adhya",
     "trailer": "https://www.youtube.com/watch?v=ZRW6h0mzqNw",
