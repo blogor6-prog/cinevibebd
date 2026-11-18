@@ -108,7 +108,6 @@
     .movie-title { font-size: 11px; font-weight: 800; color: #f4f4f5; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .movie-submeta { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
 
-    /* এক লাইনে Watch & Download বাটন */
     .dl-trigger-btn {
       background: var(--primary-hover);
       color: #fff;
@@ -412,10 +411,9 @@
     <div class="cine-player-wrap" id="cinePlayerWrap">
       <div id="trailerStatusMsg" style="display:none; background:rgba(225,29,72,0.14); border:1px solid rgba(225,29,72,0.4); color:#facc15; font-size:12px; font-weight:700; padding:8px 12px; border-radius:8px; margin-bottom:8px; text-align:center;"></div>
       
-      <!-- Invidious Ad-Free Player আইফ্রেম -->
+      <!-- সরাসরি ফাস্ট প্লেয়ার (কোনো Cloudflare বট চেক ছাড়া) -->
       <iframe class="cine-video-frame" id="cineVideoPlayer" src="" allowfullscreen allow="autoplay; encrypted-media"></iframe>
       
-      <!-- ডাইরেক্ট MP4 প্লেয়ার -->
       <div class="direct-video-box" id="directVideoBox" oncontextmenu="return false;">
         <video id="cineDirectVideo" playsinline preload="metadata" controlsList="nodownload noplaybackrate" disablePictureInPicture disableRemotePlayback oncontextmenu="return false;" onclick="toggleCustomVideoPlay()"></video>
         <div class="custom-video-controls" id="customVideoControls">
@@ -1218,11 +1216,10 @@
       const ip = document.getElementById('cineVideoPlayer'), db = document.getElementById('directVideoBox'), dv = document.getElementById('cineDirectVideo'), eb = document.getElementById('directExternalBar'), eBtn = document.getElementById('btnDirectExternalOpen'), sm = document.getElementById('trailerStatusMsg');
       resetPlayerElements();
 
-      // ইউটিউব লিংক হলে সরাসরি Invidious Ad-Free প্লেয়ারে চালাবে
       if (url.includes('youtube.com') || url.includes('youtu.be')) {
         const m = url.match(/(?:youtu\.be\/|watch\?v=|embed\/|shorts\/|v=)([\w-]{11})/);
         if (m) {
-          playExactTrailerKey(m[1], `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`);
+          playExactTrailerKey(m[1], `🎬 ${currentMovie.title} — Official Trailer`);
           return;
         }
       }
@@ -1269,7 +1266,6 @@
       else switchOnlineServer(currentServerIndex);
     }
 
-    /* অ্যাপল অফিশিয়াল ট্রেলার খোঁজা */
     async function tryItunesExactTrailer(cleanedTitle, extractedYear) {
       const countries = ['IN', 'US', 'GB'];
       for (const country of countries) {
@@ -1284,7 +1280,7 @@
       return null;
     }
 
-    /* Invidious Ad-Free প্রক্সি প্লেয়ার লোডার */
+    /* সরাসরি ট্রেলার লোডার — কোনো Cloudflare বট চেক ছাড়া ফাস্ট প্লে */
     function playExactTrailerKey(videoKey, labelText) {
       const ip = document.getElementById('cineVideoPlayer'),
             db = document.getElementById('directVideoBox'),
@@ -1294,17 +1290,16 @@
       if (db) db.style.display = 'none';
       if (dv) { dv.onerror = null; try { dv.pause(); } catch(e) {} dv.removeAttribute('src'); }
 
-      // গুগলের প্লেয়ার সরিয়ে Invidious Ad-Free প্লেয়ার লোড
       ip.style.display = 'block';
-      ip.src = `https://yewtu.be/embed/${videoKey}?autoplay=1&dark_mode=true`;
+      // সরাসরি নিরাপদ ও সুপারফাস্ট প্লেয়ার (কোনো ক্যাপচা বা চেকিং পেজ ছাড়া)
+      ip.src = `https://www.youtube-nocookie.com/embed/${videoKey}?autoplay=1&rel=0&modestbranding=1&playsinline=1`;
 
       if (sm) {
-        sm.innerText = labelText || '🎬 Official Trailer (Ad-Free)';
+        sm.innerText = labelText || '🎬 Official Trailer';
         sm.style.display = 'block';
       }
     }
 
-    /* ট্রেলার প্লেয়ার ফাংশন (১০০% বিজ্ঞাপনহীন) */
     async function playOfficialTrailer() {
       if (!currentMovie) return;
       const pw = document.getElementById('cinePlayerWrap'),
@@ -1318,22 +1313,22 @@
       document.getElementById('serverSelectionBar').style.display = 'none';
       if (qb) qb.style.display = 'none';
 
-      sm.innerText = `⏳ "${currentMovie.title}"-এর বিজ্ঞাপনহীন ট্রেলার লোড হচ্ছে...`;
+      sm.innerText = `⏳ "${currentMovie.title}"-এর ট্রেলার লোড হচ্ছে...`;
       sm.style.display = 'block';
       pw.style.display = 'block';
       pw.scrollIntoView({ behavior: 'smooth' });
 
-      // ১. শিট বা এডমিনে সরাসরি MP4 ট্রেলার লিংক দেওয়া থাকলে
+      // ১. শিট বা এডমিনে নিজস্ব লিংক দেওয়া থাকলে
       if (currentMovie.trailerUrl && /^https?:\/\//i.test(currentMovie.trailerUrl.trim())) {
         const tUrl = currentMovie.trailerUrl.trim();
         if (/\.(mp4|m4v|webm)/i.test(tUrl)) {
           p.style.display = 'none'; db.style.display = 'block'; dv.onerror = null; dv.src = tUrl; dv.play().catch(() => {});
-          sm.innerText = `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`; return;
+          sm.innerText = `🎬 ${currentMovie.title} — Official Trailer`; return;
         }
         if (tUrl.includes('youtube') || tUrl.includes('youtu.be')) {
           const m = tUrl.match(/(?:youtu\.be\/|watch\?v=|embed\/|shorts\/|v=)([\w-]{11})/);
           if (m) {
-            playExactTrailerKey(m[1], `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`);
+            playExactTrailerKey(m[1], `🎬 ${currentMovie.title} — Official Trailer`);
             return;
           }
         }
@@ -1343,14 +1338,14 @@
             yearMatch = currentMovie.title.match(/\b(19\d{2}|20\d{2})\b/),
             extractedYear = yearMatch ? yearMatch[1] : (currentMovie.year || '');
 
-      // ২. অ্যাপল অফিশিয়াল ট্রেলার সার্ভার (Apple Preview - কোনো অ্যাড নেই)
+      // ২. অ্যাপল অফিশিয়াল প্রিভিউ ট্রেলার (যদি পাওয়া যায় সরাসরি MP4 চলবে)
       const exactItunesUrl = await tryItunesExactTrailer(cleanedTitle, extractedYear);
       if (exactItunesUrl) {
         p.style.display = 'none'; db.style.display = 'block'; dv.onerror = null; dv.src = exactItunesUrl; dv.play().catch(() => {});
-        sm.innerText = `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`; return;
+        sm.innerText = `🎬 ${currentMovie.title} — Official Trailer`; return;
       }
 
-      // ৩. TMDB থেকে ট্রেলার বের করে Invidious Ad-Free প্লেয়ারে চালানো
+      // ৩. TMDB থেকে অফিশিয়াল ট্রেলার
       let tmdbId = currentMovie.tmdbId, type = currentMovie.mediaType || (currentMovie.isSeries ? 'tv' : 'movie');
       if (tmdbId) {
         try {
@@ -1358,7 +1353,7 @@
           const videos = (data.results || []).filter(v => v.site === 'YouTube' && v.key);
           const picked = videos.find(v => v.type === 'Trailer') || videos.find(v => v.type === 'Teaser') || videos[0];
           if (picked) {
-            playExactTrailerKey(picked.key, `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`);
+            playExactTrailerKey(picked.key, `🎬 ${currentMovie.title} — Official Trailer`);
             return;
           }
         } catch (e) {}
