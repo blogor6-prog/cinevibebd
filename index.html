@@ -814,7 +814,20 @@
 
     function closeNotice() { document.getElementById('topWelcomeNotice').style.display = 'none'; }
     function handleImageError(img) { img.onerror = null; img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><rect width="100%" height="100%" fill="%2312131a"/><text x="50%" y="50%" fill="%23e11d48" font-size="12" font-family="sans-serif" font-weight="bold" text-anchor="middle" dy=".3em">🎬 HD Movie</text></svg>'; }
-    function openSafeUrl(url) { if (!url || url === '#' || !/^https?:\/\//i.test(url)) return; if (tg && tg.openLink) tg.openLink(url); else window.open(url, '_blank', 'noopener,noreferrer'); }
+    function openSafeUrl(url) {
+      if (!url || url === '#' || !/^https?:\/\//i.test(url)) return;
+      if (tg) {
+        if (/^https?:\/\/(t\.me|telegram\.me)\//i.test(url) && tg.openTelegramLink) {
+          tg.openTelegramLink(url);
+          return;
+        }
+        if (tg.openLink) {
+          tg.openLink(url);
+          return;
+        }
+      }
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
     function openEntryAd() { openSafeUrl(ENTRY_AD_URL); }
 
     function parseStructuredEpisodes(cellValue) {
@@ -1793,14 +1806,19 @@
       }
 
       const titleWithYear = getMovieTitleWithYear(currentMovie);
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(titleWithYear).catch(() => {});
+      }
+
       let botUrl = '';
       if (botNumber === 1) {
-        const startParam = encodeURIComponent(currentMovie.title.replace(/\s+/g, '_'));
+        const cleanTitle = cleanTitleForSearch(currentMovie.title) || currentMovie.title;
+        const startParam = cleanTitle
+          .replace(/[^a-zA-Z0-9]+/g, '_')
+          .replace(/^_+|_+$/g, '')
+          .slice(0, 64) || 'movie';
         botUrl = `https://t.me/IMDBReview_bot?start=${startParam}`;
       } else {
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-          navigator.clipboard.writeText(titleWithYear).catch(() => {});
-        }
         botUrl = `https://t.me/IpapkornA_bot?text=${encodeURIComponent(titleWithYear)}`;
       }
       openSafeUrl(botUrl);
