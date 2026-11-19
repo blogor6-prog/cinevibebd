@@ -168,8 +168,8 @@
     .cine-back-btn { background: #16161e; border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
     .cine-hero-banner { width: 100%; height: 225px; position: relative; background-size: cover; background-position: center; overflow: hidden; }
-    .cine-hero-bg-media { position: absolute; top: 50%; left: 50%; width: 140%; height: 140%; transform: translate(-50%, -50%); object-fit: cover; pointer-events: none; z-index: 1; }
-    .cine-hero-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, #050507 10%, rgba(5, 5, 7, 0.58) 60%, rgba(5, 5, 7, 0.25) 100%); z-index: 2; }
+    .cine-hero-bg-media { position: absolute; top: 50%; left: 50%; width: max(130%, 420px); height: max(145%, 56.25vw); transform: translate(-50%, -50%); object-fit: cover; filter: brightness(1.18); pointer-events: none; z-index: 1; }
+    .cine-hero-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, #050507 0%, rgba(5, 5, 7, 0.25) 22%, transparent 45%); z-index: 2; }
     .cine-main-info { padding: 0 14px; margin-top: -65px; position: relative; z-index: 10; display: flex; gap: 14px; }
     .cine-poster { width: 114px; height: 166px; border-radius: 8px; object-fit: cover; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9); border: 1px solid var(--glass-border); flex-shrink: 0; background: #12131a; }
     .cine-text-info { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6px; flex: 1; min-width: 0; }
@@ -523,7 +523,7 @@
 
     <div class="cine-hero-banner" id="cineHeroBanner">
       <video id="cineHeroBgVideo" class="cine-hero-bg-media" muted playsinline autoplay style="display:none;"></video>
-      <iframe id="cineHeroBgIframe" class="cine-hero-bg-media" src="" allow="autoplay; encrypted-media" style="display:none; border:none;"></iframe>
+      <iframe id="cineHeroBgIframe" class="cine-hero-bg-media" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" style="display:none; border:none;"></iframe>
     </div>
 
     <div class="cine-main-info">
@@ -1296,7 +1296,7 @@
         bv.style.display = 'none';
       }
       if (bi) {
-        bi.src = '';
+        bi.removeAttribute('src');
         bi.style.display = 'none';
       }
     }
@@ -1314,19 +1314,22 @@
         bv.muted = true;
         bv.style.display = 'block';
         bv.ontimeupdate = () => {
-          if (bv.currentTime >= 30) stopHeroBgPreview();
+          if (bv.currentTime >= 60) stopHeroBgPreview();
         };
         bv.onended = stopHeroBgPreview;
         bv.play().catch(() => stopHeroBgPreview());
-        heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
+        heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 60500);
       };
 
       const playVimeoInBanner = (vimeoUrl) => {
-        const vm = vimeoUrl.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        const vm = vimeoUrl.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
         if (vm && bi && currentMovie && currentMovie.id === openedId) {
-          bi.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&muted=1&background=1`;
+          const hMatch = vimeoUrl.match(/[?&]h=([a-zA-Z0-9]+)/);
+          const hash = vm[2] || (hMatch ? hMatch[1] : '');
+          const hashParam = hash ? `&h=${hash}` : '';
+          bi.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&muted=1&loop=1&playsinline=1&autopause=0&background=1&dnt=1${hashParam}`;
           bi.style.display = 'block';
-          heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
+          heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 60500);
           return true;
         }
         return false;
@@ -1794,10 +1797,13 @@
       }
 
       if (url.includes('vimeo.com')) {
-        const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        const vm = url.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
         if (vm) {
+          const hMatch = url.match(/[?&]h=([a-zA-Z0-9]+)/);
+          const hash = vm[2] || (hMatch ? hMatch[1] : '');
+          const hashParam = hash ? `&h=${hash}` : '';
           ip.style.display = 'block';
-          ip.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1`;
+          ip.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&playsinline=1&dnt=1${hashParam}`;
           if (sm && customStatusLabel) { sm.innerText = customStatusLabel; sm.style.display = 'block'; }
           return;
         }
@@ -2030,7 +2036,7 @@
           const vimeoVid = allVideos.find(v => v.site === 'Vimeo' && v.type === 'Trailer') || allVideos.find(v => v.site === 'Vimeo');
           if (vimeoVid) {
             p.style.display = 'block';
-            p.src = `https://player.vimeo.com/video/${vimeoVid.key}?autoplay=1`;
+            p.src = `https://player.vimeo.com/video/${vimeoVid.key}?autoplay=1&playsinline=1&dnt=1`;
             sm.innerText = `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`;
             return;
           }
