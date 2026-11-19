@@ -168,8 +168,19 @@
     .cine-back-btn { background: #16161e; border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
     .cine-hero-banner { width: 100%; height: 225px; position: relative; background-size: cover; background-position: center; overflow: hidden; }
+    .cine-hero-banner.banner-fs-active { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 9999 !important; background-color: #000 !important; background-image: none !important; }
+    .cine-hero-banner:fullscreen { width: 100vw !important; height: 100vh !important; background-color: #000 !important; background-image: none !important; }
     .cine-hero-bg-media { position: absolute; top: 50%; left: 50%; width: max(130%, 420px); height: max(145%, 56.25vw); transform: translate(-50%, -50%); object-fit: cover; filter: brightness(1.18); pointer-events: none; z-index: 1; }
-    .cine-hero-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, #050507 0%, rgba(5, 5, 7, 0.25) 22%, transparent 45%); z-index: 2; }
+    .cine-hero-banner.banner-fs-active .cine-hero-bg-media,
+    .cine-hero-banner:fullscreen .cine-hero-bg-media { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; transform: none !important; object-fit: contain !important; pointer-events: auto !important; filter: brightness(1.08); }
+    .cine-hero-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, #050507 0%, rgba(5, 5, 7, 0.25) 22%, transparent 45%); z-index: 2; pointer-events: none; }
+    .cine-hero-banner.banner-fs-active::after,
+    .cine-hero-banner:fullscreen::after { display: none; }
+
+    .hero-bg-controls { position: absolute; top: 12px; right: 12px; z-index: 25; display: none; align-items: center; gap: 7px; }
+    .hero-bg-ctrl-btn { background: rgba(10, 10, 16, 0.78); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.28); color: #ffffff; padding: 6px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 800; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.55); }
+    .hero-bg-ctrl-btn.sound-on { background: rgba(225, 29, 72, 0.92); border-color: rgba(255, 255, 255, 0.45); }
+
     .cine-main-info { padding: 0 14px; margin-top: -65px; position: relative; z-index: 10; display: flex; gap: 14px; }
     .cine-poster { width: 114px; height: 166px; border-radius: 8px; object-fit: cover; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.9); border: 1px solid var(--glass-border); flex-shrink: 0; background: #12131a; }
     .cine-text-info { display: flex; flex-direction: column; justify-content: flex-end; padding-bottom: 6px; flex: 1; min-width: 0; }
@@ -181,10 +192,9 @@
     .cine-details-desc-box { font-size: 12px; color: #e4e4e7; line-height: 1.6; background: #12131a; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; margin-top: 6px; }
     .cine-details-desc-box div { margin-bottom: 3px; }
 
-    .cine-action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 16px 14px 10px 14px; }
-    .cine-btn { padding: 11px; border-radius: 999px; font-size: 12.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; border: none; text-decoration: none; }
-    .btn-watch-online { grid-column: span 2; background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; font-size: 14px; padding: 12px; box-shadow: 0 4px 16px rgba(225, 29, 72, 0.4); }
-    .btn-trailer { background: #181820; border: 1px solid var(--border-color); color: #fff; }
+    .cine-action-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 10px 14px; }
+    .cine-btn { padding: 12px; border-radius: 999px; font-size: 13.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; border: none; text-decoration: none; }
+    .btn-watch-online { background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; font-size: 14px; box-shadow: 0 4px 16px rgba(225, 29, 72, 0.4); }
     .btn-download { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
 
     .detail-sponsor-card {
@@ -522,8 +532,12 @@
     </div>
 
     <div class="cine-hero-banner" id="cineHeroBanner">
-      <video id="cineHeroBgVideo" class="cine-hero-bg-media" muted playsinline autoplay style="display:none;"></video>
-      <iframe id="cineHeroBgIframe" class="cine-hero-bg-media" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" style="display:none; border:none;"></iframe>
+      <video id="cineHeroBgVideo" class="cine-hero-bg-media" muted playsinline autoplay loop style="display:none;"></video>
+      <iframe id="cineHeroBgIframe" class="cine-hero-bg-media" allow="autoplay; fullscreen; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="display:none; border:none;"></iframe>
+      <div class="hero-bg-controls" id="heroBgControls">
+        <button type="button" class="hero-bg-ctrl-btn" id="heroBgSoundBtn" onclick="event.stopPropagation(); toggleHeroBgSound();">🔇 সাউন্ড অন করুন</button>
+        <button type="button" class="hero-bg-ctrl-btn" id="heroBgFsBtn" onclick="event.stopPropagation(); toggleHeroBgFullscreen();">⛶ ফুল স্ক্রিন</button>
+      </div>
     </div>
 
     <div class="cine-main-info">
@@ -536,7 +550,6 @@
     </div>
     <div class="cine-action-grid">
       <button class="cine-btn btn-watch-online" onclick="playOnlineMovie()">▶️ Watch Full Movie (সরাসরি ফুল সিনেমা দেখুন)</button>
-      <button class="cine-btn btn-trailer" onclick="event.stopPropagation(); playOfficialTrailer();">🎬 Watch Trailer</button>
       <button class="cine-btn btn-download" onclick="scrollToDownload()">📥 Download Options</button>
     </div>
 
@@ -733,8 +746,9 @@
     let fullListPage = 1, fullListCurrentMovies = [], currentUnlockStep = 1, stepCountdownTimer = null, previousScrollPosition = 0;
     const actorPhotoCache = {};
     let reqSearchResultsCache = [];
-    let heroBgPreviewTimer = null;
     let preRollTimer = null;
+    let currentHeroMedia = null;
+    let heroBgSoundOn = false;
 
     const isInsideTelegram = !!(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData);
     const tg = isInsideTelegram ? window.Telegram.WebApp : null;
@@ -1283,13 +1297,114 @@
     }
     function openRelatedPart(idx) { const partObj = currentRelatedParts[idx]; if (partObj) openCineDetailWithObj(partObj); }
 
+    function updateHeroBgButtonsUI() {
+      const soundBtn = document.getElementById('heroBgSoundBtn');
+      const fsBtn = document.getElementById('heroBgFsBtn');
+      const banner = document.getElementById('cineHeroBanner');
+      if (soundBtn) {
+        soundBtn.classList.toggle('sound-on', heroBgSoundOn);
+        soundBtn.innerText = heroBgSoundOn ? '🔊 সাউন্ড চালু' : '🔇 সাউন্ড অন করুন';
+      }
+      if (fsBtn && banner) {
+        const isFs = banner.classList.contains('banner-fs-active') || document.fullscreenElement === banner || document.webkitFullscreenElement === banner;
+        fsBtn.innerText = isFs ? '✕ ছোট করুন' : '⛶ ফুল স্ক্রিন';
+      }
+    }
+
+    function exitHeroBgFullscreen() {
+      const banner = document.getElementById('cineHeroBanner');
+      if (banner) banner.classList.remove('banner-fs-active');
+      if (document.fullscreenElement === banner && document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      } else if (document.webkitFullscreenElement === banner && document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      }
+      updateHeroBgButtonsUI();
+    }
+
+    function toggleHeroBgFullscreen() {
+      const banner = document.getElementById('cineHeroBanner');
+      if (!banner) return;
+      const isNativeFs = document.fullscreenElement === banner || document.webkitFullscreenElement === banner;
+      const isCssFs = banner.classList.contains('banner-fs-active');
+      if (isNativeFs || isCssFs) {
+        exitHeroBgFullscreen();
+        return;
+      }
+      if (banner.requestFullscreen) {
+        banner.requestFullscreen().then(updateHeroBgButtonsUI).catch(() => {
+          banner.classList.add('banner-fs-active');
+          updateHeroBgButtonsUI();
+        });
+      } else if (banner.webkitRequestFullscreen) {
+        try { banner.webkitRequestFullscreen(); } catch (e) { banner.classList.add('banner-fs-active'); }
+        updateHeroBgButtonsUI();
+      } else {
+        banner.classList.add('banner-fs-active');
+        updateHeroBgButtonsUI();
+      }
+    }
+    document.addEventListener('fullscreenchange', updateHeroBgButtonsUI);
+    document.addEventListener('webkitfullscreenchange', updateHeroBgButtonsUI);
+
+    function applyHeroBgMedia(withSound, restartFromZero = false) {
+      if (!currentHeroMedia) return;
+      const bv = document.getElementById('cineHeroBgVideo');
+      const bi = document.getElementById('cineHeroBgIframe');
+      const controls = document.getElementById('heroBgControls');
+      if (controls) controls.style.display = 'flex';
+      updateHeroBgButtonsUI();
+
+      if (currentHeroMedia.type === 'mp4') {
+        if (bi) { bi.removeAttribute('src'); bi.style.display = 'none'; }
+        if (bv) {
+          if (bv.getAttribute('src') !== currentHeroMedia.src) bv.src = currentHeroMedia.src;
+          if (restartFromZero) bv.currentTime = 0;
+          bv.muted = !withSound;
+          bv.volume = 1;
+          bv.style.display = 'block';
+          bv.play().catch(() => {
+            bv.muted = true;
+            heroBgSoundOn = false;
+            updateHeroBgButtonsUI();
+            bv.play().catch(() => {});
+          });
+        }
+      } else if (currentHeroMedia.type === 'vimeo') {
+        if (bv) { try { bv.pause(); } catch (e) {} bv.removeAttribute('src'); bv.style.display = 'none'; }
+        if (bi) {
+          const hashParam = currentHeroMedia.hash ? `&h=${currentHeroMedia.hash}` : '';
+          bi.src = withSound
+            ? `https://player.vimeo.com/video/${currentHeroMedia.id}?autoplay=1&muted=0&loop=1&playsinline=1&autopause=0&dnt=1${hashParam}`
+            : `https://player.vimeo.com/video/${currentHeroMedia.id}?autoplay=1&muted=1&loop=1&playsinline=1&autopause=0&background=1&dnt=1${hashParam}`;
+          bi.style.display = 'block';
+        }
+      } else if (currentHeroMedia.type === 'youtube') {
+        if (bv) { try { bv.pause(); } catch (e) {} bv.removeAttribute('src'); bv.style.display = 'none'; }
+        if (bi) {
+          bi.src = withSound
+            ? `https://www.youtube-nocookie.com/embed/${currentHeroMedia.id}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=${currentHeroMedia.id}`
+            : `https://www.youtube-nocookie.com/embed/${currentHeroMedia.id}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=${currentHeroMedia.id}`;
+          bi.style.display = 'block';
+        }
+      }
+    }
+
+    function toggleHeroBgSound() {
+      if (!currentHeroMedia) return;
+      heroBgSoundOn = !heroBgSoundOn;
+      applyHeroBgMedia(heroBgSoundOn, true);
+    }
+
     function stopHeroBgPreview() {
-      clearTimeout(heroBgPreviewTimer);
-      heroBgPreviewTimer = null;
+      currentHeroMedia = null;
+      heroBgSoundOn = false;
+      exitHeroBgFullscreen();
+      const controls = document.getElementById('heroBgControls');
+      if (controls) controls.style.display = 'none';
       const bv = document.getElementById('cineHeroBgVideo');
       const bi = document.getElementById('cineHeroBgIframe');
       if (bv) {
-        bv.ontimeupdate = null;
         try { bv.pause(); } catch (e) {}
         bv.removeAttribute('src');
         bv.load();
@@ -1304,65 +1419,63 @@
     async function startHeroBgPreview(movie) {
       stopHeroBgPreview();
       if (!movie) return;
-      const bv = document.getElementById('cineHeroBgVideo');
-      const bi = document.getElementById('cineHeroBgIframe');
       const openedId = movie.id;
 
-      const playMp4InBanner = (mp4Url) => {
-        if (!currentMovie || currentMovie.id !== openedId || !bv) return;
-        bv.src = mp4Url;
-        bv.muted = true;
-        bv.style.display = 'block';
-        bv.ontimeupdate = () => {
-          if (bv.currentTime >= 60) stopHeroBgPreview();
-        };
-        bv.onended = stopHeroBgPreview;
-        bv.play().catch(() => stopHeroBgPreview());
-        heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 60500);
+      const startMediaObj = (mediaObj) => {
+        if (!currentMovie || currentMovie.id !== openedId) return false;
+        currentHeroMedia = mediaObj;
+        heroBgSoundOn = false;
+        applyHeroBgMedia(false, true);
+        return true;
       };
 
-      const playVimeoInBanner = (vimeoUrl) => {
-        const vm = vimeoUrl.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
-        if (vm && bi && currentMovie && currentMovie.id === openedId) {
-          const hMatch = vimeoUrl.match(/[?&]h=([a-zA-Z0-9]+)/);
-          const hash = vm[2] || (hMatch ? hMatch[1] : '');
-          const hashParam = hash ? `&h=${hash}` : '';
-          bi.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&muted=1&loop=1&playsinline=1&autopause=0&background=1&dnt=1${hashParam}`;
-          bi.style.display = 'block';
-          heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 60500);
-          return true;
+      const tryCustomSourceInBanner = (rawUrl) => {
+        const u = (rawUrl || '').trim();
+        if (!u) return false;
+        if (u.includes('vimeo.com')) {
+          const vm = u.match(/vimeo\.com\/(?:video\/)?(\d+)(?:\/([a-zA-Z0-9]+))?/);
+          if (vm) {
+            const hMatch = u.match(/[?&]h=([a-zA-Z0-9]+)/);
+            const hash = vm[2] || (hMatch ? hMatch[1] : '');
+            return startMediaObj({ type: 'vimeo', id: vm[1], hash });
+          }
+        }
+        if (u.includes('youtube.com') || u.includes('youtu.be')) {
+          const ym = u.match(/(?:youtu\.be\/|watch\?v=|embed\/|shorts\/|v=)([\w-]{11})/);
+          if (ym) return startMediaObj({ type: 'youtube', id: ym[1] });
+        }
+        if (/^https?:\/\//i.test(u) && !/imdb\.com/i.test(u)) {
+          return startMediaObj({ type: 'mp4', src: u });
         }
         return false;
       };
 
-      const bgSpecific = (movie.bgVideo || '').trim();
-      if (bgSpecific) {
-        if (bgSpecific.includes('vimeo.com') && playVimeoInBanner(bgSpecific)) return;
-        if (/^https?:\/\//i.test(bgSpecific) && !/youtube|youtu\.be|vimeo|imdb/i.test(bgSpecific)) {
-          playMp4InBanner(bgSpecific);
-          return;
-        }
-      }
-
-      const customBg = (movie.trailerUrl || '').trim();
-      if (customBg && customBg.includes('vimeo.com') && playVimeoInBanner(customBg)) {
-        return;
-      }
-      const isDirectVid = /\.(mp4|m4v|webm|mov)(\?.*)?$/i.test(customBg) ||
-        /r2\.dev|r2\.cloudflarestorage\.com|workers\.dev|b-cdn\.net|firebasestorage|backblazeb2|\/stream\//i.test(customBg);
-
-      if (customBg && isDirectVid && !/youtube|youtu\.be|vimeo|imdb/i.test(customBg)) {
-        playMp4InBanner(customBg);
-        return;
-      }
+      if (tryCustomSourceInBanner(movie.bgVideo)) return;
+      if (tryCustomSourceInBanner(movie.trailerUrl)) return;
 
       const cleanedTitle = cleanTitleForSearch(movie.title) || movie.title;
       const yearMatch = movie.title.match(/\b(19\d{2}|20\d{2})\b/);
       const extractedYear = yearMatch ? yearMatch[1] : (movie.tmdbId ? (movie.year || '') : '');
-      const itunesMp4 = await tryItunesExactTrailer(cleanedTitle, extractedYear);
-      if (itunesMp4) {
-        playMp4InBanner(itunesMp4);
+
+      let tmdbVimeo = null, tmdbYouTube = null;
+      if (movie.tmdbId) {
+        try {
+          const type = movie.mediaType || (movie.isSeries ? 'tv' : 'movie');
+          const vRes = await fetch(`https://api.themoviedb.org/3/${type}/${movie.tmdbId}/videos?api_key=${TMDB_API_KEY}&include_video_language=hi,bn,en,ta,te,ml,kn,ko,ja,null`);
+          const data = await resJsonSafe(vRes);
+          const allVideos = (data?.results || []).filter(v => v.key);
+          tmdbVimeo = allVideos.find(v => v.site === 'Vimeo' && v.type === 'Trailer') || allVideos.find(v => v.site === 'Vimeo');
+          const ytVideos = allVideos.filter(v => v.site === 'YouTube');
+          tmdbYouTube = ytVideos.find(v => v.type === 'Trailer') || ytVideos.find(v => v.type === 'Teaser') || ytVideos[0];
+        } catch (e) {}
       }
+      if (!currentMovie || currentMovie.id !== openedId) return;
+
+      if (tmdbVimeo && startMediaObj({ type: 'vimeo', id: tmdbVimeo.key, hash: '' })) return;
+      if (tmdbYouTube && startMediaObj({ type: 'youtube', id: tmdbYouTube.key })) return;
+
+      const itunesMp4 = await tryItunesExactTrailer(cleanedTitle, extractedYear);
+      if (itunesMp4) startMediaObj({ type: 'mp4', src: itunesMp4 });
     }
 
     function openCineDetailWithObj(movieObj) {
@@ -1791,7 +1904,9 @@
       if (url.includes('youtube.com') || url.includes('youtu.be')) {
         const m = url.match(/(?:youtu\.be\/|watch\?v=|embed\/|shorts\/|v=)([\w-]{11})/);
         if (m) {
-          playExactTrailerKey(m[1], customStatusLabel || `🎬 ${currentMovie.title} — Official Trailer`);
+          ip.style.display = 'block';
+          ip.src = `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`;
+          if (sm && customStatusLabel) { sm.innerText = customStatusLabel; sm.style.display = 'block'; }
           return;
         }
       }
@@ -1813,7 +1928,7 @@
         ip.style.display = 'none';
         if (sm) { sm.innerText = '🎬 IMDb সিকিউরিটির কারণে সাইটের ভেতরে প্লে হয় না—নিচের বাটনে ক্লিক করে দেখুন:'; sm.style.display = 'block'; }
         if (eb && eBtn) {
-          eBtn.innerText = '🎬 IMDb-তে ট্রেলার দেখুন';
+          eBtn.innerText = '🎬 IMDb-তে দেখুন';
           eb.style.display = 'block';
           eBtn.onclick = () => openSafeUrl(url);
         }
@@ -1957,108 +2072,6 @@
         } catch (e) {}
       }
       return null;
-    }
-
-    function playExactTrailerKey(videoKey, labelText, imdbUrl) {
-      const ip = document.getElementById('cineVideoPlayer'),
-            db = document.getElementById('directVideoBox'),
-            dv = document.getElementById('cineDirectVideo'),
-            sm = document.getElementById('trailerStatusMsg'),
-            eb = document.getElementById('directExternalBar'),
-            eBtn = document.getElementById('btnDirectExternalOpen');
-
-      if (db) db.style.display = 'none';
-      if (dv) { dv.onerror = null; try { dv.pause(); } catch(e) {} dv.removeAttribute('src'); }
-
-      ip.style.display = 'block';
-      ip.src = `https://www.youtube-nocookie.com/embed/${videoKey}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`;
-
-      if (sm) {
-        sm.innerText = labelText || '🎬 Official Trailer';
-        sm.style.display = 'block';
-      }
-      if (imdbUrl && eb && eBtn) {
-        eBtn.innerText = '🎬 IMDb-তে দেখুন (অ্যাড ছাড়া দেখতে Brave ব্যবহার করুন)';
-        eb.style.display = 'block';
-        eBtn.onclick = () => openSafeUrl(imdbUrl);
-      }
-    }
-
-    async function playOfficialTrailer() {
-      if (!currentMovie) return;
-      stopHeroBgPreview();
-      const pw = document.getElementById('cinePlayerWrap'),
-            p = document.getElementById('cineVideoPlayer'),
-            db = document.getElementById('directVideoBox'),
-            dv = document.getElementById('cineDirectVideo'),
-            sm = document.getElementById('trailerStatusMsg'),
-            eb = document.getElementById('directExternalBar'),
-            eBtn = document.getElementById('btnDirectExternalOpen');
-
-      resetPlayerElements();
-      document.getElementById('serverSelectionBar').style.display = 'none';
-
-      if (currentMovie.trailerUrl && (/^https?:\/\//i.test(currentMovie.trailerUrl.trim()) || /^www\./i.test(currentMovie.trailerUrl.trim()))) {
-        loadCustomUrlIntoPlayer(currentMovie.trailerUrl.trim(), `🎬 ${currentMovie.title} — Official Trailer`);
-        pw.style.display = 'block';
-        pw.scrollIntoView({ behavior: 'smooth' });
-        return;
-      }
-
-      sm.innerText = `⏳ "${currentMovie.title}"-এর অ্যাড-ফ্রি ট্রেলার খোঁজা হচ্ছে...`;
-      sm.style.display = 'block';
-      pw.style.display = 'block';
-      pw.scrollIntoView({ behavior: 'smooth' });
-
-      const cleanedTitle = cleanTitleForSearch(currentMovie.title) || currentMovie.title,
-            yearMatch = currentMovie.title.match(/\b(19\d{2}|20\d{2})\b/),
-            extractedYear = yearMatch ? yearMatch[1] : (currentMovie.tmdbId ? (currentMovie.year || '') : '');
-
-      const exactItunesUrl = await tryItunesExactTrailer(cleanedTitle, extractedYear);
-      if (exactItunesUrl) {
-        p.style.display = 'none'; db.style.display = 'block'; dv.onerror = null; dv.src = exactItunesUrl; dv.play().catch(() => {});
-        sm.innerText = `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`; return;
-      }
-
-      let tmdbId = currentMovie.tmdbId, type = currentMovie.mediaType || (currentMovie.isSeries ? 'tv' : 'movie');
-      let imdbUrl = '';
-      if (tmdbId) {
-        try {
-          const [vRes, extRes] = await Promise.all([
-            fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/videos?api_key=${TMDB_API_KEY}&include_video_language=hi,bn,en,ta,te,ml,kn,ko,ja,null`),
-            fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/external_ids?api_key=${TMDB_API_KEY}`)
-          ]);
-          const data = await resJsonSafe(vRes);
-          const extData = await resJsonSafe(extRes);
-          if (extData?.imdb_id) imdbUrl = `https://www.imdb.com/title/${extData.imdb_id}/`;
-
-          const allVideos = (data?.results || []).filter(v => v.key);
-          const vimeoVid = allVideos.find(v => v.site === 'Vimeo' && v.type === 'Trailer') || allVideos.find(v => v.site === 'Vimeo');
-          if (vimeoVid) {
-            p.style.display = 'block';
-            p.src = `https://player.vimeo.com/video/${vimeoVid.key}?autoplay=1&playsinline=1&dnt=1`;
-            sm.innerText = `🎬 ${currentMovie.title} — Official Trailer (Ad-Free)`;
-            return;
-          }
-
-          const ytVideos = allVideos.filter(v => v.site === 'YouTube');
-          const picked = ytVideos.find(v => v.type === 'Trailer') || ytVideos.find(v => v.type === 'Teaser') || ytVideos[0];
-          if (picked) {
-            playExactTrailerKey(picked.key, `🎬 ${currentMovie.title} — Official Trailer`, imdbUrl);
-            return;
-          }
-        } catch (e) {}
-      }
-
-      p.style.display = 'none';
-      if (imdbUrl && eb && eBtn) {
-        sm.innerText = `🎬 "${currentMovie.title}"-এর ট্রেলার সরাসরি প্লেয়ারে পাওয়া যায়নি—IMDb পেজ থেকে দেখুন:`;
-        eBtn.innerText = '🎬 IMDb-তে ট্রেলার দেখুন';
-        eb.style.display = 'block';
-        eBtn.onclick = () => openSafeUrl(imdbUrl);
-      } else {
-        sm.innerText = `⚠️ দুঃখিত! "${currentMovie.title}" মুভিটির ট্রেলার পাওয়া যায়নি। চাইলে নিচ থেকে ফুল মুভি দেখতে পারবেন।`;
-      }
     }
 
     function scrollToDownload() { document.getElementById('downloadSectionBox').scrollIntoView({ behavior: 'smooth' }); }
