@@ -32,7 +32,6 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-dark); color: var(--text-main); padding-bottom: 85px; min-height: 100vh; overflow-x: hidden; }
 
-    /* প্রিমিয়াম CineVibeBD ইন্ট্রো ঝলক */
     .cine-splash-overlay {
       position: fixed;
       inset: 0;
@@ -233,7 +232,6 @@
     .actor-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #e11d48; object-fit: cover; background: #16161e; }
     .actor-name { font-size: 10.5px; color: #ffffff; text-align: center; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; font-weight: 700; }
 
-    /* লম্বালম্বিভাবে পুরো স্ক্রিনজুড়ে মুভির দৃশ্যের ছবি (ছবির মতো স্ট্যাক) */
     .scenes-section { margin: 12px 14px 10px 14px; text-align: left; display: none; }
     .scenes-title { font-size: 13.5px; font-weight: 800; color: #38bdf8; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
     .scenes-list { display: flex; flex-direction: column; gap: 5px; border-radius: 8px; overflow: hidden; }
@@ -324,7 +322,6 @@
 </head>
 <body>
 
-  <!-- প্রিমিয়াম CineVibeBD ঝলক -->
   <div class="cine-splash-overlay" id="cineSplashOverlay" onclick="this.classList.add('hide')">
     <div class="splash-card">
       <div class="splash-logo-wrap">
@@ -526,6 +523,7 @@
 
     <div class="cine-hero-banner" id="cineHeroBanner">
       <video id="cineHeroBgVideo" class="cine-hero-bg-media" muted playsinline autoplay style="display:none;"></video>
+      <iframe id="cineHeroBgIframe" class="cine-hero-bg-media" src="" allow="autoplay; encrypted-media" style="display:none; border:none;"></iframe>
     </div>
 
     <div class="cine-main-info">
@@ -552,7 +550,6 @@
 
     <div class="cast-section" id="castSection"><div class="cast-title">🎭 Top Cast &amp; Actors</div><div class="cast-list" id="castList"></div></div>
 
-    <!-- ছবির মতো লম্বালম্বিভাবে পুরো প্রস্থজুড়ে মুভির দৃশ্য -->
     <div class="scenes-section" id="scenesSection">
       <div class="scenes-title">📸 মুভির কিছু দৃশ্য (Movie Scenes)</div>
       <div class="scenes-list" id="scenesList"></div>
@@ -1290,6 +1287,7 @@
       clearTimeout(heroBgPreviewTimer);
       heroBgPreviewTimer = null;
       const bv = document.getElementById('cineHeroBgVideo');
+      const bi = document.getElementById('cineHeroBgIframe');
       if (bv) {
         bv.ontimeupdate = null;
         try { bv.pause(); } catch (e) {}
@@ -1297,12 +1295,17 @@
         bv.load();
         bv.style.display = 'none';
       }
+      if (bi) {
+        bi.src = '';
+        bi.style.display = 'none';
+      }
     }
 
     async function startHeroBgPreview(movie) {
       stopHeroBgPreview();
       if (!movie) return;
       const bv = document.getElementById('cineHeroBgVideo');
+      const bi = document.getElementById('cineHeroBgIframe');
       const openedId = movie.id;
 
       const playMp4InBanner = (mp4Url) => {
@@ -1318,15 +1321,30 @@
         heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
       };
 
-      // ০. আলাদাভাবে দেওয়া পোস্টারের পেছনের ভিডিও লিংক (bgVideo) থাকলে সবার আগে চলবে
+      const playVimeoInBanner = (vimeoUrl) => {
+        const vm = vimeoUrl.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+        if (vm && bi && currentMovie && currentMovie.id === openedId) {
+          bi.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&muted=1&background=1`;
+          bi.style.display = 'block';
+          heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
+          return true;
+        }
+        return false;
+      };
+
       const bgSpecific = (movie.bgVideo || '').trim();
-      if (bgSpecific && /^https?:\/\//i.test(bgSpecific) && !/youtube|youtu\.be|vimeo|imdb/i.test(bgSpecific)) {
-        playMp4InBanner(bgSpecific);
-        return;
+      if (bgSpecific) {
+        if (bgSpecific.includes('vimeo.com') && playVimeoInBanner(bgSpecific)) return;
+        if (/^https?:\/\//i.test(bgSpecific) && !/youtube|youtu\.be|vimeo|imdb/i.test(bgSpecific)) {
+          playMp4InBanner(bgSpecific);
+          return;
+        }
       }
 
-      // ১. ট্রেলারে ডিরেক্ট ভিডিও লিংক (MP4 / R2 / CDN / Stream) থাকলে চলবে
       const customBg = (movie.trailerUrl || '').trim();
+      if (customBg && customBg.includes('vimeo.com') && playVimeoInBanner(customBg)) {
+        return;
+      }
       const isDirectVid = /\.(mp4|m4v|webm|mov)(\?.*)?$/i.test(customBg) ||
         /r2\.dev|r2\.cloudflarestorage\.com|workers\.dev|b-cdn\.net|firebasestorage|backblazeb2|\/stream\//i.test(customBg);
 
@@ -1335,7 +1353,6 @@
         return;
       }
 
-      // ২. Apple iTunes-এর অ্যাড-ফ্রি MP4 চেষ্টা করবে (YouTube কখনোই পেছনে চলবে না)
       const cleanedTitle = cleanTitleForSearch(movie.title) || movie.title;
       const yearMatch = movie.title.match(/\b(19\d{2}|20\d{2})\b/);
       const extractedYear = yearMatch ? yearMatch[1] : (movie.tmdbId ? (movie.year || '') : '');
