@@ -233,11 +233,11 @@
     .actor-avatar { width: 60px; height: 60px; border-radius: 50%; border: 2px solid #e11d48; object-fit: cover; background: #16161e; }
     .actor-name { font-size: 10.5px; color: #ffffff; text-align: center; margin-top: 6px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; font-weight: 700; }
 
-    .scenes-section { margin: 10px 14px 8px 14px; text-align: left; display: none; }
-    .scenes-title { font-size: 13.5px; font-weight: 800; color: #38bdf8; margin-bottom: 9px; display: flex; align-items: center; gap: 5px; }
-    .scenes-list { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 6px; scrollbar-width: none; }
-    .scenes-list::-webkit-scrollbar { display: none; }
-    .scene-thumb { width: 175px; height: 98px; border-radius: 8px; object-fit: cover; flex-shrink: 0; border: 1px solid var(--glass-border); background: #12131a; cursor: pointer; }
+    /* লম্বালম্বিভাবে পুরো স্ক্রিনজুড়ে মুভির দৃশ্যের ছবি (ছবির মতো স্ট্যাক) */
+    .scenes-section { margin: 12px 14px 10px 14px; text-align: left; display: none; }
+    .scenes-title { font-size: 13.5px; font-weight: 800; color: #38bdf8; margin-bottom: 10px; display: flex; align-items: center; gap: 5px; }
+    .scenes-list { display: flex; flex-direction: column; gap: 5px; border-radius: 8px; overflow: hidden; }
+    .scene-thumb { width: 100%; aspect-ratio: 16 / 9; height: auto; border-radius: 4px; object-fit: cover; border: 1px solid var(--border-color); background: #12131a; cursor: pointer; display: block; }
 
     .cine-player-wrap { padding: 10px 14px; display: none; }
     .cine-video-frame { width: 100%; height: 220px; border-radius: 10px; border: 1px solid var(--border-color); background: #000; transition: filter 0.12s ease; }
@@ -542,7 +542,6 @@
       <button class="cine-btn btn-download" onclick="scrollToDownload()">📥 Download Options</button>
     </div>
 
-    <!-- নিরাপদ ও দৃশ্যমান স্পন্সর অ্যাড স্লট -->
     <div class="detail-sponsor-card" onclick="openEntryAd()">
       <div class="detail-sponsor-left">
         <span class="sponsor-tag">SPONSORED</span>
@@ -553,6 +552,7 @@
 
     <div class="cast-section" id="castSection"><div class="cast-title">🎭 Top Cast &amp; Actors</div><div class="cast-list" id="castList"></div></div>
 
+    <!-- ছবির মতো লম্বালম্বিভাবে পুরো প্রস্থজুড়ে মুভির দৃশ্য -->
     <div class="scenes-section" id="scenesSection">
       <div class="scenes-title">📸 মুভির কিছু দৃশ্য (Movie Scenes)</div>
       <div class="scenes-list" id="scenesList"></div>
@@ -1063,6 +1063,7 @@
               isSeries,
               castNames: m.cast || '',
               trailerUrl: m.trailer || '',
+              bgVideo: m.bgVideo || '',
               customWatchUrl: m.watchUrl || '',
               screenshots: m.screenshots || m.scenes || m.images || '',
               sheetLanguage: m.language || '',
@@ -1285,7 +1286,6 @@
     }
     function openRelatedPart(idx) { const partObj = currentRelatedParts[idx]; if (partObj) openCineDetailWithObj(partObj); }
 
-    // পোস্টারের পিছনে শুধুমাত্র অ্যাড-ফ্রি ৩০ সেকেন্ডের ডিরেক্ট ভিডিও সিন (YouTube কখনোই চলবে না)
     function stopHeroBgPreview() {
       clearTimeout(heroBgPreviewTimer);
       heroBgPreviewTimer = null;
@@ -1318,7 +1318,14 @@
         heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
       };
 
-      // ১. আপনার নিজের দেওয়া ডিরেক্ট ভিডিও লিংক (MP4 / R2 / CDN / Stream)
+      // ০. আলাদাভাবে দেওয়া পোস্টারের পেছনের ভিডিও লিংক (bgVideo) থাকলে সবার আগে চলবে
+      const bgSpecific = (movie.bgVideo || '').trim();
+      if (bgSpecific && /^https?:\/\//i.test(bgSpecific) && !/youtube|youtu\.be|vimeo|imdb/i.test(bgSpecific)) {
+        playMp4InBanner(bgSpecific);
+        return;
+      }
+
+      // ১. ট্রেলারে ডিরেক্ট ভিডিও লিংক (MP4 / R2 / CDN / Stream) থাকলে চলবে
       const customBg = (movie.trailerUrl || '').trim();
       const isDirectVid = /\.(mp4|m4v|webm|mov)(\?.*)?$/i.test(customBg) ||
         /r2\.dev|r2\.cloudflarestorage\.com|workers\.dev|b-cdn\.net|firebasestorage|backblazeb2|\/stream\//i.test(customBg);
@@ -1328,7 +1335,7 @@
         return;
       }
 
-      // ২. আপনার লিংক না থাকলে Apple iTunes-এর অ্যাড-ফ্রি MP4 চেষ্টা করবে
+      // ২. Apple iTunes-এর অ্যাড-ফ্রি MP4 চেষ্টা করবে (YouTube কখনোই পেছনে চলবে না)
       const cleanedTitle = cleanTitleForSearch(movie.title) || movie.title;
       const yearMatch = movie.title.match(/\b(19\d{2}|20\d{2})\b/);
       const extractedYear = yearMatch ? yearMatch[1] : (movie.tmdbId ? (movie.year || '') : '');
@@ -1448,7 +1455,6 @@
       }
     })();
 
-    // আলো (30% - 220%) এবং সাউন্ড (0% - 100%)
     function setPlayerBrightness(val) {
       const v = Math.min(220, Math.max(30, parseInt(val, 10) || 100));
       const filterStr = `brightness(${v / 100})`;
@@ -1577,9 +1583,9 @@
           const fallbackData = await resJsonSafe(await fetch(`https://api.themoviedb.org/3/${ep}/${tmdbId}/images?api_key=${TMDB_API_KEY}`));
           backdrops = (fallbackData?.backdrops || []).filter(b => b.file_path && b.iso_639_1 === null);
         }
-        const picked = backdrops.slice(0, 5);
+        const picked = backdrops.slice(0, 6);
         if (picked.length === 0) return;
-        list.innerHTML = picked.map(b => `<img class="scene-thumb" src="https://image.tmdb.org/t/p/w500${b.file_path}" alt="Movie Scene" loading="lazy" onclick="openScenePreview('https://image.tmdb.org/t/p/w1280${b.file_path}')">`).join('');
+        list.innerHTML = picked.map(b => `<img class="scene-thumb" src="https://image.tmdb.org/t/p/w780${b.file_path}" alt="Movie Scene" loading="lazy" onclick="openScenePreview('https://image.tmdb.org/t/p/w1280${b.file_path}')">`).join('');
         sec.style.display = 'block';
       } catch (e) {}
     }
