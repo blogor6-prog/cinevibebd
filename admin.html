@@ -99,6 +99,7 @@
     .cat-chip span { color: var(--wp-red); cursor: pointer; font-weight: 900; }
 
     .builder-row { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
+    .ss-thumb-mini { width: 58px; height: 34px; object-fit: cover; border-radius: 4px; border: 1px solid var(--wp-border); background: #1d2327; flex-shrink: 0; display: none; }
     .episode-card { border: 1px solid #dcdcde; border-radius: 6px; padding: 10px; margin-bottom: 10px; background: #f9f9f9; }
     .episode-card-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
 
@@ -242,7 +243,7 @@
         </div>
 
         <div class="wp-card">
-          <div class="wp-card-header">✨ TMDB অটো-ফিল (নাম লিখলেই সব তথ্য, ল্যাঙ্গুয়েজ, রিলিজ ডেট, জেনরা ও ক্যাটাগরি অটো বসবে)</div>
+          <div class="wp-card-header">✨ TMDB অটো-ফিল (নাম লিখলেই সব তথ্য, ল্যাঙ্গুয়েজ, রিলিজ ডেট, জেনরা, স্ক্রিনশট ও ক্যাটাগরি অটো বসবে)</div>
           <div class="wp-card-body">
             <div style="display:flex; gap:8px;">
               <input type="text" id="tmdbSearchInput" class="wp-input" placeholder="মুভি বা সিরিজের নাম লিখুন (যেমন: Pushpa 2)...">
@@ -291,10 +292,27 @@
                   <input type="url" id="fWatchUrl" class="wp-input" placeholder="https://...">
                 </div>
 
+                <div class="form-group">
+                  <label>🎥 পোস্টারের পেছনের ৩০ সেকেন্ডের ভিডিও লিংক (ডিরেক্ট MP4 / R2 / Stream — অ্যাড ছাড়া)</label>
+                  <input type="url" id="fBgVideo" class="wp-input" placeholder="https://... (খালি রাখলে অটো ছবি বা iTunes প্রিভিউ দেখাবে)">
+                </div>
+
                 <div class="two-col-inputs">
-                  <div class="form-group"><label>🎞️ ট্রেলার লিংক</label><input type="url" id="fTrailer" class="wp-input"></div>
+                  <div class="form-group"><label>🎞️ ট্রেলার লিংক (Watch Trailer বাটনের জন্য)</label><input type="url" id="fTrailer" class="wp-input" placeholder="https://..."></div>
                   <div class="form-group"><label>🎭 কাস্ট / অভিনয়শিল্পী</label><input type="text" id="fCast" class="wp-input"></div>
                 </div>
+              </div>
+            </div>
+
+            <!-- মুভির দৃশ্যের ছবি / স্ক্রিনশট বক্স -->
+            <div class="wp-card">
+              <div class="wp-card-header">
+                <span>📸 মুভির দৃশ্যের ছবি / স্ক্রিনশট (পোস্টার নয়)</span>
+                <button type="button" class="wp-btn wp-btn-sm wp-btn-secondary" onclick="addScreenshotRow()">+ আরও ছবি</button>
+              </div>
+              <div class="wp-card-body">
+                <p style="font-size:11.5px; color:#646970; margin-bottom:8px;">TMDB সার্চ করলে অটো বসবে, অথবা নিজে ImgBB/Postimg থেকে ৪–৫টি ছবির লিংক দিন:</p>
+                <div id="screenshotsContainer"></div>
               </div>
             </div>
 
@@ -329,6 +347,13 @@
             <div class="wp-card">
               <div class="wp-card-header">🚀 Publish</div>
               <div class="wp-card-body">
+                <div class="form-group">
+                  <label>📅 আপলোড তারিখ (Notice ঘণ্টার জন্য)</label>
+                  <div style="display:flex; gap:6px;">
+                    <input type="date" id="fAddedDate" class="wp-input" style="flex:1;">
+                    <button type="button" class="wp-btn wp-btn-sm wp-btn-secondary" onclick="setTodayAddedDate()">আজকে</button>
+                  </div>
+                </div>
                 <div class="form-group">
                   <label>কোয়ালিটি / ধরন ব্যাজ</label>
                   <input type="text" id="fBadge" class="wp-input" value="1080p">
@@ -400,6 +425,16 @@
       if (localStorage.getItem("cine_gh_logged") === "1") {
         openAdminFromSaved();
       }
+    }
+
+    function getTodayIsoDate(d = new Date()) {
+      const y = d.getFullYear();
+      const m = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${y}-${m}-${day}`;
+    }
+    function setTodayAddedDate() {
+      document.getElementById("fAddedDate").value = getTodayIsoDate();
     }
 
     function utf8ToBase64(str) {
@@ -585,15 +620,17 @@
             episodes: cell(c, 12),
             cast: cell(c, 13),
             trailer: cell(c, 14),
+            bgVideo: "",
             watchUrl: cell(c, 15),
             language: cell(c, 16),
             releaseDate: cell(c, 17),
-            genre: cell(c, 18)
+            genre: cell(c, 18),
+            addedDate: getTodayIsoDate(),
+            screenshots: []
           });
         }
         imported.reverse();
 
-        // Safe Merge: keep existing movies added in Admin + add missing ones from Google Sheet
         const existingTitles = new Set(allMovies.map(m => (m.title || "").trim().toLowerCase()));
         const onlyNewFromSheet = imported.filter(m => !existingTitles.has((m.title || "").trim().toLowerCase()));
         const merged = [...allMovies, ...onlyNewFromSheet];
@@ -683,7 +720,7 @@
       tbody.innerHTML = rows.map(({ m, idx }) => `
         <tr>
           <td><img class="thumb-img" src="${escapeHtml(m.image)}" onerror="this.style.display='none'"></td>
-          <td><strong>${escapeHtml(m.title)}</strong><br><span style="font-size:11.5px; color:#646970;">⭐ ${escapeHtml(m.rating || "Auto")} · ${escapeHtml(m.badge || "HD")} ${m.releaseDate ? "· " + escapeHtml(m.releaseDate) : ""}</span></td>
+          <td><strong>${escapeHtml(m.title)}</strong><br><span style="font-size:11.5px; color:#646970;">⭐ ${escapeHtml(m.rating || "Auto")} · ${escapeHtml(m.badge || "HD")} ${m.addedDate ? "· 📅 " + escapeHtml(m.addedDate) : ""}</span></td>
           <td><span class="badge">${escapeHtml(m.category)}</span></td>
           <td>${m.sortOrder ? `<span class="badge badge-ok">#${m.sortOrder}</span>` : "—"}</td>
           <td>${m.watchUrl ? '<span class="badge badge-ok">✔ যুক্ত আছে</span>' : '<span class="badge badge-warn">নেই</span>'}</td>
@@ -713,6 +750,43 @@
     function addSelectedCategory() { addCategoryName(document.getElementById("catSelectDropdown").value); }
     function addCustomCategory() { const inp = document.getElementById("customCatInput"); addCategoryName(inp.value); inp.value = ""; }
     function removeCategoryChip(idx) { selectedCategories.splice(idx, 1); renderCategoryChips(); }
+
+    function addScreenshotRow(url = "") {
+      const container = document.getElementById("screenshotsContainer");
+      const row = document.createElement("div");
+      row.className = "builder-row ss-row";
+      row.innerHTML = `
+        <img class="ss-thumb-mini" src="${escapeHtml(url)}" style="${url ? 'display:block;' : ''}" onerror="this.style.display='none'">
+        <input type="url" class="wp-input ss-url" style="flex:1; min-width:170px;" placeholder="দৃশ্যের ছবির লিংক দিন (https://...)" value="${escapeHtml(url)}" oninput="updateSsThumb(this)">
+        <button type="button" class="wp-btn wp-btn-sm wp-btn-danger" onclick="this.parentElement.remove()">✕</button>
+      `;
+      container.appendChild(row);
+    }
+    function updateSsThumb(inp) {
+      const img = inp.parentElement.querySelector(".ss-thumb-mini");
+      const val = inp.value.trim();
+      if (img) {
+        if (/^https?:\/\//i.test(val)) { img.src = val; img.style.display = "block"; }
+        else img.style.display = "none";
+      }
+    }
+    function collectScreenshots() {
+      const list = [];
+      document.querySelectorAll("#screenshotsContainer .ss-url").forEach(inp => {
+        const u = inp.value.trim();
+        if (/^https?:\/\//i.test(u)) list.push(u);
+      });
+      return list;
+    }
+    function populateScreenshots(raw) {
+      const container = document.getElementById("screenshotsContainer");
+      container.innerHTML = "";
+      let list = [];
+      if (Array.isArray(raw)) list = raw.map(s => String(s).trim()).filter(Boolean);
+      else if (typeof raw === "string" && raw.trim()) list = raw.split(/,|\n|\|/).map(s => s.trim()).filter(Boolean);
+      if (list.length > 0) list.forEach(u => addScreenshotRow(u));
+      else addScreenshotRow("");
+    }
 
     function addDownloadRow(url = "", label = "") {
       const container = document.getElementById("downloadLinksContainer");
@@ -816,10 +890,12 @@
       editingIndex = null;
       document.getElementById("editorPageTitle").innerText = "➕ নতুন মুভি যোগ করুন";
       document.getElementById("btnSaveMovie").innerText = "💾 পাবলিশ করুন";
-      ["fTitle","fLanguage","fReleaseDate","fGenre","fRating","fSortOrder","fImage","fAd1","fAd2","fCast","fTrailer","fWatchUrl","tmdbSearchInput","customCatInput"].forEach(id => document.getElementById(id).value = "");
+      ["fTitle","fLanguage","fReleaseDate","fGenre","fRating","fSortOrder","fImage","fAd1","fAd2","fCast","fTrailer","fBgVideo","fWatchUrl","tmdbSearchInput","customCatInput"].forEach(id => document.getElementById(id).value = "");
       document.getElementById("fBadge").value = "1080p";
+      setTodayAddedDate();
       selectedCategories = [];
       renderCategoryChips();
+      populateScreenshots([]);
       document.getElementById("downloadLinksContainer").innerHTML = "";
       addDownloadRow("", "480p");
       document.getElementById("episodesBuilderContainer").innerHTML = "";
@@ -846,10 +922,20 @@
       document.getElementById("fBadge").value = m.badge || "1080p";
       document.getElementById("fCast").value = m.cast || "";
       document.getElementById("fTrailer").value = m.trailer || "";
+      document.getElementById("fBgVideo").value = m.bgVideo || "";
       document.getElementById("fWatchUrl").value = m.watchUrl || "";
+
+      if (m.addedDate) {
+        document.getElementById("fAddedDate").value = m.addedDate;
+      } else if (m.id && Number(m.id) > 1577836800000) {
+        document.getElementById("fAddedDate").value = getTodayIsoDate(new Date(Number(m.id)));
+      } else {
+        document.getElementById("fAddedDate").value = "";
+      }
 
       selectedCategories = (m.category || "").split(",").map(s => s.trim()).filter(s => s && s.toLowerCase() !== "all");
       renderCategoryChips();
+      populateScreenshots(m.screenshots || m.scenes || m.images || []);
 
       const dlBox = document.getElementById("downloadLinksContainer");
       dlBox.innerHTML = "";
@@ -887,10 +973,13 @@
         episodes: collectEpisodesData(),
         cast: document.getElementById("fCast").value.trim(),
         trailer: document.getElementById("fTrailer").value.trim(),
+        bgVideo: document.getElementById("fBgVideo").value.trim(),
         watchUrl: document.getElementById("fWatchUrl").value.trim(),
         language: document.getElementById("fLanguage").value.trim(),
         releaseDate: document.getElementById("fReleaseDate").value.trim(),
-        genre: document.getElementById("fGenre").value.trim()
+        genre: document.getElementById("fGenre").value.trim(),
+        addedDate: document.getElementById("fAddedDate").value.trim() || getTodayIsoDate(),
+        screenshots: collectScreenshots()
       };
 
       const updated = [...allMovies];
@@ -950,14 +1039,15 @@
 
     async function applyTmdbItem(tmdbId, type) {
       document.getElementById("tmdbResultsGrid").style.display = "none";
-      showToast("⏳ TMDB থেকে সব তথ্য লোড হচ্ছে...");
+      showToast("⏳ TMDB থেকে সব তথ্য ও স্ক্রিনশট লোড হচ্ছে...");
       try {
-        const [detRes, credRes, vidRes] = await Promise.all([
+        const [detRes, credRes, vidRes, imgRes] = await Promise.all([
           fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}?api_key=${TMDB_API_KEY}`),
           fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/credits?api_key=${TMDB_API_KEY}`),
-          fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/videos?api_key=${TMDB_API_KEY}`)
+          fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/videos?api_key=${TMDB_API_KEY}`),
+          fetch(`https://api.themoviedb.org/3/${type}/${tmdbId}/images?api_key=${TMDB_API_KEY}&include_image_language=null`)
         ]);
-        const det = await detRes.json(), cred = await credRes.json(), vid = await vidRes.json();
+        const det = await detRes.json(), cred = await credRes.json(), vid = await vidRes.json(), imgData = await imgRes.json().catch(() => ({}));
         const title = det.title || det.name || "", relDate = det.release_date || det.first_air_date || "", year = relDate ? relDate.split("-")[0] : "";
         const genres = (det.genres || []).map(g => g.name), origLang = det.original_language || "";
 
@@ -984,7 +1074,10 @@
         const yt = (vid.results || []).find(v => v.site === "YouTube" && v.type === "Trailer") || (vid.results || []).find(v => v.site === "YouTube");
         if (yt && yt.key) document.getElementById("fTrailer").value = `https://www.youtube.com/watch?v=${yt.key}`;
 
-        showToast("✅ TMDB-এর সব তথ্য বসে গেছে!");
+        const sceneUrls = (imgData?.backdrops || []).filter(b => b.file_path).slice(0, 5).map(b => `https://image.tmdb.org/t/p/w500${b.file_path}`);
+        populateScreenshots(sceneUrls);
+
+        showToast("✅ TMDB-এর সব তথ্য ও স্ক্রিনশট বসে গেছে!");
       } catch (e) { showToast("TMDB তথ্য আনতে সমস্যা হয়েছে!", true); }
     }
 
