@@ -1277,11 +1277,7 @@
         return;
       }
 
-      if (eb && eBtn) {
-        eBtn.innerText = '🔗 ভিডিও প্লে না হলে সরাসরি ব্রাউজারে দেখুন';
-        eb.style.display = 'block';
-        eBtn.onclick = () => openSafeUrl(url);
-      }
+      
       ip.style.display = 'block';
       ip.src = url;
       if (sm && customStatusLabel) { sm.innerText = customStatusLabel; sm.style.display = 'block'; }
