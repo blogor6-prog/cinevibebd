@@ -188,7 +188,6 @@
     .btn-trailer { background: #181820; border: 1px solid var(--border-color); color: #fff; }
     .btn-download { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
 
-    /* নিরাপদ, স্পষ্ট ও বেশি আয়ের স্পন্সর অ্যাড স্লট (বাটনের নিচে) */
     .detail-sponsor-card {
       margin: 6px 14px 4px 14px;
       background: linear-gradient(135deg, rgba(225, 29, 72, 0.16), rgba(249, 115, 22, 0.14));
@@ -206,7 +205,6 @@
     .sponsor-headline { font-size: 12.5px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .sponsor-cta { background: linear-gradient(135deg, #e11d48, #f97316); color: #fff; font-size: 11px; font-weight: 800; padding: 7px 12px; border-radius: 999px; white-space: nowrap; flex-shrink: 0; box-shadow: 0 3px 10px rgba(225, 29, 72, 0.35); }
 
-    /* প্লেয়ারের ভেতরে ৫ সেকেন্ডের নিরাপদ Pre-Roll অ্যাড বক্স */
     .preroll-ad-box {
       width: 100%;
       min-height: 220px;
@@ -528,7 +526,6 @@
 
     <div class="cine-hero-banner" id="cineHeroBanner">
       <video id="cineHeroBgVideo" class="cine-hero-bg-media" muted playsinline autoplay style="display:none;"></video>
-      <iframe id="cineHeroBgIframe" class="cine-hero-bg-media" src="" allow="autoplay; encrypted-media" style="display:none; border:none;"></iframe>
     </div>
 
     <div class="cine-main-info">
@@ -545,7 +542,7 @@
       <button class="cine-btn btn-download" onclick="scrollToDownload()">📥 Download Options</button>
     </div>
 
-    <!-- নিরাপদ ও দৃশ্যমান স্পন্সর অ্যাড স্লট (আয়ের জন্য) -->
+    <!-- নিরাপদ ও দৃশ্যমান স্পন্সর অ্যাড স্লট -->
     <div class="detail-sponsor-card" onclick="openEntryAd()">
       <div class="detail-sponsor-left">
         <span class="sponsor-tag">SPONSORED</span>
@@ -564,7 +561,6 @@
     <div class="cine-player-wrap" id="cinePlayerWrap">
       <div id="trailerStatusMsg" style="display:none; background:rgba(225,29,72,0.14); border:1px solid rgba(225,29,72,0.4); color:#facc15; font-size:12px; font-weight:700; padding:8px 12px; border-radius:8px; margin-bottom:8px; text-align:center;"></div>
 
-      <!-- ৫ সেকেন্ডের নিরাপদ Pre-Roll স্পন্সর অ্যাড -->
       <div class="preroll-ad-box" id="preRollAdBox">
         <span class="sponsor-tag">SPONSORED AD</span>
         <h4>🎬 সিনেমাটি লোড হচ্ছে...</h4>
@@ -1289,11 +1285,11 @@
     }
     function openRelatedPart(idx) { const partObj = currentRelatedParts[idx]; if (partObj) openCineDetailWithObj(partObj); }
 
+    // পোস্টারের পিছনে শুধুমাত্র অ্যাড-ফ্রি ৩০ সেকেন্ডের ডিরেক্ট ভিডিও সিন (YouTube কখনোই চলবে না)
     function stopHeroBgPreview() {
       clearTimeout(heroBgPreviewTimer);
       heroBgPreviewTimer = null;
       const bv = document.getElementById('cineHeroBgVideo');
-      const bi = document.getElementById('cineHeroBgIframe');
       if (bv) {
         bv.ontimeupdate = null;
         try { bv.pause(); } catch (e) {}
@@ -1301,17 +1297,12 @@
         bv.load();
         bv.style.display = 'none';
       }
-      if (bi) {
-        bi.src = '';
-        bi.style.display = 'none';
-      }
     }
 
     async function startHeroBgPreview(movie) {
       stopHeroBgPreview();
       if (!movie) return;
       const bv = document.getElementById('cineHeroBgVideo');
-      const bi = document.getElementById('cineHeroBgIframe');
       const openedId = movie.id;
 
       const playMp4InBanner = (mp4Url) => {
@@ -1327,32 +1318,23 @@
         heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
       };
 
-      if (movie.trailerUrl && /\.(mp4|m4v|webm)(\?.*)?$/i.test(movie.trailerUrl.trim())) {
-        playMp4InBanner(movie.trailerUrl.trim());
+      // ১. আপনার নিজের দেওয়া ডিরেক্ট ভিডিও লিংক (MP4 / R2 / CDN / Stream)
+      const customBg = (movie.trailerUrl || '').trim();
+      const isDirectVid = /\.(mp4|m4v|webm|mov)(\?.*)?$/i.test(customBg) ||
+        /r2\.dev|r2\.cloudflarestorage\.com|workers\.dev|b-cdn\.net|firebasestorage|backblazeb2|\/stream\//i.test(customBg);
+
+      if (customBg && isDirectVid && !/youtube|youtu\.be|vimeo|imdb/i.test(customBg)) {
+        playMp4InBanner(customBg);
         return;
       }
 
+      // ২. আপনার লিংক না থাকলে Apple iTunes-এর অ্যাড-ফ্রি MP4 চেষ্টা করবে
       const cleanedTitle = cleanTitleForSearch(movie.title) || movie.title;
       const yearMatch = movie.title.match(/\b(19\d{2}|20\d{2})\b/);
       const extractedYear = yearMatch ? yearMatch[1] : (movie.tmdbId ? (movie.year || '') : '');
       const itunesMp4 = await tryItunesExactTrailer(cleanedTitle, extractedYear);
       if (itunesMp4) {
         playMp4InBanner(itunesMp4);
-        return;
-      }
-
-      if (movie.tmdbId && currentMovie && currentMovie.id === openedId) {
-        try {
-          const ep = movie.mediaType || (movie.isSeries ? 'tv' : 'movie');
-          const vData = await resJsonSafe(await fetch(`https://api.themoviedb.org/3/${ep}/${movie.tmdbId}/videos?api_key=${TMDB_API_KEY}&include_video_language=hi,bn,en,ta,te,ml,kn,ko,ja,null`));
-          const ytVids = (vData?.results || []).filter(v => v.site === 'YouTube' && v.key);
-          const picked = ytVids.find(v => v.type === 'Trailer') || ytVids.find(v => v.type === 'Teaser') || ytVids[0];
-          if (picked && currentMovie && currentMovie.id === openedId && bi) {
-            bi.src = `https://www.youtube-nocookie.com/embed/${picked.key}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&iv_load_policy=3&start=15&end=45&playsinline=1`;
-            bi.style.display = 'block';
-            heroBgPreviewTimer = setTimeout(stopHeroBgPreview, 30500);
-          }
-        } catch (e) {}
       }
     }
 
