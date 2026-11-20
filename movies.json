@@ -444,22 +444,34 @@
   },
   {
     "id": 1794735100687,
-    "title": "DeSu7 (2026)",
+    "title": "DeSu7 (2026)৬",
     "category": "Bangla",
     "rating": "7.5",
-    "image": "https://image.tmdb.org/t/p/w500/w9yI1qXn3yPzQeAr72Y6QZeHZ5z.jpg",
-    "ad1": "",
-    "ad2": "",
-    "links": [],
-    "badge": "1080p",
     "sortOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/w9yI1qXn3yPzQeAr72Y6QZeHZ5z.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://premiumfiletolink0-f6ae40dffe19.herokuapp.com/476714/DeSu7.2026.720p.HEVC.HDTC.Bengali.x265.AAC.HC.ESub.mkv?hash=AgADOw",
+        "label": "720p - 897.31 MIB"
+      },
+      {
+        "link": "https://premiumfiletolink0-f6ae40dffe19.herokuapp.com/476716/DeSu7.2026.1080p.HEVC.HDTC.Bengali.x265.AAC.HC.ESub.mkv?hash=AgADki",
+        "label": "1080p - 2.23 GIB"
+      }
+    ],
+    "badge": "1080p",
     "episodes": "",
     "cast": "Dev, Subhashree Ganguly, Anirban Bhattacharya, Parthasarathi Chakraborty, Rajatabha Dutta, Aparajita Adhya",
     "trailer": "https://www.youtube.com/watch?v=ZRW6h0mzqNw",
-    "watchUrl": "",
+    "bgVideo": "",
+    "watchUrl": "https://f2l3.reaperzclub.dpdns.org/AgADkixp1akh5",
     "language": "",
     "releaseDate": "",
-    "genre": ""
+    "genre": "",
+    "addedDate": "2026-11-15",
+    "screenshots": []
   },
   {
     "id": 1794743350469,
