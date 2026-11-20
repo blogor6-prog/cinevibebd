@@ -1175,22 +1175,25 @@
     "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
     "links": [
       {
-        "link": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/qwnxKXAd/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=989e475186d24c1c2450587d7c2bcfc4bce8c763d360a95463667174c198ed58",
-        "label": "480p"
+        "link": "https://premiumfiletolink0-f6ae40dffe19.herokuapp.com/476071/Immortal.2026.720p.AMZN.WEB-DL.Hindi.DDP2.0-Tamil.DDP2.0.mkv?hash=AgADqi",
+        "label": "720p • 1.21 GB"
       },
       {
-        "link": "https://t.me/hdvirallink18",
-        "label": "🔞 viral zone"
+        "link": "https://premiumfiletolink0-f6ae40dffe19.herokuapp.com/476073/Immortal.2026.1080p.AMZN.WEB-DL.DUAL.DDP5.1.H.265-BETA.mkv?hash=AgADfS",
+        "label": "1080p • 2.11 GB"
       }
     ],
     "badge": "4K WEB-DL",
     "episodes": "",
     "cast": "",
     "trailer": "",
-    "watchUrl": "",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Immortal.2026.720p.DS4K.WEB-DL.Hindi.5.1-Tamil.5.1.ESub.x264-Fmxbd.com.mkv",
     "language": "",
     "releaseDate": "",
-    "genre": ""
+    "genre": "",
+    "addedDate": "2026-11-15",
+    "screenshots": []
   },
   {
     "id": 1794743350446,
