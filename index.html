@@ -167,12 +167,14 @@
     .cine-top-nav { position: sticky; top: 0; left: 0; width: 100%; background: rgba(5, 5, 7, 0.94); backdrop-filter: blur(10px); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; z-index: 2100; border-bottom: 1px solid var(--border-color); }
     .cine-back-btn { background: #16161e; border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
+    /* ক্রিস্টাল-ক্লিয়ার HD ব্যাকগ্রাউন্ড ট্রেলার ব্যানার (কোনো অতিরিক্ত জুম বা ঘোলা ফিল্টার ছাড়া) */
     .cine-hero-banner { width: 100%; height: 225px; position: relative; background-size: cover; background-position: center; overflow: hidden; }
     .cine-hero-banner.banner-fs-active { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 9999 !important; background-color: #000 !important; background-image: none !important; }
     .cine-hero-banner:fullscreen { width: 100vw !important; height: 100vh !important; background-color: #000 !important; background-image: none !important; }
-    .cine-hero-bg-media { position: absolute; top: 50%; left: 50%; width: max(130%, 420px); height: max(145%, 56.25vw); transform: translate(-50%, -50%); object-fit: cover; filter: brightness(1.18); pointer-events: none; z-index: 1; }
+    .cine-hero-bg-media { position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; transform: translate(-50%, -50%); object-fit: cover; filter: contrast(1.04) saturate(1.05); pointer-events: none; z-index: 1; }
+    iframe.cine-hero-bg-media { width: max(100%, calc(225px * 16 / 9)); height: max(100%, 56.25vw); }
     .cine-hero-banner.banner-fs-active .cine-hero-bg-media,
-    .cine-hero-banner:fullscreen .cine-hero-bg-media { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; transform: none !important; object-fit: contain !important; pointer-events: auto !important; filter: brightness(1.08); }
+    .cine-hero-banner:fullscreen .cine-hero-bg-media { width: 100% !important; height: 100% !important; top: 0 !important; left: 0 !important; transform: none !important; object-fit: contain !important; pointer-events: auto !important; filter: none !important; }
     .cine-hero-banner::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(0deg, #050507 0%, rgba(5, 5, 7, 0.25) 22%, transparent 45%); z-index: 2; pointer-events: none; }
     .cine-hero-banner.banner-fs-active::after,
     .cine-hero-banner:fullscreen::after { display: none; }
@@ -635,7 +637,6 @@
         </div>
       </div>
 
-      <!-- Dolby/AC3 Codec Audio Warning -->
       <div class="audio-codec-warning" id="audioCodecWarningBar">
         <p>🔇 এই ভিডিও ফাইলটির অডিও ফরম্যাট (AC3 / Dolby) মোবাইল ব্রাউজার সাপোর্ট করছে না। সাউন্ডসহ দেখতে নিচের বাটনে ক্লিক করে MX Player বা VLC-তে প্লে করুন:</p>
         <button class="audio-ext-btn" id="btnOpenExternalAudioPlayer">🔊 সাউন্ডসহ প্লে করুন (VLC / MX Player)</button>
@@ -1416,16 +1417,16 @@
         if (bi) {
           const hashParam = currentHeroMedia.hash ? `&h=${currentHeroMedia.hash}` : '';
           bi.src = withSound
-            ? `https://player.vimeo.com/video/${currentHeroMedia.id}?autoplay=1&muted=0&loop=1&playsinline=1&autopause=0&dnt=1${hashParam}`
-            : `https://player.vimeo.com/video/${currentHeroMedia.id}?autoplay=1&muted=1&loop=1&playsinline=1&autopause=0&background=1&dnt=1${hashParam}`;
+            ? `https://player.vimeo.com/video/${currentHeroMedia.id}?autoplay=1&muted=0&loop=1&playsinline=1&autopause=0&quality=1080p&dnt=1${hashParam}`
+            : `https://player.vimeo.com/video/${currentHeroMedia.id}?autoplay=1&muted=1&loop=1&playsinline=1&autopause=0&background=1&quality=1080p&dnt=1${hashParam}`;
           bi.style.display = 'block';
         }
       } else if (currentHeroMedia.type === 'youtube') {
         if (bv) { try { bv.pause(); } catch (e) {} bv.removeAttribute('src'); bv.style.display = 'none'; }
         if (bi) {
           bi.src = withSound
-            ? `https://www.youtube-nocookie.com/embed/${currentHeroMedia.id}?autoplay=1&mute=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=${currentHeroMedia.id}`
-            : `https://www.youtube-nocookie.com/embed/${currentHeroMedia.id}?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=${currentHeroMedia.id}`;
+            ? `https://www.youtube-nocookie.com/embed/${currentHeroMedia.id}?autoplay=1&mute=0&vq=hd1080&hd=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=${currentHeroMedia.id}`
+            : `https://www.youtube-nocookie.com/embed/${currentHeroMedia.id}?autoplay=1&mute=1&controls=0&vq=hd1080&hd=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3&loop=1&playlist=${currentHeroMedia.id}`;
           bi.style.display = 'block';
         }
       }
@@ -1504,10 +1505,15 @@
           const type = movie.mediaType || (movie.isSeries ? 'tv' : 'movie');
           const vRes = await fetch(`https://api.themoviedb.org/3/${type}/${movie.tmdbId}/videos?api_key=${TMDB_API_KEY}&include_video_language=hi,bn,en,ta,te,ml,kn,ko,ja,null`);
           const data = await resJsonSafe(vRes);
-          const allVideos = (data?.results || []).filter(v => v.key);
+          const allVideos = (data?.results || [])
+            .filter(v => v.key)
+            .sort((a, b) => (b.size || 0) - (a.size || 0));
           tmdbVimeo = allVideos.find(v => v.site === 'Vimeo' && v.type === 'Trailer') || allVideos.find(v => v.site === 'Vimeo');
           const ytVideos = allVideos.filter(v => v.site === 'YouTube');
-          tmdbYouTube = ytVideos.find(v => v.type === 'Trailer') || ytVideos.find(v => v.type === 'Teaser') || ytVideos[0];
+          tmdbYouTube = ytVideos.find(v => v.type === 'Trailer' && /official/i.test(v.name || ''))
+            || ytVideos.find(v => v.type === 'Trailer')
+            || ytVideos.find(v => v.type === 'Teaser')
+            || ytVideos[0];
         } catch (e) {}
       }
       if (!currentMovie || currentMovie.id !== openedId) return;
@@ -2015,7 +2021,7 @@
         const m = url.match(/(?:youtu\.be\/|watch\?v=|embed\/|shorts\/|v=)([\w-]{11})/);
         if (m) {
           ip.style.display = 'block';
-          ip.src = `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`;
+          ip.src = `https://www.youtube-nocookie.com/embed/${m[1]}?autoplay=1&vq=hd1080&hd=1&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3`;
           if (pSliders) pSliders.style.display = 'flex';
           if (volBar) volBar.style.display = 'none';
           if (sm && customStatusLabel) { sm.innerText = customStatusLabel; sm.style.display = 'block'; }
@@ -2030,7 +2036,7 @@
           const hash = vm[2] || (hMatch ? hMatch[1] : '');
           const hashParam = hash ? `&h=${hash}` : '';
           ip.style.display = 'block';
-          ip.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&playsinline=1&dnt=1${hashParam}`;
+          ip.src = `https://player.vimeo.com/video/${vm[1]}?autoplay=1&quality=1080p&playsinline=1&dnt=1${hashParam}`;
           if (pSliders) pSliders.style.display = 'flex';
           if (volBar) volBar.style.display = 'none';
           if (sm && customStatusLabel) { sm.innerText = customStatusLabel; sm.style.display = 'block'; }
@@ -2071,7 +2077,6 @@
         return;
       }
 
-      // যেকোনো File-to-Link (যেমন f2l3.reaperzclub.dpdns.org/AgAD...) বা ডিরেক্ট ভিডিও স্ট্রিম কাস্টম প্লেয়ারে চলবে (৩-ডট ও ডাউনলোড ছাড়া)
       ip.style.display = 'none';
       db.style.display = 'block';
       if (eb) eb.style.display = 'none';
@@ -2083,7 +2088,6 @@
         dv.onerror = null;
         if (switchedToIframe) return;
         switchedToIframe = true;
-        // যদি লিংকটি আসলেই HTML এমবেড পেজ হয় (সরাসরি ভিডিও না হয়), তখন অটো iframe-এ যাবে
         db.style.display = 'none';
         ip.style.display = 'block';
         ip.src = url;
