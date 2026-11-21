@@ -279,11 +279,6 @@
     "genre": "Crime, Thriller, Mystery",
     "expiredLinks": [
       {
-        "label": "Trailer",
-        "url": "https://www.youtube.com/watch?v=hf96obsJIGU",
-        "reason": "HTTP 429"
-      },
-      {
         "label": "Download (480p•540MB)",
         "url": "https://hubcdn.wiki/dl/?link=https://pub-dfed992f19e6446284cd820451e160f4.r2.dev/4ad1362f3fd6263ade82c06fdc48b009",
         "reason": "HTTP 403"
