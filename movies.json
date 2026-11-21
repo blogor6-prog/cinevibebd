@@ -50,6 +50,7 @@
     "category": "Bangla, Action, Crime, Thriller",
     "rating": "7.5",
     "sortOrder": null,
+    "trendingOrder": null,
     "image": "https://image.tmdb.org/t/p/w500/xGATAJvy0pWeJ1Y05s92ljL8Q.jpg",
     "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
     "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
@@ -67,10 +68,6 @@
         "label": "HD 1080p | Bangla | 1.24GB"
       },
       {
-        "link": "http://yaichi-anime.ddns.net:8080/stream/38968?hash=b07867&d=true",
-        "label": "480p • 567 MB"
-      },
-      {
         "link": "https://premiumfiletolink0-f6ae40dffe19.herokuapp.com/474182/Mrigaya.1.5.The.Hunt.Continues.2026.720p.HEVC.WeB-DL.mkv?hash=AgADbh",
         "label": "720p • 672.06 MB"
       }
@@ -79,17 +76,14 @@
     "episodes": "",
     "cast": "Ritwick Chakraborty, Koushani Mukherjee, Mir Afsar Ali, Ananya Bhattacharya, Arpan Ghoshal, Aritra Dutta Banik",
     "trailer": "https://f2l.reaperzclub.dpdns.org/AgADcixp18r1d",
+    "bgVideo": "",
     "watchUrl": "https://premiumfiletolink0-f6ae40dffe19.herokuapp.com/474182/Mrigaya.1.5.The.Hunt.Continues.2026.720p.HEVC.WeB-DL.mkv?hash=AgADbh",
     "language": "Bengali (বাংলা)",
     "releaseDate": "2026-11-13",
     "genre": "Action, Crime, Thriller",
-    "expiredLinks": [
-      {
-        "label": "Download (480p • 567 MB)",
-        "url": "http://yaichi-anime.ddns.net:8080/stream/38968?hash=b07867&d=true",
-        "reason": "Dead Link / DNS Error"
-      }
-    ],
+    "addedDate": "2026-11-18",
+    "screenshots": [],
+    "expiredLinks": [],
     "lastLinkCheck": "2026-11-21T12:30:06.088Z"
   },
   {
