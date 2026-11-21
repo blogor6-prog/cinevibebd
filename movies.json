@@ -23,7 +23,7 @@
       "https://image.tmdb.org/t/p/w500/7bIrEDdkZCMjLf2pz9YS8t8r2D2.jpg"
     ],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1795003174520,
@@ -44,7 +44,7 @@
     "releaseDate": "2017-11-17",
     "genre": "Action & Adventure, Crime, Drama",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1795002696555,
@@ -85,8 +85,14 @@
     "genre": "Action, Crime, Thriller",
     "addedDate": "2026-11-18",
     "screenshots": [],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Trailer",
+        "url": "https://f2l.reaperzclub.dpdns.org/AgADcixp18r1d",
+        "reason": "HTTP 404"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1795002509425,
@@ -120,7 +126,7 @@
     "releaseDate": "2026-10-02",
     "genre": "Crime, Thriller, Mystery",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794993694434,
@@ -154,7 +160,7 @@
     "releaseDate": "2026-09-18",
     "genre": "Crime, Thriller",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794990639419,
@@ -188,7 +194,7 @@
     "releaseDate": "2026-11-05",
     "genre": "Comedy, Crime, Action",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794989785684,
@@ -222,7 +228,7 @@
     "releaseDate": "2026-09-18",
     "genre": "Crime, Drama",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794835309876,
@@ -271,8 +277,19 @@
     "language": "Hindi (Studio-Dub DD5.1)",
     "releaseDate": "2026-09-11",
     "genre": "Crime, Thriller, Mystery",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p•540MB)",
+        "url": "https://hubcdn.wiki/dl/?link=https://pub-dfed992f19e6446284cd820451e160f4.r2.dev/4ad1362f3fd6263ade82c06fdc48b009",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p x264 [3.1GB])",
+        "url": "https://hubcdn.wiki/dl/?link=https://pub-dfed992f19e6446284cd820451e160f4.r2.dev/2a3a1301ad04969aae608fb3d7702603",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794760935486,
@@ -309,8 +326,29 @@
     "language": "[English-Hindi]",
     "releaseDate": "Sep. 25, 2026",
     "genre": "Adventure, Science Fiction, Action",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p•900MB)",
+        "url": "https://video-downloads.googleusercontent.com/ADGPM2mrv3Is6cGmE0IG8Z-YiMewV_hrwVgdPKjt6BhI2wDVRciQ4wtQK_-0q5MkxxFE_6MQvJGXswR4oUUD2KDhB_Qepz6vz422WGCt-lpwSisYJ8NxSRFwTc3YrJ4SD3rkNd-xC1QI8Nz8aOIZC6qOJH1N2EuJmx6gRO53NPO5Xl79SCycCTlJVwA-esXvQxYeOXa6K4qTtZ4dF6R0e9D7cEdeCOCuUeOtsgyg5XfnyzNyK_QkD7m4qUgNMG8hGHmy__Sp8rvtRBiQjeaZLJygDev3sXMZRg",
+        "reason": "HTTP 400"
+      },
+      {
+        "label": "Download (720p • 1.2GB)",
+        "url": "https://video-downloads.googleusercontent.com/ADGPM2kwW7sIQDrRoBWleFCisHY8NPzu_fgaIdiPYf1TZSTnq0yGRNUGoqunY6dvvngvYH7bn6CWTcJ9vnVHOFAF0ba0qDq91Kzsx9Azyvrmv1R_ilLuvqOYvY76J0MISJA37AXcokCLCLDHzOg1xYTFEa7nt_Pny5Qe1fIfv4z0VCI6E0YQbSCuCPzvbddjtjnSdNULuTVz7a_YLpWtsVaxpSdiyzQFMC86LgHSpPOgDP82T4KbUj3rwerQj0JehN6UX93d72PeU22LZAatefp-bs7xEHvKdg",
+        "reason": "HTTP 400"
+      },
+      {
+        "label": "Download (720p • 1.7GB)",
+        "url": "https://video-downloads.googleusercontent.com/ADGPM2kiQNufpNpBR-szoPjzOoG_iQ9qkR5wSLpLF_LGIAq8dgSDuG5KK-fM1kBgwfPLGuAmUtyJq74ZX3zV16ePMvch4hkS-4Q1UDs8kPV7Mcxke22s-ft7kwuwI1Fat0GQ974lacmViPlgEOOG5gufVdEx7BHPoNzKPTU2NntJwoBCxHMU2CeQi4V80sgqsyP0zM8TlIY_A-AF6gwFOjvg3CNOULS3wG-yb2tyWkJnfbbN3PlrFA1vBIljXq9CYn0DQ0-xGVDyjk22j3cjTeXy5xWpI_HjOw",
+        "reason": "HTTP 400"
+      },
+      {
+        "label": "Download (1080p • 3.1 GB)",
+        "url": "https://video-downloads.googleusercontent.com/ADGPM2ku1r_iP5NYYs3ala-tn0HqzH3cjhxmCvwuhA_qerqUBOsoXn2RFwEQm7EY4vzxsDdYfakJVgJQ0DvuuWNO4Z7lw2wOJWHD-wAZ2g9FCHsXfzeRxcxOlnnTt-0KjQ5mCW6RnGbkJlqE-41AJwT_aaiLFQOILundv0MLPsWLbiskCAjPxX159nUoUvTeHr8O_1qHYH_JRkezYVnoDYfpWOraicEgvAD2vQ5VyWq3lfgSt3xlBcu-84L0eoGRBYKRewUZmu566M8xgNHwYRnM1_VhQsdY4Q",
+        "reason": "HTTP 400"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794760294594,
@@ -340,7 +378,7 @@
     "releaseDate": "Nov. 10, 2026  70 Min.",
     "genre": "Documentary",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794757718192,
@@ -370,7 +408,7 @@
     "releaseDate": "Nov. 06, 2026  70 Min.",
     "genre": "Drama",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794757212872,
@@ -400,7 +438,7 @@
     "releaseDate": "Oct. 30, 2026  70 Min.",
     "genre": "Drama",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794745637003,
@@ -430,7 +468,7 @@
     "releaseDate": "Oct. 23, 2026",
     "genre": "Drama",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794735100691,
@@ -450,8 +488,19 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "1 (HD)",
+        "url": "https://999c8bfadce536bf3068e488c127691c.r2.cloudflarestorage.com/movielinkbd/media/3rjkLSnH/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=a42b844b9f9d69b522136d088cb62f8d%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T000000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=eca7aadf424d3b10e6c98e8ab6ed7dc9648c70d6882a552ce978070847465c6d",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "2 (HD)",
+        "url": "https://999c8bfadce536bf3068e488c127691c.r2.cloudflarestorage.com/movielinkbd/media/3rjkLSnH/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=a42b844b9f9d69b522136d088cb62f8d%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T000000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=eca7aadf424d3b10e6c98e8ab6ed7dc9648c70d6882a552ce978070847465c6d",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794735100690,
@@ -472,7 +521,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794735100689,
@@ -496,7 +545,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794735100687,
@@ -529,7 +578,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350469,
@@ -555,7 +604,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350468,
@@ -589,7 +638,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350467,
@@ -619,7 +668,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350466,
@@ -640,7 +689,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350465,
@@ -670,7 +719,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350464,
@@ -699,8 +748,14 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p)",
+        "url": "https://youtu.be/e0jCKBx4SoI?si=xpJZViyPW78QEH-e",
+        "reason": "HTTP 429"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350463,
@@ -737,8 +792,24 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p • 419.39 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/jVDhrPSY/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=6ddcd21dedf0bb7c89707604e97b08088f00fa0549edb9b10feaf8fb574e2469",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (720p • 1.17 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/RtsDunwe/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=a4b062ced5541962d42846b8f4fee20712442eec6216ffcd058e04f8702484cd",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p • 2.72 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/PNWFAMGc/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=8b9a1ee48dced93085aee62b5cb036af19c288082023c02f501a9cd30f62593a",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350462,
@@ -775,8 +846,24 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p • 393.35 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/KVVbaUZU/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=95d3cc4694f6def4ddb3a1ff24ded50c04ce3f7d5295c2ebd9dfa59afc34db20",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (720p • 1 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/pHzACPmr/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=1e9ec04fdf135e957b4d66aeeb3388ccdd6799209a386a816f6ec01f3fdb9c5c",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p • 2.52 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/Nw7kp7bG/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=f3b98bddc4904f6ca2fa0dd3be3d744eb019c4ead236970d77f845588fc70475",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350461,
@@ -809,8 +896,19 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (720p • 751.65 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/7ei7zyUK/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=e9f0345f3169ffbb73b1d575fe8d787ae9df423004e8f5bc005d419119fbd510",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p • 1.86 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/bPMNsmPr/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=0c9330660607f5bc55b9a778f3606b4079f3ff9ca12d1a481298b451500f50c6",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350460,
@@ -847,8 +945,24 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p • 434.74 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/HBnvMXk6/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=c1b7560f973f06fd0e7d67b1ae417404062677f3fa560c538a097c06d972e86b",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (720p • 722.92 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/sPT7qgKn/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=8f0f6d1933e21f10bdf5939d6354d5a29718dca976bc4bd1d136c8700f466873",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p • 1.5 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/kezU2My4/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=5cf0d14c6b12ac2279a4fc4536a651d537bb2b6a55274977601ca2af263743a6",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350459,
@@ -881,8 +995,19 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (720p • 749.06 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/yn8GokqJ/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=b100d605587f897fbd44789a4549b86be82adb908d6c90bf26d0128aa2ed5d2e",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p • 1.73 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/PEmKrjZp/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=b43720355add2470cf788b70ecd69e87098224a23efd1ab001f0ccc9d246ee4f",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350458,
@@ -919,8 +1044,24 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p • 554.62 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/BXzP6Dgw/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=ab2c1239868d11839dcc282c0b66f49bc747c9ad5420a51b8230b1675a432010",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (720p • 964.69 MB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/GVrP6Vdk/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=676ceacb5928de415c073fd564b70579cc08e4f896c88833762f27ceaf833a13",
+        "reason": "HTTP 403"
+      },
+      {
+        "label": "Download (1080p • 1.54 GB)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/niYgSoZW/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=ec9e4cb535e6ca9bed306171fed175b7fd69d26985d08f7b8fb98cdb883f8ca7",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350457,
@@ -949,7 +1090,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350456,
@@ -982,7 +1123,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350455,
@@ -1019,7 +1160,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350454,
@@ -1052,7 +1193,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350452,
@@ -1085,7 +1226,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350451,
@@ -1118,7 +1259,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350450,
@@ -1151,7 +1292,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350449,
@@ -1184,7 +1325,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350448,
@@ -1220,8 +1361,14 @@
     "genre": "",
     "addedDate": "2026-11-15",
     "screenshots": [],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Watch Online",
+        "url": "https://f2l3.reaperzclub.dpdns.org/AgADGCxp1ak2b",
+        "reason": "HTTP 404"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350447,
@@ -1254,7 +1401,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350446,
@@ -1287,7 +1434,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350445,
@@ -1329,7 +1476,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350444,
@@ -1358,8 +1505,14 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/26QWV2Vk/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=27dc3a52cb809e846ca7300a447fd815f428ee7973efec88008bbdb280a12b9b",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350443,
@@ -1388,8 +1541,14 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/acu5QjhL/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=c02f91af6cd76674da2fe70e204a55ed0d314790f459e600f552df5eeca2e6b5",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350442,
@@ -1435,7 +1594,7 @@
     "releaseDate": "",
     "genre": "",
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350441,
@@ -1477,8 +1636,14 @@
     "screenshots": [
       "https://i.postimg.cc/fR7rrGs8/Screenshot-20261119-201849-Chrome.png"
     ],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Watch Online",
+        "url": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/-%20Comrade%20Kalyan%202026%20AMZN%20Dual%20Audio%20[Hindi%20(DD5.1)%20&%20Telugu]%20720p%20WEB-DL%20x264%20ESubs-Fmxbd.com.mkv",
+        "reason": "Unreachable / Dead"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350440,
@@ -1507,8 +1672,14 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/JEghNRPR/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=c145a4ed04bce0ea81d166063eabd23bcd1c3ee10ee13e841830ea43b0fcb9c7",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350438,
@@ -1537,8 +1708,14 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:08:58.879Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/XmcGLxY6/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=eab0eee386f32637840a6f349119f1809c8fdcfeca45e7722956d704da79a8de",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350437,
@@ -1567,8 +1744,14 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Download (480p)",
+        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/54BsRkmg/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=7a2c752d1da7ba68e4ac913578ac177a2c24d0defa6e0da600fd03b3c69da857",
+        "reason": "HTTP 403"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350436,
@@ -1605,7 +1788,7 @@
     "addedDate": "2026-11-15",
     "screenshots": [],
     "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350435,
@@ -1643,8 +1826,14 @@
     "screenshots": [
       "https://t.me/FilesHubZone_bot/?start=mwno0yo7"
     ],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Watch Online",
+        "url": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Jailer%202%202026%20AMZN%20[Hindi%202.0-Tamil%202.0]%20480p%20WEB-DL%20x264-Fmxbd.com.mkv",
+        "reason": "Unreachable / Dead"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   },
   {
     "id": 1794743350434,
@@ -1680,7 +1869,13 @@
     "genre": "",
     "addedDate": "2026-11-15",
     "screenshots": [],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-21T13:02:22.197Z"
+    "expiredLinks": [
+      {
+        "label": "Watch Online",
+        "url": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/-%20Akka%202026%20S01%20[EP01-05]%20Complete%20Hindi%20ORG%201080p%20WEB-DL%20x265%20ESubs-Fmxbd.com.mkv",
+        "reason": "Unreachable / Dead"
+      }
+    ],
+    "lastLinkCheck": "2026-11-21T13:41:09.133Z"
   }
 ]
