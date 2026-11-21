@@ -334,7 +334,7 @@
     .indicator-light { width: 10px; height: 10px; border-radius: 50%; }
     .light-blue { background-color: #22c55e; }
 
-    /* Monetag ১০ সেকেন্ড অ্যাড + ক্রস ওভারলে */
+    /* ১০ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে */
     .monetag-overlay-modal {
       display: none;
       position: fixed;
@@ -345,15 +345,17 @@
       z-index: 9500;
       justify-content: center;
       align-items: center;
-      padding: 16px;
+      padding: 14px;
     }
     .monetag-ad-card {
       width: 100%;
-      max-width: 390px;
+      max-width: 380px;
+      max-height: 92vh;
+      overflow-y: auto;
       background: linear-gradient(160deg, #161824 0%, #0b0c12 100%);
       border: 1px solid rgba(225, 29, 72, 0.55);
       border-radius: 18px;
-      padding: 18px 16px;
+      padding: 14px 13px;
       position: relative;
       text-align: center;
       box-shadow: 0 20px 55px rgba(0, 0, 0, 0.9);
@@ -362,7 +364,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
     }
     .monetag-timer-pill {
       background: rgba(250, 204, 21, 0.16);
@@ -392,19 +394,32 @@
       background: rgba(225, 29, 72, 0.12);
       border: 1px dashed rgba(249, 115, 22, 0.55);
       border-radius: 12px;
-      padding: 16px 14px;
-      margin-bottom: 12px;
+      padding: 12px 10px;
+      margin-bottom: 10px;
     }
-    .monetag-offer-box h4 { font-size: 15.5px; color: #fff; font-weight: 800; margin-bottom: 6px; }
-    .monetag-offer-box p { font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px; }
+    .monetag-offer-box h4 { font-size: 14.5px; color: #fff; font-weight: 800; margin-bottom: 4px; }
+    .monetag-offer-box p { font-size: 11.5px; color: #cbd5e1; line-height: 1.45; margin-bottom: 10px; }
+    .modal-ad-300x250-wrap {
+      width: 100%;
+      max-width: 300px;
+      min-height: 250px;
+      margin: 0 auto 10px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #0a0b10;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      overflow: hidden;
+    }
     .monetag-visit-btn {
       width: 100%;
-      padding: 11px 16px;
+      padding: 10px 14px;
       border: none;
       border-radius: 999px;
       background: linear-gradient(135deg, #e11d48, #f97316);
       color: #fff;
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       cursor: pointer;
       box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
@@ -788,7 +803,7 @@
     </div>
   </div>
 
-  <!-- Monetag ১০ সেকেন্ডের ক্রস ওভারলে অ্যাড মডাল -->
+  <!-- ১০ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে মডাল -->
   <div class="monetag-overlay-modal" id="monetagUnlockModal">
     <div class="monetag-ad-card">
       <div class="monetag-top-row">
@@ -796,9 +811,21 @@
         <button type="button" class="monetag-close-x" id="monetagCloseBtn" onclick="handleMonetagCloseClick()">✕</button>
       </div>
       <div class="monetag-offer-box">
-        <span class="sponsor-tag" style="margin-bottom:8px;">MONETAG SPONSOR</span>
+        <span class="sponsor-tag" style="margin-bottom:6px;">SPONSOR AD</span>
         <h4 id="monetagStepHeading">🔓 ধাপ ভেরিফিকেশন চলছে...</h4>
-        <p id="monetagStepDesc">অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
+        <p id="monetagStepDesc">নিচের অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
+        <div class="modal-ad-300x250-wrap" id="modalAd300x250Wrap">
+          <script>
+            atOptions = {
+              'key' : '6ca0efc6f46a904645aa70e1f122ac83',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
+          </script>
+          <script src="https://bancadeltempoidea.org/22/6ca0efc6f46a904645aa70e1f122ac83"></script>
+        </div>
         <button type="button" class="monetag-visit-btn" id="monetagOfferBtn" onclick="openCurrentMonetagLink()">🎁 স্পনসর অফার দেখুন (Click Here)</button>
       </div>
       <div class="monetag-warn-note">⚠️ ১০ সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!</div>
@@ -913,7 +940,7 @@
     let topNoticeClosed = false;
     let topNoticeCycleStarted = false;
 
-    // 4-Step Adsterra + Monetag ১০ সেকেন্ড ভেরিফিকেশন স্টেট
+    // 4-Step Adsterra + ১০ সেকেন্ড ভেরিফিকেশন স্টেট
     let waitingReturnStep = 0;
     let returnFallbackTimer = null;
     let monetagCountdownTimer = null;
@@ -962,6 +989,7 @@
       const splash = document.getElementById('cineSplashOverlay');
       if (splash) splash.classList.add('hide');
       startTopNoticeAdCycle();
+      injectMonetagVignette();
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -2015,7 +2043,7 @@
       if (m && img) { img.src = url; m.style.display = 'flex'; }
     }
 
-    // === ৪-ধাপের Adsterra + Monetag ১০ সেকেন্ড ক্রস আনলক সিস্টেম ===
+    // === ৪-ধাপের Adsterra + ১০ সেকেন্ড 300x250 ব্যানার & Monetag Direct Link ভেরিফিকেশন ===
     function clearMonetagAndTimers() {
       clearInterval(stepCountdownTimer);
       clearInterval(monetagCountdownTimer);
@@ -2079,7 +2107,7 @@
       const desc = document.getElementById('monetagStepDesc');
 
       if (heading) heading.innerText = `🔓 স্টেপ ${step}/৩ ভেরিফিকেশন চলছে...`;
-      if (desc) desc.innerHTML = 'Monetag স্পনসর অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।';
+      if (desc) desc.innerHTML = 'নিচের অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।';
       if (timerPill) timerPill.innerText = `⏳ অপেক্ষা করুন: ${monetagTimeLeft}s`;
       if (closeBtn) {
         closeBtn.classList.remove('ready');
@@ -2161,7 +2189,7 @@
         btn.innerText = '⏳ বিজ্ঞাপন দেখে ব্যাক আসুন...';
       }
       if (notice) {
-        notice.innerText = `স্টেপ ${stepToRun}/৩: Adsterra বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই Monetag ভেরিফিকেশন চালু হবে।`;
+        notice.innerText = `স্টেপ ${stepToRun}/৩: বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই ১০ সেকেন্ডের ভেরিফিকেশন চালু হবে।`;
       }
 
       openSafeUrl(getAdsterraUrlForStep(stepToRun));
