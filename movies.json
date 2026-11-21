@@ -159,13 +159,7 @@
     "language": "Tamil (தமிழ்)",
     "releaseDate": "2026-09-18",
     "genre": "Crime, Thriller",
-    "expiredLinks": [
-      {
-        "label": "Trailer",
-        "url": "https://www.youtube.com/watch?v=9t2-keYiSas",
-        "reason": "HTTP 429"
-      }
-    ],
+    "expiredLinks": [],
     "lastLinkCheck": "2026-11-21T13:02:22.197Z"
   },
   {
