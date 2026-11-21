@@ -43,13 +43,7 @@
     "language": "English",
     "releaseDate": "2017-11-17",
     "genre": "Action & Adventure, Crime, Drama",
-    "expiredLinks": [
-      {
-        "label": "Trailer",
-        "url": "https://www.youtube.com/watch?v=s4QV6OZdmWY",
-        "reason": "HTTP 429"
-      }
-    ],
+    "expiredLinks": [],
     "lastLinkCheck": "2026-11-21T13:02:22.197Z"
   },
   {
