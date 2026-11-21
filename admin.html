@@ -191,7 +191,7 @@
 
   <div class="wp-toast" id="wpToast"></div>
 
-  <!-- EYE MODAL (কোন কোন লিংকের মেয়াদ শেষ তা দেখার জন্য) -->
+  <!-- EYE MODAL -->
   <div class="wp-modal-backdrop" id="eyeModalBackdrop" onclick="if(event.target===this) closeEyeModal()">
     <div class="wp-modal">
       <div class="wp-modal-head">
@@ -215,26 +215,19 @@
           <input type="email" id="cfgGmail" class="wp-input" value="blogor6@gmail.com" placeholder="blogor6@gmail.com">
         </div>
         <div class="form-group">
-          <label>🔗 Google Apps Script Web App URL (পোস্টারের ছবিসহ Gmail ও দ্রুত প্যারালাল চেক)</label>
+          <label>🔗 Google Apps Script Web App URL</label>
           <input type="url" id="cfgGasUrl" class="wp-input" placeholder="https://script.google.com/macros/s/...../exec">
           <p style="font-size:11.5px; color:#646970; margin-top:4px;">
-            প্রতি তারিখে আলাদা মেসেজ যাবে (যেমন ২১ তারিখের সবগুলো ১ মেসেজে, ২২ তারিখের নতুনগুলো আলাদা আরেকটি মেসেজে)। ফোন/পিসি বন্ধ থাকলেও ১ ঘণ্টা পর পর চেক চালাতে নিচের Apps Script সেট করুন।
+            নতুন স্মার্ট চেকার শুধু সত্যিকারের 404 / ডিলিট হওয়া লিংকগুলোকেই লাল করবে। সচল কোনো লিংক অযথা লাল করবে না।
           </p>
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
           <button class="wp-btn" onclick="saveCheckerSettings()">💾 সেটিংস সেভ করুন</button>
           <button class="wp-btn wp-btn-secondary" onclick="sendTestGmailAlert()">📧 টেস্ট মেসেজ পাঠান</button>
-          <button class="wp-btn wp-btn-amber" onclick="toggleGasGuide()">📋 ২৪/৭ অটো-চেকার Apps Script কোড</button>
+          <button class="wp-btn wp-btn-amber" onclick="toggleGasGuide()">📋 Apps Script কোড</button>
         </div>
 
         <div id="gasGuideBox" style="display:none; border:1px solid var(--wp-border); background:#f9f9f9; padding:12px; border-radius:4px;">
-          <p style="font-size:12.5px; font-weight:700; margin-bottom:6px;">২৪ ঘণ্টা (১ ঘণ্টা পর পর) অটো-চেক চালু করার নিয়ম:</p>
-          <ol style="font-size:12px; padding-left:18px; margin-bottom:8px; line-height:1.6;">
-            <li><b>script.google.com</b>-এ <b>blogor6@gmail.com</b> দিয়ে ঢুকে <b>New Project</b> খুলুন।</li>
-            <li>নিচের কোডের ভেতরে <code>GITHUB_TOKEN</code>-এর জায়গায় আপনার GitHub টোকেন বসান (বাকি সব বসানোই আছে)।</li>
-            <li>উপরে রান বাটনে একবার <b>setupHourlyTrigger</b> ফাংশনটি Run করুন—তাহলে প্রতি ১ ঘণ্টা পর পর অটো-চেক চালু হয়ে যাবে!</li>
-            <li>তারপর <b>Deploy ➔ New deployment ➔ Web app</b> (Execute as: <b>Me</b>, Who has access: <b>Anyone</b>) করে পাওয়া URL উপরের বক্সে সেভ করুন।</li>
-          </ol>
           <textarea id="gasScriptText" class="wp-textarea" rows="10" readonly style="font-size:11px; font-family:monospace;"></textarea>
           <button class="wp-btn wp-btn-sm wp-btn-secondary" style="margin-top:6px;" onclick="copyGasCode()">📋 কোড কপি করুন</button>
         </div>
@@ -313,6 +306,7 @@
         </div>
         <div style="display:flex; gap:6px; flex-wrap:wrap;">
           <button class="wp-btn wp-btn-sm wp-btn-secondary" id="btnToggleAutoCheck" onclick="toggleAutoCheck()">⏸️ বন্ধ করুন</button>
+          <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="clearAllFalseRedMarks()">🧹 পুরোনো লাল ক্লিয়ার</button>
           <button class="wp-btn wp-btn-sm wp-btn-danger" onclick="scanAllMoviesLinks(true)">⚡ এখনই সব চেক করুন</button>
         </div>
       </div>
@@ -582,7 +576,7 @@
       es: "Spanish (Español)", tr: "Turkish (Türkçe)", fr: "French (Français)", ur: "Urdu"
     };
 
-    const GAS_CODE_TEMPLATE = `// === আপনার GitHub তথ্য এখানে দিন (ফোন বন্ধ থাকলেও ১ ঘণ্টা পর পর চেকের জন্য) ===
+    const GAS_CODE_TEMPLATE = `// এই কোড আপনার script.google.com-এ বসাবেন (শুধুমাত্র প্রাইভেট রাখুন)
 var GITHUB_USER = "blogor6-prog";
 var GITHUB_REPO = "cinevibebd";
 var GITHUB_TOKEN = "এখানে_আপনার_ghp_টোকেন_বসান";
@@ -645,7 +639,7 @@ function hourlyAutoCheck() {
   });
 
   var putBody = {
-    message: "Auto 1-hour link check",
+    message: "Auto 1-hour smart link check",
     content: Utilities.base64Encode(Utilities.newBlob(JSON.stringify(movies, null, 2), "application/json", "movies.json").getBytes()),
     sha: sha,
     branch: branch
@@ -708,14 +702,39 @@ function sendCombinedHtmlEmail(toEmail, moviesList, subjectText) {
   MailApp.sendEmail({ to: toEmail, subject: subjectText || getDailySubjectBD(), htmlBody: htmlBody });
 }
 
+function isYoutubeUrl(u) {
+  return /(youtube\\.com|youtu\\.be)/i.test(u);
+}
+
+function buildGasRequest(item) {
+  var u = item.url;
+  if (isYoutubeUrl(u)) {
+    return {
+      url: "https://www.youtube.com/oembed?url=" + encodeURIComponent(u) + "&format=json",
+      method: "get",
+      muteHttpExceptions: true,
+      followRedirects: true
+    };
+  }
+  var isDirectMedia = /\\.(mp4|mkv|webm|mov|avi|m3u8|zip|rar)(\\?|$)/i.test(u) || /r2\\.dev|workers\\.dev|cloudfront/i.test(u);
+  var hdrs = { "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" };
+  if (isDirectMedia) hdrs["Range"] = "bytes=0-4096";
+  return {
+    url: u,
+    method: "get",
+    muteHttpExceptions: true,
+    followRedirects: true,
+    validateHttpsCertificates: false,
+    headers: hdrs
+  };
+}
+
 function checkUrlsBatchParallel(items) {
   var out = [];
-  var chunkSize = 25;
+  var chunkSize = 20;
   for (var i = 0; i < items.length; i += chunkSize) {
     var chunk = items.slice(i, i + chunkSize);
-    var reqs = chunk.map(function(it) {
-      return { url: it.url, method: "get", muteHttpExceptions: true, followRedirects: true, validateHttpsCertificates: false, headers: { "Range": "bytes=0-4096" } };
-    });
+    var reqs = chunk.map(buildGasRequest);
     try {
       var resps = UrlFetchApp.fetchAll(reqs);
       for (var j = 0; j < chunk.length; j++) out.push(evaluateGasResponse(chunk[j], resps[j]));
@@ -728,22 +747,56 @@ function checkUrlsBatchParallel(items) {
 
 function checkSingleUrl(item) {
   try {
-    var resp = UrlFetchApp.fetch(item.url, { method: "get", muteHttpExceptions: true, followRedirects: true, validateHttpsCertificates: false, headers: { "Range": "bytes=0-4096" } });
+    var req = buildGasRequest(item);
+    var resp = UrlFetchApp.fetch(req.url, req);
     return evaluateGasResponse(item, resp);
   } catch (e) {
-    return { idx: item.idx, url: item.url, label: item.label, expired: true, status: 0, reason: "Unreachable / Dead" };
+    var msg = String(e || "").toLowerCase();
+    if (msg.indexOf("dns error") !== -1 || msg.indexOf("address unavailable") !== -1) {
+      return { idx: item.idx, url: item.url, label: item.label, expired: true, status: 0, reason: "Domain Dead / DNS Error" };
+    }
+    return { idx: item.idx, url: item.url, label: item.label, expired: false, status: 0, reason: "OK (Slow/Protected)" };
   }
 }
 
 function evaluateGasResponse(item, resp) {
   var code = resp.getResponseCode();
-  if (code >= 400 || code === 0) return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: "HTTP " + code };
+  if (code === 404 || code === 410) {
+    return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: "HTTP " + code + " (Not Found)" };
+  }
+  if (isYoutubeUrl(item.url)) {
+    return { idx: item.idx, url: item.url, label: item.label, expired: false, status: code, reason: "OK" };
+  }
   var ct = (resp.getHeaders()["Content-Type"] || resp.getHeaders()["content-type"] || "").toLowerCase();
-  if (ct.indexOf("text/html") !== -1) {
-    var text = resp.getContentText().slice(0, 6000).toLowerCase();
-    var dead = ["404 not found", "file not found", "file was deleted", "video has been removed", "this video is unavailable", "no longer available", "link expired", "has expired", "file does not exist", "video not found"];
-    for (var i = 0; i < dead.length; i++) {
-      if (text.indexOf(dead[i]) !== -1) return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: dead[i] };
+  if (code === 200 && ct.indexOf("text/html") !== -1) {
+    var rawHtml = resp.getContentText().slice(0, 25000);
+    var titleMatch = rawHtml.match(/<title[^>]*>([\\s\\S]*?)<\\/title>/i);
+    var pageTitle = titleMatch ? titleMatch[1].toLowerCase().trim() : "";
+    if (/\\b404\\b|page not found|file not found|video not found|error 404/.test(pageTitle)) {
+      return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: "Dead Page Title" };
+    }
+    var visibleText = rawHtml
+      .replace(/<script[\\s\\S]*?<\\/script>/gi, " ")
+      .replace(/<style[\\s\\S]*?<\\/style>/gi, " ")
+      .replace(/<[^>]+>/g, " ")
+      .replace(/\\s+/g, " ")
+      .toLowerCase();
+
+    var exactDeadPhrases = [
+      "sorry, the file you have requested does not exist",
+      "this file has been removed",
+      "this video has been removed",
+      "file was deleted",
+      "file has been deleted",
+      "404 - file or directory not found",
+      "the link has expired",
+      "video doesn't exist",
+      "account associated with this video has been terminated"
+    ];
+    for (var i = 0; i < exactDeadPhrases.length; i++) {
+      if (visibleText.indexOf(exactDeadPhrases[i]) !== -1) {
+        return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: exactDeadPhrases[i] };
+      }
     }
   }
   return { idx: item.idx, url: item.url, label: item.label, expired: false, status: code, reason: "OK" };
@@ -1264,12 +1317,25 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
       return items;
     }
 
+    async function clearAllFalseRedMarks() {
+      const updated = allMovies.map(m => ({ ...m, expiredLinks: [] }));
+      try {
+        showToast("🧹 সব লাল মার্ক ক্লিয়ার হচ্ছে...");
+        await pushMoviesToGitHub(updated, "Clear all expired marks");
+        renderDashboardStats();
+        renderMoviesTable();
+        showToast("✅ সব পুরোনো লাল মার্ক মুছে ফেলা হয়েছে!");
+      } catch (e) {
+        showToast("সমস্যা: " + e.message, true);
+      }
+    }
+
     async function checkUrlsFastParallel(allItems, onProgress) {
       if (!allItems || allItems.length === 0) return [];
       const results = [];
 
       if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
-        const chunkSize = 25;
+        const chunkSize = 20;
         for (let i = 0; i < allItems.length; i += chunkSize) {
           if (scanCancelled) break;
           const chunk = allItems.slice(i, i + chunkSize);
@@ -1285,19 +1351,19 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
               if (onProgress) onProgress(Math.min(i + chunk.length, allItems.length), allItems.length);
               continue;
             }
-          } catch (e) { console.warn("GAS chunk failed, using browser parallel pool", e); }
+          } catch (e) { console.warn("GAS chunk failed, using browser smart check", e); }
 
-          const fallbackRes = await checkBrowserParallelPool(chunk, 12);
+          const fallbackRes = await checkBrowserParallelPool(chunk, 10);
           results.push(...fallbackRes);
           if (onProgress) onProgress(Math.min(i + chunk.length, allItems.length), allItems.length);
         }
         return results;
       }
 
-      return await checkBrowserParallelPool(allItems, 15, onProgress);
+      return await checkBrowserParallelPool(allItems, 10, onProgress);
     }
 
-    async function checkBrowserParallelPool(items, concurrency = 15, onProgress = null) {
+    async function checkBrowserParallelPool(items, concurrency = 10, onProgress = null) {
       const results = new Array(items.length);
       let cursor = 0;
       let done = 0;
@@ -1320,36 +1386,32 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
     }
 
     async function checkUrlInBrowser(item) {
+      const u = item.url;
+      if (/(youtube\.com|youtu\.be)/i.test(u)) {
+        try {
+          const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(u)}&format=json`);
+          if (res.status === 404) return { ...item, expired: true, status: 404, reason: "YouTube Video Removed (404)" };
+          return { ...item, expired: false, status: res.status, reason: "OK" };
+        } catch (e) {
+          return { ...item, expired: false, status: 0, reason: "OK" };
+        }
+      }
+
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 5500);
+      const timer = setTimeout(() => controller.abort(), 9000);
       try {
-        const res = await fetch(item.url, { method: "HEAD", signal: controller.signal });
+        const res = await fetch(u, { method: "HEAD", signal: controller.signal });
         clearTimeout(timer);
-        if (res.status >= 400) {
-          return { ...item, expired: true, status: res.status, reason: `HTTP ${res.status}` };
+        if (res.status === 404 || res.status === 410) {
+          return { ...item, expired: true, status: res.status, reason: `HTTP ${res.status} (Not Found)` };
         }
         return { ...item, expired: false, status: res.status, reason: "OK" };
       } catch (err) {
-        try {
-          const c2 = new AbortController();
-          const t2 = setTimeout(() => c2.abort(), 5000);
-          await fetch(item.url, { method: "HEAD", mode: "no-cors", signal: c2.signal });
-          clearTimeout(t2);
-          return { ...item, expired: false, status: 0, reason: "Server Alive (CORS)" };
-        } catch (err2) {
-          clearTimeout(timer);
-          const isAbort = err2 && err2.name === "AbortError";
-          return {
-            ...item,
-            expired: true,
-            status: 0,
-            reason: isAbort ? "Timeout / Slow" : "Dead Link / DNS Error"
-          };
-        }
+        clearTimeout(timer);
+        return { ...item, expired: false, status: 0, reason: "OK (CORS/Protected)" };
       }
     }
 
-    // Send 1 separate email per date! (21st -> 1 email for 21st, 22nd -> 1 separate email for 22nd)
     async function sendCombinedGmailAlert(moviesPayload, manualNotify = false) {
       const gmail = (checkerCfg.gmail || DEFAULT_GMAIL).trim();
       if (!gmail) {
@@ -1425,7 +1487,7 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
         showToast("এই মুভিতে চেক করার মতো কোনো লিংক নেই!", true);
         return;
       }
-      showToast(`🔍 "${m.title}"-এর ${items.length}টি লিংক একসাথে চেক হচ্ছে...`);
+      showToast(`🔍 "${m.title}"-এর ${items.length}টি লিংক চেক হচ্ছে...`);
       const results = await checkUrlsFastParallel(items);
       const expiredList = results.filter(r => r.expired).map(r => ({ label: r.label, url: r.url, reason: r.reason }));
 
@@ -1433,7 +1495,7 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
       updated[idx] = { ...m, expiredLinks: expiredList, lastLinkCheck: new Date().toISOString() };
 
       try {
-        await pushMoviesToGitHub(updated, `Link check: ${m.title}`);
+        await pushMoviesToGitHub(updated, `Smart link check: ${m.title}`);
         renderDashboardStats();
         renderMoviesTable();
         if (expiredList.length > 0) {
@@ -1468,7 +1530,7 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
         extractMovieLinks(m).forEach(l => allItems.push({ idx, label: l.label, url: l.url }));
       });
 
-      txt.innerText = `⚡ মোট ${allMovies.length}টি মুভির ${allItems.length}টি লিংক দ্রুত প্যারালাল চেক হচ্ছে...`;
+      txt.innerText = `⚡ মোট ${allMovies.length}টি মুভির ${allItems.length}টি লিংক স্মার্ট চেক হচ্ছে...`;
 
       const results = await checkUrlsFastParallel(allItems, (done, total) => {
         const pct = Math.max(5, Math.round((done / Math.max(1, total)) * 100));
@@ -1520,11 +1582,10 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
 
       try {
         showToast("💾 লিংক স্ট্যাটাস GitHub-এ সেভ হচ্ছে...");
-        await pushMoviesToGitHub(updated, "Fast parallel link expiration check");
+        await pushMoviesToGitHub(updated, "Smart parallel link expiration check");
         renderDashboardStats();
         renderMoviesTable();
 
-        // Only send NEW expirations in auto-scan, or all current expirations on manual scan (1 email for today's date)
         const toEmailList = isManual ? allExpiredMoviesPayload : newlyExpiredMovies;
         let emailSent = false;
         if (toEmailList.length > 0) {
@@ -1532,9 +1593,9 @@ function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { retur
         }
 
         if (allExpiredMoviesPayload.length > 0) {
-          showToast(`🔴 ${allExpiredMoviesPayload.length}টি মুভিতে মেয়াদ শেষ! ${emailSent ? "(আজকের তারিখে blogor6@gmail.com-এ পাঠানো হয়েছে)" : ""}`, true);
+          showToast(`🔴 ${allExpiredMoviesPayload.length}টি মুভিতে সত্যিকারের নষ্ট লিংক পাওয়া গেছে! ${emailSent ? "(Gmail-এ পাঠানো হয়েছে)" : ""}`, true);
         } else {
-          showToast("✅ সব মুভির লিংক সচল আছে!");
+          showToast("✅ সব মুভির লিংক সচল আছে! (কোনো নষ্ট লিংক নেই)");
         }
       } catch (e) {
         showToast("সেভ ব্যর্থ: " + e.message, true);
