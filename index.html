@@ -108,9 +108,12 @@
     .hero-dot.active { width: 14px; border-radius: 999px; background: #e11d48; }
 
     .main-container { padding: 0 12px; }
-    .welcome-notice-bar { background: rgba(20, 21, 30, 0.9); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 9px 12px; margin: 6px 0 10px 0; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .top-notice-ad-slot { margin: 6px 0 10px 0; }
+    .welcome-notice-bar { background: rgba(20, 21, 30, 0.9); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
     .welcome-notice-bar p { font-size: 11.5px; line-height: 1.4; color: #e2e8f0; }
     .notice-close-btn { background: rgba(255, 255, 255, 0.12); border: none; color: #fff; font-size: 10.5px; font-weight: bold; padding: 4px 8px; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+    .top-banner-ad-wrap { width: 100%; min-height: 54px; background: rgba(18, 19, 26, 0.8); border: 1px solid var(--border-color); border-radius: 10px; display: none; justify-content: center; align-items: center; padding: 2px 0; overflow: hidden; }
+    .detail-banner-ad-wrap { margin: 14px 14px 2px 14px; min-height: 56px; background: rgba(18, 19, 26, 0.85); border: 1px solid var(--border-color); border-radius: 10px; display: flex; justify-content: center; align-items: center; padding: 3px; overflow: hidden; }
     .viral-btn-wrap { margin-bottom: 12px; }
     .viral-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 10px; background: linear-gradient(135deg, #e11d48, #f97316); color: #fff; font-weight: 800; font-size: 13px; border-radius: 999px; text-decoration: none; cursor: pointer; box-shadow: 0 4px 14px rgba(225, 29, 72, 0.3); }
 
@@ -193,7 +196,7 @@
     .cine-details-desc-box { font-size: 12px; color: #e4e4e7; line-height: 1.6; background: #12131a; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px 12px; margin-top: 6px; }
     .cine-details-desc-box div { margin-bottom: 3px; }
 
-    .cine-action-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 16px 14px 10px 14px; }
+    .cine-action-grid { display: grid; grid-template-columns: 1fr; gap: 10px; padding: 14px 14px 10px 14px; }
     .cine-btn { padding: 12px; border-radius: 999px; font-size: 13.5px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; border: none; text-decoration: none; }
     .btn-watch-online { background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; font-size: 14px; box-shadow: 0 4px 16px rgba(225, 29, 72, 0.4); }
     .btn-download { background: linear-gradient(135deg, #16a34a, #15803d); color: #fff; }
@@ -408,9 +411,6 @@
     }
     .monetag-warn-note { font-size: 11px; color: #fca5a5; line-height: 1.4; }
 
-    .social-ad-toast { position: fixed; bottom: 75px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #e11d48, #f97316); color: #fff; padding: 10px 16px; border-radius: 30px; font-size: 12px; font-weight: 800; box-shadow: 0 10px 25px rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; gap: 8px; animation: bounceToast 0.4s ease; white-space: nowrap; }
-    @keyframes bounceToast { 0% { transform: translate(-50%, 20px); opacity: 0; } 100% { transform: translate(-50%, 0); opacity: 1; } }
-
     .request-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 3000; justify-content: center; align-items: center; padding: 20px; }
     .request-box { background: #12131a; border: 1px solid var(--glass-border); padding: 20px; border-radius: 14px; width: 100%; max-width: 390px; text-align: center; position: relative; }
     .request-box h3 { font-size: 16px; color: #ffffff; margin-bottom: 8px; }
@@ -433,7 +433,7 @@
 </head>
 <body>
 
-  <div class="cine-splash-overlay" id="cineSplashOverlay" onclick="this.classList.add('hide')">
+  <div class="cine-splash-overlay" id="cineSplashOverlay" onclick="hideSplashAndStartCycle()">
     <div class="splash-card">
       <div class="splash-logo-wrap">
         <svg width="44" height="44" viewBox="0 0 48 48" fill="none">
@@ -454,11 +454,6 @@
       <div class="splash-sub">HD Movies &amp; Web Series</div>
       <div class="splash-bar-track"><div class="splash-bar-fill"></div></div>
     </div>
-  </div>
-
-  <div class="social-ad-toast" id="socialAdToast">
-    <span>📢 বিজ্ঞাপনে মাত্র ১ বার ক্লিক করে ব্যাক আসুন!</span>
-    <span onclick="this.parentElement.style.display='none'" style="cursor:pointer; font-weight:900;">✕</span>
   </div>
 
   <header class="top-glass-header" id="topGlassHeader">
@@ -559,9 +554,23 @@
   </section>
 
   <div class="main-container" id="homeSectionsContainer">
-    <div class="welcome-notice-bar" id="topWelcomeNotice">
-      <p>📢 <b>প্রিয় দর্শক:</b> আপনি যেকোনো মুভি দেখতে সার্চ বক্সে নাম দিয়ে সার্চ করুন। যদি না পান তাহলে নিচের <b>Request</b> বাটনে ক্লিক করে মুভি রিকোয়েস্ট করুন।</p>
-      <button class="notice-close-btn" onclick="closeNotice()">বুঝেছি ✕</button>
+    <div class="top-notice-ad-slot" id="topNoticeAdSlot">
+      <div class="welcome-notice-bar" id="topWelcomeNotice">
+        <p>📢 <b>প্রিয় দর্শক:</b> আপনি যেকোনো মুভি দেখতে সার্চ বক্সে নাম দিয়ে সার্চ করুন। যদি না পান তাহলে নিচের <b>Request</b> বাটনে ক্লিক করে মুভি রিকোয়েস্ট করুন।</p>
+        <button class="notice-close-btn" onclick="closeNotice()">বুঝেছি ✕</button>
+      </div>
+      <div class="top-banner-ad-wrap" id="topBannerAdBox">
+        <script>
+          atOptions = {
+            'key' : '2f860c633961a49b1d05f3575a456ec8',
+            'format' : 'iframe',
+            'height' : 50,
+            'width' : 320,
+            'params' : {}
+          };
+        </script>
+        <script src="https://bancadeltempoidea.org/22/2f860c633961a49b1d05f3575a456ec8"></script>
+      </div>
     </div>
     <div class="viral-btn-wrap">
       <a href="https://blogor6-prog.github.io/SS-Adult-Zone/" target="_blank" class="viral-btn" onclick="openSafeUrl('https://blogor6-prog.github.io/SS-Adult-Zone/'); return false;">🔥 Viral Video Link (Click Here) 🔞</a>
@@ -649,6 +658,20 @@
         <div class="cine-details-desc-box" id="cineDetailsDescBox"></div>
       </div>
     </div>
+
+    <div class="detail-banner-ad-wrap" id="detailBannerAdBox">
+      <script>
+        atOptions = {
+          'key' : '2f860c633961a49b1d05f3575a456ec8',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://bancadeltempoidea.org/22/2f860c633961a49b1d05f3575a456ec8"></script>
+    </div>
+
     <div class="cine-action-grid">
       <button class="cine-btn btn-watch-online" onclick="playOnlineMovie()">▶️ Watch Full Movie (সরাসরি ফুল সিনেমা দেখুন)</button>
       <button class="cine-btn btn-download" onclick="scrollToDownload()">📥 Download Options</button>
@@ -885,6 +908,11 @@
     let heroBgSoundOn = false;
     let audioCheckShownForUrl = '';
 
+    // টপ নোটিশ + 320x50 ব্যানার সাইকেল (৩ সেকেন্ড মেসেজ -> ৫ সেকেন্ড অ্যাড -> পুনরায় মেসেজ)
+    let topNoticeCycleTimer = null;
+    let topNoticeClosed = false;
+    let topNoticeCycleStarted = false;
+
     // 4-Step Adsterra + Monetag ১০ সেকেন্ড ভেরিফিকেশন স্টেট
     let waitingReturnStep = 0;
     let returnFallbackTimer = null;
@@ -909,10 +937,36 @@
       } catch (e) {}
     }
 
+    function startTopNoticeAdCycle() {
+      if (topNoticeCycleStarted || topNoticeClosed) return;
+      const noticeEl = document.getElementById('topWelcomeNotice');
+      const adEl = document.getElementById('topBannerAdBox');
+      if (!noticeEl || !adEl) return;
+      topNoticeCycleStarted = true;
+
+      function runCycle() {
+        if (topNoticeClosed) return;
+        noticeEl.style.display = 'flex';
+        adEl.style.display = 'none';
+        topNoticeCycleTimer = setTimeout(() => {
+          if (topNoticeClosed) return;
+          noticeEl.style.display = 'none';
+          adEl.style.display = 'flex';
+          topNoticeCycleTimer = setTimeout(runCycle, 5000);
+        }, 3000);
+      }
+      runCycle();
+    }
+
+    function hideSplashAndStartCycle() {
+      const splash = document.getElementById('cineSplashOverlay');
+      if (splash) splash.classList.add('hide');
+      startTopNoticeAdCycle();
+    }
+
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
-        const splash = document.getElementById('cineSplashOverlay');
-        if (splash) splash.classList.add('hide');
+        hideSplashAndStartCycle();
       }, 2100);
     });
 
@@ -961,23 +1015,13 @@
       return result.filter(Boolean);
     }
 
-    (function monitorSocialBarAd() {
-      let toastShown = false;
-      const observer = new MutationObserver((mutations) => {
-        if (toastShown) return;
-        for (const mutation of mutations) {
-          for (const node of mutation.addedNodes) {
-            if (node.nodeType === 1 && !node.closest('#ad300x250Wrap') && !node.closest('#nativeBannerWrap')) {
-              const isSocialAd = node.matches?.("iframe[src*='bancadeltempoidea'], div[class*='bancadeltempoidea']") || node.querySelector?.("iframe[src*='bancadeltempoidea']");
-              if (isSocialAd) { toastShown = true; const toast = document.getElementById('socialAdToast'); if (toast) { toast.style.display = 'flex'; setTimeout(() => { toast.style.display = 'none'; }, 7000); } observer.disconnect(); return; }
-            }
-          }
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-    })();
-
-    function closeNotice() { document.getElementById('topWelcomeNotice').style.display = 'none'; }
+    function closeNotice() {
+      topNoticeClosed = true;
+      clearTimeout(topNoticeCycleTimer);
+      topNoticeCycleTimer = null;
+      const slot = document.getElementById('topNoticeAdSlot');
+      if (slot) slot.style.display = 'none';
+    }
     function handleImageError(img) { img.onerror = null; img.src = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140"><rect width="100%" height="100%" fill="%2312131a"/><text x="50%" y="50%" fill="%23e11d48" font-size="12" font-family="sans-serif" font-weight="bold" text-anchor="middle" dy=".3em">🎬 HD Movie</text></svg>'; }
     function openSafeUrl(url) {
       if (!url || url === '#' || !/^https?:\/\//i.test(url)) return;
@@ -2068,7 +2112,6 @@
       if (modal) modal.style.display = 'none';
 
       if (!monetagCompleted) {
-        // ১০ সেকেন্ড পূর্ণ না করেই ক্রস করলে আবার ১ম ধাপে রিসেট হবে
         resetUnlockFlowUI('⚠️ ১০ সেকেন্ড পূর্ণ হওয়ার আগেই ক্রস করায় আবার ১ম ধাপ থেকে শুরু করতে হবে:');
         return;
       }
@@ -2111,7 +2154,6 @@
         return;
       }
 
-      // স্টেপ ১, ২, ৩: প্রথমে Adsterra Direct Link ওপেন হবে → ব্যাক এলেই Monetag ১০ সেকেন্ড চালু হবে
       const stepToRun = currentUnlockStep;
       waitingReturnStep = stepToRun;
       if (btn) {
@@ -2124,7 +2166,6 @@
 
       openSafeUrl(getAdsterraUrlForStep(stepToRun));
 
-      // যদি পপআপ ব্লক হয় বা একই ট্যাবে থেকে যায়, ১.৮ সেকেন্ড পর অটোমেটিক Monetag ওভারলে চালু হবে
       clearTimeout(returnFallbackTimer);
       returnFallbackTimer = setTimeout(() => {
         if (waitingReturnStep === stepToRun && document.visibilityState === 'visible') {
@@ -2676,6 +2717,5 @@
 
     fetchMoviesFromGitHub();
   </script>
-  <script data-cfasync="false" src="https://bancadeltempoidea.org/14/3c12a21d984165afb2e8c2dc456ef1d8"></script>
 </body>
   </html>
