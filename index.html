@@ -167,7 +167,6 @@
     .cine-top-nav { position: sticky; top: 0; left: 0; width: 100%; background: rgba(5, 5, 7, 0.94); backdrop-filter: blur(10px); padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; z-index: 2100; border-bottom: 1px solid var(--border-color); }
     .cine-back-btn { background: #16161e; border: 1px solid var(--border-color); color: #fff; padding: 6px 14px; border-radius: 999px; font-size: 12.5px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
 
-    /* ক্রিস্টাল-ক্লিয়ার HD ব্যাকগ্রাউন্ড ট্রেলার ব্যানার (কোনো অতিরিক্ত জুম বা ঘোলা ফিল্টার ছাড়া) */
     .cine-hero-banner { width: 100%; height: 225px; position: relative; background-size: cover; background-position: center; overflow: hidden; }
     .cine-hero-banner.banner-fs-active { position: fixed !important; inset: 0 !important; width: 100vw !important; height: 100vh !important; z-index: 9999 !important; background-color: #000 !important; background-image: none !important; }
     .cine-hero-banner:fullscreen { width: 100vw !important; height: 100vh !important; background-color: #000 !important; background-image: none !important; }
@@ -322,6 +321,8 @@
     .tg-second-bot-btn { flex: 1.4; background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; border: none; padding: 9px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; }
 
     .ad-unlock-box { background: #0a0a0f; border: 1px solid var(--border-color); border-radius: 10px; padding: 16px; text-align: center; margin-bottom: 12px; }
+    .unlock-progress-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 999px; overflow: hidden; margin-bottom: 11px; }
+    .unlock-progress-fill { width: 0%; height: 100%; background: linear-gradient(90deg, #e11d48, #f97316, #22c55e); border-radius: 999px; transition: width 0.35s ease; }
     .ad-step-btn { width: 100%; padding: 13px; border: none; border-radius: 999px; font-size: 13.5px; font-weight: 800; cursor: pointer; color: #fff; background: linear-gradient(135deg, #e11d48, #be123c); transition: all 0.2s ease; }
     .ad-step-btn:disabled { background: #3f3f46; cursor: not-allowed; opacity: 0.85; }
     .quality-options-list { display: flex; flex-direction: column; gap: 10px; }
@@ -329,6 +330,83 @@
     .quality-btn:active, .quality-btn:hover { background: var(--primary); border-color: var(--primary); }
     .indicator-light { width: 10px; height: 10px; border-radius: 50%; }
     .light-blue { background-color: #22c55e; }
+
+    /* Monetag ১০ সেকেন্ড অ্যাড + ক্রস ওভারলে */
+    .monetag-overlay-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(3, 4, 8, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 9500;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+    }
+    .monetag-ad-card {
+      width: 100%;
+      max-width: 390px;
+      background: linear-gradient(160deg, #161824 0%, #0b0c12 100%);
+      border: 1px solid rgba(225, 29, 72, 0.55);
+      border-radius: 18px;
+      padding: 18px 16px;
+      position: relative;
+      text-align: center;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.9);
+    }
+    .monetag-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .monetag-timer-pill {
+      background: rgba(250, 204, 21, 0.16);
+      border: 1px solid rgba(250, 204, 21, 0.45);
+      color: #facc15;
+      font-size: 11.5px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+    .monetag-close-x {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: #ffffff;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .monetag-close-x.ready {
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      border-color: #22c55e;
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.55);
+    }
+    .monetag-offer-box {
+      background: rgba(225, 29, 72, 0.12);
+      border: 1px dashed rgba(249, 115, 22, 0.55);
+      border-radius: 12px;
+      padding: 16px 14px;
+      margin-bottom: 12px;
+    }
+    .monetag-offer-box h4 { font-size: 15.5px; color: #fff; font-weight: 800; margin-bottom: 6px; }
+    .monetag-offer-box p { font-size: 12px; color: #cbd5e1; line-height: 1.5; margin-bottom: 12px; }
+    .monetag-visit-btn {
+      width: 100%;
+      padding: 11px 16px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #e11d48, #f97316);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(225, 29, 72, 0.4);
+    }
+    .monetag-warn-note { font-size: 11px; color: #fca5a5; line-height: 1.4; }
 
     .social-ad-toast { position: fixed; bottom: 75px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #e11d48, #f97316); color: #fff; padding: 10px 16px; border-radius: 30px; font-size: 12px; font-weight: 800; box-shadow: 0 10px 25px rgba(0,0,0,0.8); z-index: 9999; display: none; align-items: center; gap: 8px; animation: bounceToast 0.4s ease; white-space: nowrap; }
     @keyframes bounceToast { 0% { transform: translate(-50%, 20px); opacity: 0; } 100% { transform: translate(-50%, 0); opacity: 1; } }
@@ -675,14 +753,32 @@
         <div class="tg-alert-buttons" id="tgAlertButtons"></div>
       </div>
       <div class="ad-unlock-box" id="adUnlockBox">
+        <div class="unlock-progress-track"><div class="unlock-progress-fill" id="unlockProgressFill"></div></div>
         <p id="adStepNotice" style="font-size:12.5px; color:#cbd5e1; margin-bottom:12px;">ডাউনলোড লিংক আনলক করতে নিচের বাটনে ক্লিক করুন:</p>
-        <button class="ad-step-btn" id="adStepBtn" onclick="handleAdUnlockStep()">🚀 ১ ক্লিকে ডাউনলোড লিংক আনলক করুন (স্টেপ ১/২)</button>
+        <button class="ad-step-btn" id="adStepBtn" onclick="handleAdUnlockStep()">🚀 ডাউনলোড লিংক আনলক করুন (স্টেপ ১/৩)</button>
       </div>
       <div class="quality-options-list" id="qualityContainer" style="display: none;"></div>
       <div class="related-parts-wrap" id="relatedPartsSection">
         <div class="related-parts-title">🎞️ এই মুভির সব পার্ট (All Parts)</div>
         <div class="related-parts-row" id="relatedPartsRow"></div>
       </div>
+    </div>
+  </div>
+
+  <!-- Monetag ১০ সেকেন্ডের ক্রস ওভারলে অ্যাড মডাল -->
+  <div class="monetag-overlay-modal" id="monetagUnlockModal">
+    <div class="monetag-ad-card">
+      <div class="monetag-top-row">
+        <span class="monetag-timer-pill" id="monetagTimerPill">⏳ অপেক্ষা করুন: 10s</span>
+        <button type="button" class="monetag-close-x" id="monetagCloseBtn" onclick="handleMonetagCloseClick()">✕</button>
+      </div>
+      <div class="monetag-offer-box">
+        <span class="sponsor-tag" style="margin-bottom:8px;">MONETAG SPONSOR</span>
+        <h4 id="monetagStepHeading">🔓 ধাপ ভেরিফিকেশন চলছে...</h4>
+        <p id="monetagStepDesc">অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
+        <button type="button" class="monetag-visit-btn" id="monetagOfferBtn" onclick="openCurrentMonetagLink()">🎁 স্পনসর অফার দেখুন (Click Here)</button>
+      </div>
+      <div class="monetag-warn-note">⚠️ ১০ সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!</div>
     </div>
   </div>
 
@@ -758,9 +854,19 @@
   <script>
     const TMDB_API_KEY = "8265bd1679663a7ea12ac168da84d2e8";
     const ADMIN_EMAIL = "blogor6@gmail.com";
+
+    // Adsterra লিংক ও অটো ব্যাকআপ লিংক
     const ENTRY_AD_URL = "https://directyp.org/4/4efb0f438c711d6932662cc00c8e4d56";
     const NON_SHEET_AD1_URL = "https://asiafilm.org/4/a555ec6bc7d6af27618f9ba45943fffd";
     const NON_SHEET_AD2_URL = "https://asiafilm.org/4/a555ec6bc7d6af27618f9ba45943fffd";
+    const BACKUP_ADSTERRA_1 = "https://auctionr.org/4/e987faae17c1331cc1fe83762de3c190";
+    const BACKUP_ADSTERRA_2 = "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3";
+
+    // Monetag Direct Link ও ব্যাকআপ লিংকসমূহ
+    const MONETAG_DIRECT_MAIN = "https://uplcm.com/4/12312628";
+    const MONETAG_BACKUP_1 = "https://uplcm.com/4/12154636";
+    const MONETAG_BACKUP_2 = "https://uplcm.com/4/12312510";
+
     const USER_SEARCH_TTL = 2 * 24 * 60 * 60 * 1000;
 
     const GENRE_MAP = { 28:"Action",12:"Adventure",16:"Animation",35:"Comedy",80:"Crime",99:"Documentary",18:"Drama",10751:"Family",14:"Fantasy",36:"History",27:"Horror",10402:"Music",9648:"Mystery",10749:"Romance",878:"Sci-Fi",10770:"TV Movie",53:"Thriller",10752:"War",37:"Western",10759:"Action & Adventure",10762:"Kids",10764:"Reality",10765:"Sci-Fi & Fantasy" };
@@ -779,9 +885,29 @@
     let heroBgSoundOn = false;
     let audioCheckShownForUrl = '';
 
+    // 4-Step Adsterra + Monetag ১০ সেকেন্ড ভেরিফিকেশন স্টেট
+    let waitingReturnStep = 0;
+    let returnFallbackTimer = null;
+    let monetagCountdownTimer = null;
+    let monetagTimeLeft = 10;
+    let monetagCompleted = false;
+    let monetagActiveStep = 1;
+    let monetagVignetteInjected = false;
+
     const isInsideTelegram = !!(window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData);
     const tg = isInsideTelegram ? window.Telegram.WebApp : null;
     if (tg) { try { tg.ready(); tg.expand(); } catch (e) {} }
+
+    function injectMonetagVignette() {
+      if (monetagVignetteInjected) return;
+      monetagVignetteInjected = true;
+      try {
+        (function(s){
+          s.dataset.zone = '12312621';
+          s.src = 'https://n6wxm.com/vignette.min.js';
+        })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')));
+      } catch (e) {}
+    }
 
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
@@ -800,8 +926,18 @@
         renderBotFeedbackState();
       }
     }
-    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') syncBotReturnUI(); });
-    window.addEventListener('focus', syncBotReturnUI);
+    function handleUserReturnToSite() {
+      syncBotReturnUI();
+      if (waitingReturnStep > 0 && document.getElementById('cineDetailView').style.display === 'block') {
+        const step = waitingReturnStep;
+        waitingReturnStep = 0;
+        clearTimeout(returnFallbackTimer);
+        returnFallbackTimer = null;
+        openMonetagCountdownOverlay(step);
+      }
+    }
+    document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible') handleUserReturnToSite(); });
+    window.addEventListener('focus', handleUserReturnToSite);
 
     function toggleSearchPanel() { const panel = document.getElementById('searchBarPanel'); panel.classList.toggle('open'); if (panel.classList.contains('open')) setTimeout(() => document.getElementById('searchInput').focus(), 100); }
     function toggleClearBtn() { const input = document.getElementById('searchInput'), btn = document.getElementById('clearSearchBtn'); if (btn) btn.style.display = input.value.length > 0 ? 'flex' : 'none'; }
@@ -1105,8 +1241,8 @@
               hasExplicitRating: !!m.rating,
               image: m.image || '',
               backdrop: m.image || '',
-              ad1: m.ad1 || ENTRY_AD_URL,
-              ad2: m.ad2 || ENTRY_AD_URL,
+              ad1: (m.ad1 && String(m.ad1).trim()) ? String(m.ad1).trim() : BACKUP_ADSTERRA_1,
+              ad2: (m.ad2 && String(m.ad2).trim()) ? String(m.ad2).trim() : BACKUP_ADSTERRA_2,
               badge: m.badge || (isSeries ? 'SERIES' : '1080p'),
               sortOrder,
               details: '',
@@ -1258,7 +1394,7 @@
 
     function buildExternalMovieObj(item, fallbackYear) {
       const isTv = item.media_type === 'tv' || !!item.first_air_date, releaseDate = item.release_date || item.first_air_date || (fallbackYear ? `${fallbackYear}-01-01` : '2026'), year = releaseDate ? releaseDate.split('-')[0] : '2026', titleName = item.title || item.name, ratingVal = (item.vote_average && item.vote_average > 0) ? item.vote_average.toFixed(1) : '7.5', genres = (item.genre_ids || []).map(id => GENRE_MAP[id]).filter(Boolean).slice(0, 3).join(', ') || 'Action, Drama', actualLang = ACCURATE_LANG_MAP[item.original_language] || "Hindi (हिंदी)";
-      return { id: item.id, tmdbId: item.id, mediaType: isTv ? 'tv' : 'movie', originalLanguage: item.original_language || '', title: titleName, category: isTv ? 'Series' : 'Movie', rating: `⭐ ${ratingVal}`, year, overview: item.overview || `${actualLang} · Watch & Download HD Movie`, image: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '', backdrop: (item.backdrop_path || item.poster_path) ? `https://image.tmdb.org/t/p/original${item.backdrop_path || item.poster_path}` : '', badge: isTv ? 'SERIES' : `${year} HD`, details: formatMovieDetailsHTML(ratingVal, genres, actualLang, '1080p WEB-DL', '1920x1080 FHD', releaseDate), links: [], structuredEpisodes: [], ad1: NON_SHEET_AD1_URL, ad2: NON_SHEET_AD2_URL, isSeries: isTv, isFromSheet: false };
+      return { id: item.id, tmdbId: item.id, mediaType: isTv ? 'tv' : 'movie', originalLanguage: item.original_language || '', title: titleName, category: isTv ? 'Series' : 'Movie', rating: `⭐ ${ratingVal}`, year, overview: item.overview || `${actualLang} · Watch & Download HD Movie`, image: item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : '', backdrop: (item.backdrop_path || item.poster_path) ? `https://image.tmdb.org/t/p/original${item.backdrop_path || item.poster_path}` : '', badge: isTv ? 'SERIES' : `${year} HD`, details: formatMovieDetailsHTML(ratingVal, genres, actualLang, '1080p WEB-DL', '1920x1080 FHD', releaseDate), links: [], structuredEpisodes: [], ad1: BACKUP_ADSTERRA_1, ad2: BACKUP_ADSTERRA_2, isSeries: isTv, isFromSheet: false };
     }
 
     async function fetchTmdbForCategory(cat) {
@@ -1541,7 +1677,8 @@
       loadMovieScenesGallery(currentMovie);
       loadRelatedParts(currentMovie);
       startHeroBgPreview(currentMovie);
-      currentUnlockStep = 1; clearInterval(stepCountdownTimer); document.getElementById('qualityContainer').style.display = 'none';
+      resetUnlockFlowUI();
+      document.getElementById('qualityContainer').style.display = 'none';
 
       const tgAlert = document.getElementById('tgFeedbackAlert'), unlockBox = document.getElementById('adUnlockBox');
       if (currentMovie.isFromSheet) {
@@ -1555,8 +1692,6 @@
         }
       }
 
-      document.getElementById('adStepBtn').disabled = false; document.getElementById('adStepBtn').innerText = '🚀 ১ ক্লিকে ডাউনলোড লিংক আনলক করুন (স্টেপ ১/২)';
-      document.getElementById('adStepNotice').innerText = 'ডাউনলোড লিংক আনলক করতে নিচের বাটনে ক্লিক করুন:';
       const detailView = document.getElementById('cineDetailView'); detailView.style.display = 'block'; detailView.scrollTop = 0;
       if (tg?.HapticFeedback) tg.HapticFeedback.impactOccurred('medium');
       if (tg?.BackButton) { tg.BackButton.show(); tg.BackButton.onClick(closeCineDetail); }
@@ -1752,7 +1887,7 @@
     }
     function closeCineDetail() {
       localStorage.removeItem('last_opened_id');
-      clearInterval(stepCountdownTimer);
+      clearMonetagAndTimers();
       stopHeroBgPreview();
       resetPlayerElements();
       document.getElementById('cineDetailView').style.display = 'none';
@@ -1836,20 +1971,167 @@
       if (m && img) { img.src = url; m.style.display = 'flex'; }
     }
 
-    function handleAdUnlockStep() {
-      const btn = document.getElementById('adStepBtn'), notice = document.getElementById('adStepNotice');
-      if (currentUnlockStep === 1) {
-        openSafeUrl(currentMovie.isFromSheet ? (currentMovie.ad1 || ENTRY_AD_URL) : (currentMovie.ad1 || NON_SHEET_AD1_URL));
-        let t = 10; btn.disabled = true; btn.innerText = `⏳ অপেক্ষা করুন (${t}s)...`; notice.innerText = 'অ্যাডটি ওপেন হয়েছে। ১০ সেকেন্ড অপেক্ষা করুন...';
-        stepCountdownTimer = setInterval(() => { t--; if (t > 0) btn.innerText = `⏳ অপেক্ষা করুন (${t}s)...`; else { clearInterval(stepCountdownTimer); currentUnlockStep = 2; btn.disabled = false; btn.innerText = '🚀 ২য় ক্লিকে কনফার্ম করুন (স্টেপ ২/২)'; notice.innerText = 'স্টেপ ১ সম্পন্ন হয়েছে! এবার নিচের বাটনে ক্লিক করুন:'; } }, 1000);
-      } else if (currentUnlockStep === 2) {
-        openSafeUrl(currentMovie.isFromSheet ? (currentMovie.ad2 || ENTRY_AD_URL) : (currentMovie.ad2 || NON_SHEET_AD2_URL));
-        let t = 10; btn.disabled = true; btn.innerText = `⏳ অপেক্ষা করুন (${t}s)...`; notice.innerText = 'অ্যাডটি ওপেন হয়েছে। ১০ সেকেন্ড পর ডাউনলোড লিংক দেখতে পাবেন...';
-        stepCountdownTimer = setInterval(() => { t--; if (t > 0) btn.innerText = `⏳ অপেক্ষা করুন (${t}s)...`; else { clearInterval(stepCountdownTimer); currentUnlockStep = 3; btn.disabled = false; btn.innerText = '🔓 ৩য় ক্লিকে ডাউনলোড কোয়ালিটি দেখুন'; notice.innerText = 'সব স্টেপ সম্পন্ন! নিচের বাটনে ক্লিক করে কোয়ালিটি লিংক দেখুন:'; } }, 1000);
-      } else if (currentUnlockStep === 3) {
-        if (currentMovie.isFromSheet) { document.getElementById('adUnlockBox').style.display = 'none'; renderDownloadButtons(); document.getElementById('qualityContainer').style.display = 'flex'; }
-        else openTelegramNoticeModal(currentMovie.title);
+    // === ৪-ধাপের Adsterra + Monetag ১০ সেকেন্ড ক্রস আনলক সিস্টেম ===
+    function clearMonetagAndTimers() {
+      clearInterval(stepCountdownTimer);
+      clearInterval(monetagCountdownTimer);
+      clearTimeout(returnFallbackTimer);
+      stepCountdownTimer = null;
+      monetagCountdownTimer = null;
+      returnFallbackTimer = null;
+      waitingReturnStep = 0;
+      monetagCompleted = false;
+      const mModal = document.getElementById('monetagUnlockModal');
+      if (mModal) mModal.style.display = 'none';
+    }
+
+    function resetUnlockFlowUI(customWarningMsg) {
+      clearMonetagAndTimers();
+      currentUnlockStep = 1;
+      const btn = document.getElementById('adStepBtn');
+      const notice = document.getElementById('adStepNotice');
+      const fill = document.getElementById('unlockProgressFill');
+      if (btn) {
+        btn.disabled = false;
+        btn.innerText = '🚀 ডাউনলোড লিংক আনলক করুন (স্টেপ ১/৩)';
       }
+      if (notice) {
+        notice.innerText = customWarningMsg || 'ডাউনলোড লিংক আনলক করতে নিচের বাটনে ক্লিক করুন:';
+      }
+      if (fill) fill.style.width = '0%';
+    }
+
+    function getAdsterraUrlForStep(step) {
+      if (!currentMovie) return BACKUP_ADSTERRA_1;
+      if (step === 1) {
+        return currentMovie.isFromSheet ? (currentMovie.ad1 || BACKUP_ADSTERRA_1) : (currentMovie.ad1 || NON_SHEET_AD1_URL);
+      }
+      if (step === 2) {
+        return currentMovie.isFromSheet ? (currentMovie.ad2 || BACKUP_ADSTERRA_2) : (currentMovie.ad2 || NON_SHEET_AD2_URL);
+      }
+      return ENTRY_AD_URL || BACKUP_ADSTERRA_1;
+    }
+
+    function getMonetagUrlForStep(step) {
+      if (step === 1) return MONETAG_DIRECT_MAIN;
+      if (step === 2) return MONETAG_BACKUP_1;
+      return MONETAG_BACKUP_2;
+    }
+
+    function openCurrentMonetagLink() {
+      openSafeUrl(getMonetagUrlForStep(monetagActiveStep));
+    }
+
+    function openMonetagCountdownOverlay(step) {
+      injectMonetagVignette();
+      monetagActiveStep = step;
+      monetagCompleted = false;
+      monetagTimeLeft = 10;
+
+      const modal = document.getElementById('monetagUnlockModal');
+      const timerPill = document.getElementById('monetagTimerPill');
+      const closeBtn = document.getElementById('monetagCloseBtn');
+      const heading = document.getElementById('monetagStepHeading');
+      const desc = document.getElementById('monetagStepDesc');
+
+      if (heading) heading.innerText = `🔓 স্টেপ ${step}/৩ ভেরিফিকেশন চলছে...`;
+      if (desc) desc.innerHTML = 'Monetag স্পনসর অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।';
+      if (timerPill) timerPill.innerText = `⏳ অপেক্ষা করুন: ${monetagTimeLeft}s`;
+      if (closeBtn) {
+        closeBtn.classList.remove('ready');
+        closeBtn.innerText = '✕';
+      }
+      if (modal) modal.style.display = 'flex';
+
+      clearInterval(monetagCountdownTimer);
+      monetagCountdownTimer = setInterval(() => {
+        monetagTimeLeft--;
+        if (monetagTimeLeft > 0) {
+          if (timerPill) timerPill.innerText = `⏳ অপেক্ষা করুন: ${monetagTimeLeft}s`;
+        } else {
+          clearInterval(monetagCountdownTimer);
+          monetagCountdownTimer = null;
+          monetagCompleted = true;
+          if (timerPill) timerPill.innerText = '✅ ১০ সেকেন্ড পূর্ণ হয়েছে!';
+          if (closeBtn) {
+            closeBtn.classList.add('ready');
+            closeBtn.innerText = '✕ এগিয়ে যান';
+          }
+        }
+      }, 1000);
+    }
+
+    function handleMonetagCloseClick() {
+      clearInterval(monetagCountdownTimer);
+      monetagCountdownTimer = null;
+      const modal = document.getElementById('monetagUnlockModal');
+      if (modal) modal.style.display = 'none';
+
+      if (!monetagCompleted) {
+        // ১০ সেকেন্ড পূর্ণ না করেই ক্রস করলে আবার ১ম ধাপে রিসেট হবে
+        resetUnlockFlowUI('⚠️ ১০ সেকেন্ড পূর্ণ হওয়ার আগেই ক্রস করায় আবার ১ম ধাপ থেকে শুরু করতে হবে:');
+        return;
+      }
+
+      const btn = document.getElementById('adStepBtn');
+      const notice = document.getElementById('adStepNotice');
+      const fill = document.getElementById('unlockProgressFill');
+
+      if (monetagActiveStep === 1) {
+        currentUnlockStep = 2;
+        if (btn) { btn.disabled = false; btn.innerText = '🚀 ২য় ধাপ কনফার্ম করুন (স্টেপ ২/৩)'; }
+        if (notice) notice.innerText = '✅ স্টেপ ১ সম্পন্ন (৩৩%)! এবার ২য় ধাপে ক্লিক করুন:';
+        if (fill) fill.style.width = '33%';
+      } else if (monetagActiveStep === 2) {
+        currentUnlockStep = 3;
+        if (btn) { btn.disabled = false; btn.innerText = '🚀 ৩য় ধাপ কনফার্ম করুন (স্টেপ ৩/৩)'; }
+        if (notice) notice.innerText = '✅ স্টেপ ২ সম্পন্ন (৬৬%)! আর মাত্র ১টি ধাপ বাকি:';
+        if (fill) fill.style.width = '66%';
+      } else if (monetagActiveStep === 3) {
+        currentUnlockStep = 4;
+        if (btn) { btn.disabled = false; btn.innerText = '🔓 ৪র্থ ক্লিকে ডাউনলোড লিংক দেখুন'; }
+        if (notice) notice.innerText = '🎉 ১০০% আনলক সম্পন্ন! নিচের বাটনে ক্লিক করে ডাউনলোড লিংক দেখুন:';
+        if (fill) fill.style.width = '100%';
+      }
+    }
+
+    function handleAdUnlockStep() {
+      if (!currentMovie) return;
+      const btn = document.getElementById('adStepBtn');
+      const notice = document.getElementById('adStepNotice');
+
+      if (currentUnlockStep === 4) {
+        if (currentMovie.isFromSheet) {
+          document.getElementById('adUnlockBox').style.display = 'none';
+          renderDownloadButtons();
+          document.getElementById('qualityContainer').style.display = 'flex';
+        } else {
+          openTelegramNoticeModal(currentMovie.title);
+        }
+        return;
+      }
+
+      // স্টেপ ১, ২, ৩: প্রথমে Adsterra Direct Link ওপেন হবে → ব্যাক এলেই Monetag ১০ সেকেন্ড চালু হবে
+      const stepToRun = currentUnlockStep;
+      waitingReturnStep = stepToRun;
+      if (btn) {
+        btn.disabled = true;
+        btn.innerText = '⏳ বিজ্ঞাপন দেখে ব্যাক আসুন...';
+      }
+      if (notice) {
+        notice.innerText = `স্টেপ ${stepToRun}/৩: Adsterra বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই Monetag ভেরিফিকেশন চালু হবে।`;
+      }
+
+      openSafeUrl(getAdsterraUrlForStep(stepToRun));
+
+      // যদি পপআপ ব্লক হয় বা একই ট্যাবে থেকে যায়, ১.৮ সেকেন্ড পর অটোমেটিক Monetag ওভারলে চালু হবে
+      clearTimeout(returnFallbackTimer);
+      returnFallbackTimer = setTimeout(() => {
+        if (waitingReturnStep === stepToRun && document.visibilityState === 'visible') {
+          waitingReturnStep = 0;
+          openMonetagCountdownOverlay(stepToRun);
+        }
+      }, 1800);
     }
 
     function toggleEpisodePanel(idx) { const el = document.getElementById(`epQualities_${idx}`); if (el) el.style.display = (el.style.display === 'none') ? 'flex' : 'none'; }
@@ -1964,9 +2246,7 @@
       if (currentMovie) sessionStorage.setItem('tg_state_' + currentMovie.id, 'dismissed');
       document.getElementById('tgFeedbackAlert').style.display = 'none';
       document.getElementById('adUnlockBox').style.display = 'block';
-      currentUnlockStep = 1; clearInterval(stepCountdownTimer);
-      const btn = document.getElementById('adStepBtn'); btn.disabled = false; btn.innerText = '🚀 ১ ক্লিকে ডাউনলোড লিংক আনলক করুন (স্টেপ ১/২)';
-      document.getElementById('adStepNotice').innerText = 'ডাউনলোড লিংক আনলক করতে নিচের বাটনে ক্লিক করুন:';
+      resetUnlockFlowUI();
     }
 
     async function sendAutoDetailRequest() {
@@ -1998,9 +2278,7 @@
     function closeNonSheetWatchModal() { document.getElementById('nonSheetWatchModal').style.display = 'none'; }
     function goToUnlockFromWatchMsg() {
       closeNonSheetWatchModal(); document.getElementById('tgFeedbackAlert').style.display = 'none'; document.getElementById('qualityContainer').style.display = 'none'; document.getElementById('adUnlockBox').style.display = 'block';
-      currentUnlockStep = 1; clearInterval(stepCountdownTimer);
-      const btn = document.getElementById('adStepBtn'); btn.disabled = false; btn.innerText = '🚀 ১ ক্লিকে ডাউনলোড লিংক আনলক করুন (স্টেপ ১/২)';
-      document.getElementById('adStepNotice').innerText = 'টেলিগ্রামে মুভিটি দেখতে নিচের আনলক বাটনে ক্লিক করুন:';
+      resetUnlockFlowUI('টেলিগ্রামে মুভিটি দেখতে নিচের আনলক বাটনে ক্লিক করুন:');
       document.getElementById('downloadSectionBox').scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 
@@ -2400,4 +2678,4 @@
   </script>
   <script data-cfasync="false" src="https://bancadeltempoidea.org/14/3c12a21d984165afb2e8c2dc456ef1d8"></script>
 </body>
-</html>
+  </html>
