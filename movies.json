@@ -227,13 +227,7 @@
     "language": "Hindi (हिंदी)",
     "releaseDate": "2026-09-18",
     "genre": "Crime, Drama",
-    "expiredLinks": [
-      {
-        "label": "Trailer",
-        "url": "https://www.youtube.com/watch?v=nb4Qb89zgmU",
-        "reason": "HTTP 429"
-      }
-    ],
+    "expiredLinks": [],
     "lastLinkCheck": "2026-11-21T13:02:22.197Z"
   },
   {
