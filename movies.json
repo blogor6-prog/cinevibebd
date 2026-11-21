@@ -1795,13 +1795,7 @@
     "language": "",
     "releaseDate": "",
     "genre": "",
-    "expiredLinks": [
-      {
-        "label": "Download (480p)",
-        "url": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/54BsRkmg/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261105%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261105T120000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=7a2c752d1da7ba68e4ac913578ac177a2c24d0defa6e0da600fd03b3c69da857",
-        "reason": "HTTP 403"
-      }
-    ],
+    "expiredLinks": [],
     "lastLinkCheck": "2026-11-21T13:02:22.197Z"
   },
   {
