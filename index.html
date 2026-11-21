@@ -1063,14 +1063,14 @@
     function clearSearchInput() { document.getElementById('searchInput').value = ''; toggleClearBtn(); goHome(); }
     function isAdultMovie(m) { if (!m) return false; const b = (m.badge || '').toLowerCase(), c = (m.category || '').toLowerCase(); return b.includes('18+') || b.includes('adult') || c.includes('18+') || c.includes('adult'); }
 
-    function applyCustomSortOrder(list) {
+    function applyCustomSortOrder(list, fieldName = 'sortOrder') {
       const fixedItems = [], normalItems = [];
-      list.forEach(m => { if (m.sortOrder && m.sortOrder >= 1) fixedItems.push(m); else normalItems.push(m); });
+      list.forEach(m => { if (m[fieldName] && m[fieldName] >= 1) fixedItems.push(m); else normalItems.push(m); });
       if (fixedItems.length === 0) return list;
-      fixedItems.sort((a, b) => a.sortOrder - b.sortOrder);
+      fixedItems.sort((a, b) => a[fieldName] - b[fieldName]);
       const result = new Array(list.length).fill(null);
       fixedItems.forEach(item => {
-        let idx = Math.min(Math.max(item.sortOrder - 1, 0), result.length - 1);
+        let idx = Math.min(Math.max(item[fieldName] - 1, 0), result.length - 1);
         while (idx < result.length && result[idx] !== null) idx++;
         if (idx >= result.length) idx = result.indexOf(null);
         if (idx !== -1) result[idx] = item;
@@ -1222,8 +1222,8 @@
       const t = title.toLowerCase(), c = category.toLowerCase();
       if (t.includes('hindi') || c.includes('hindi') || c.includes('bollywood')) return "Hindi (हिंदी)";
       if (t.includes('bangla') || t.includes('bengali') || c.includes('bangla')) return "Bengali (বাংলা)";
-      if (t.includes('tamil') || c.includes('tamil')) return "Tamil (தமிழ்)";
-      if (t.includes('telugu') || c.includes('telugu')) return "Telugu (తెలుగు)";
+      if (t.includes('tamil') || t.includes('tamil')) return "Tamil (தமிழ்)";
+      if (t.includes('telugu') || t.includes('telugu')) return "Telugu (తెలుగు)";
       if (t.includes('english') || c.includes('hollywood')) return "English";
       if (tmdbLang && ACCURATE_LANG_MAP[tmdbLang]) return (c.includes('bangla') && tmdbLang !== 'bn') ? "Bengali (বাংলা)" : ACCURATE_LANG_MAP[tmdbLang];
       return c.includes('bangla') ? "Bengali (বাংলা)" : "Hindi (हिंदी)";
@@ -1341,6 +1341,7 @@
             const epParsed = parseStructuredEpisodes(m.episodes || '');
             const singleLinks = Array.isArray(m.links) ? m.links : [];
             const sortOrder = (m.sortOrder && parseInt(m.sortOrder, 10) > 0) ? parseInt(m.sortOrder, 10) : null;
+            const trendingOrder = (m.trendingOrder && parseInt(m.trendingOrder, 10) > 0) ? parseInt(m.trendingOrder, 10) : null;
             return {
               id: m.id || (idx + 1),
               title: m.title || 'Untitled',
@@ -1354,6 +1355,7 @@
               ad2: (m.ad2 && String(m.ad2).trim()) ? String(m.ad2).trim() : BACKUP_ADSTERRA_2,
               badge: m.badge || (isSeries ? 'SERIES' : '1080p'),
               sortOrder,
+              trendingOrder,
               details: '',
               links: [...singleLinks, ...epParsed.legacy],
               structuredEpisodes: epParsed.structured,
@@ -1372,7 +1374,7 @@
             };
           });
 
-          rawMovies = applyCustomSortOrder(rawMovies);
+          rawMovies = applyCustomSortOrder(rawMovies, 'sortOrder');
           for (let k = 0; k < rawMovies.length; k += 8) {
             await Promise.all(rawMovies.slice(k, k + 8).map(m => completeSheetMovieDetails(m)));
           }
@@ -1396,7 +1398,7 @@
 
     function initHeroSlider(movies) {
       if (!movies || movies.length === 0) return;
-      const featured = movies.filter(m => m.trending);
+      const featured = applyCustomSortOrder(movies.filter(m => m.trending), 'trendingOrder');
       heroMovies = (featured.length > 0 ? featured : movies).slice(0, 7);
       currentHeroIndex = 0;
       const dotsWrap = document.getElementById('heroDotsContainer'); dotsWrap.innerHTML = '';
@@ -1468,7 +1470,7 @@
       if (type === 'series') { document.getElementById('fullViewTitle').innerText = '📺 Web Series Collections'; fullListCurrentMovies = [...seriesMovies]; }
       else if (type === 'bangla') { document.getElementById('fullViewTitle').innerText = '🇧🇩 Bangla Collections'; fullListCurrentMovies = [...banglaMovies]; }
       else if (type === 'adult') { document.getElementById('fullViewTitle').innerText = '🔞 18+ Adult Collections'; fullListCurrentMovies = [...adultMovies]; }
-      else if (type === 'trending') { document.getElementById('fullViewTitle').innerText = '🔥 Trending & Featured'; fullListCurrentMovies = allMovies.filter(m => m.trending && !isAdultMovie(m)); }
+      else if (type === 'trending') { document.getElementById('fullViewTitle').innerText = '🔥 Trending & Featured'; fullListCurrentMovies = applyCustomSortOrder(allMovies.filter(m => m.trending && !isAdultMovie(m)), 'trendingOrder'); }
       renderFullListPage(type === 'trending' ? 'FEATURED' : null); window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
@@ -1496,7 +1498,8 @@
     }
 
     function renderTrendingSlider(list) {
-      const container = document.getElementById('trendingList'), section = document.getElementById('trendingSection'), trendingItems = list.filter(m => m.trending && !isAdultMovie(m));
+      const container = document.getElementById('trendingList'), section = document.getElementById('trendingSection');
+      const trendingItems = applyCustomSortOrder(list.filter(m => m.trending && !isAdultMovie(m)), 'trendingOrder');
       if (trendingItems.length === 0) { section.style.display = 'none'; return; }
       section.style.display = 'block'; container.innerHTML = trendingItems.map(m => createMovieCardHTML(m, 'FEATURED')).join('');
     }
@@ -2080,7 +2083,6 @@
       if (m && img) { img.src = url; m.style.display = 'flex'; }
     }
 
-    // === ৪-ধাপের Adsterra + ১০ সেকেন্ড 300x250 ব্যানার & Monetag Direct Link ভেরিফিকেশন ===
     function clearMonetagAndTimers() {
       clearInterval(stepCountdownTimer);
       clearInterval(monetagCountdownTimer);
@@ -2599,7 +2601,7 @@
       document.getElementById('heroBannerSection').style.display = 'none'; document.getElementById('homeSectionsContainer').style.display = 'none'; document.getElementById('fullListViewBlock').style.display = 'block';
       document.getElementById('fullViewTitle').innerText = `${cat} Collections`; fullListPage = 1;
       const cLower = cat.toLowerCase(); let localMatches = [];
-      if (cLower === 'trending') localMatches = allMovies.filter(m => m.trending && !isAdultMovie(m));
+      if (cLower === 'trending') localMatches = applyCustomSortOrder(allMovies.filter(m => m.trending && !isAdultMovie(m)), 'trendingOrder');
       else if (cLower === 'series') localMatches = allMovies.filter(m => m.isSeries && !isAdultMovie(m));
       else if (cLower === '18+ adult') localMatches = allMovies.filter(m => isAdultMovie(m));
       else localMatches = allMovies.filter(m => !isAdultMovie(m) && `${m.category} ${m.genreText || ''} ${m.details || ''} ${m.badge || ''} ${m.title}`.toLowerCase().includes(cLower));
