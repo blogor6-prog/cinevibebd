@@ -66,6 +66,13 @@
     .wp-page-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
     .wp-page-title { font-size: 20px; font-weight: 700; }
 
+    .auto-check-bar {
+      background: #fff; border: 1px solid var(--wp-border); border-left: 4px solid var(--wp-green);
+      padding: 10px 14px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 10px; font-size: 13px;
+    }
+    .auto-check-bar.off { border-left-color: #8c8f94; }
+
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 12px; margin-bottom: 18px; }
     .stat-card { background: #fff; border: 1px solid var(--wp-border); padding: 14px; border-left: 4px solid var(--wp-blue); }
     .stat-card.green { border-left-color: var(--wp-green); }
@@ -152,7 +159,7 @@
       display: none; align-items: center; justify-content: center; padding: 14px; z-index: 2500;
     }
     .wp-modal {
-      width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto;
+      width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto;
       background: #fff; border: 1px solid var(--wp-border); border-radius: 6px; box-shadow: 0 12px 32px rgba(0,0,0,0.3);
     }
     .wp-modal-head {
@@ -195,40 +202,40 @@
     </div>
   </div>
 
-  <!-- GMAIL & CHECKER SETTINGS MODAL -->
+  <!-- GMAIL & 24/7 AUTO-CHECKER SETTINGS MODAL -->
   <div class="wp-modal-backdrop" id="settingsModalBackdrop" onclick="if(event.target===this) closeSettingsModal()">
     <div class="wp-modal">
       <div class="wp-modal-head">
-        <strong>⚙️ Gmail অ্যালার্ট ও লিংক চেকার সেটিংস</strong>
+        <strong>⚙️ Gmail দৈনিক আলাদা মেসেজ ও ১-ঘণ্টা অটো-চেকার</strong>
         <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="closeSettingsModal()">✕ বন্ধ</button>
       </div>
       <div class="wp-modal-body">
         <div class="form-group">
-          <label>📧 আপনার Gmail এড্রেস (যেখানে মেয়াদ শেষ লিংকের মেসেজ যাবে)</label>
+          <label>📧 আপনার Gmail এড্রেস (প্রতি তারিখের জন্য আলাদা ১টি মেসেজ যাবে)</label>
           <input type="email" id="cfgGmail" class="wp-input" value="blogor6@gmail.com" placeholder="blogor6@gmail.com">
         </div>
         <div class="form-group">
-          <label>🔗 Google Apps Script Web App URL (পোস্টারের ছবিসহ Gmail ও ১০০% নির্ভুল লিংক চেকের জন্য)</label>
+          <label>🔗 Google Apps Script Web App URL (পোস্টারের ছবিসহ Gmail ও দ্রুত প্যারালাল চেক)</label>
           <input type="url" id="cfgGasUrl" class="wp-input" placeholder="https://script.google.com/macros/s/...../exec">
           <p style="font-size:11.5px; color:#646970; margin-top:4px;">
-            Google Apps Script URL দিলে Google Drive, R2 বা যেকোনো সার্ভারের লিংক CORS ছাড়াই চেক হবে এবং মেয়াদ শেষ হলে সরাসরি আপনার <b>blogor6@gmail.com</b>-এ মুভির নাম, পোস্টার ছবি ও লিংক পাঠাবে।
+            প্রতি তারিখে আলাদা মেসেজ যাবে (যেমন ২১ তারিখের সবগুলো ১ মেসেজে, ২২ তারিখের নতুনগুলো আলাদা আরেকটি মেসেজে)। ফোন/পিসি বন্ধ থাকলেও ১ ঘণ্টা পর পর চেক চালাতে নিচের Apps Script সেট করুন।
           </p>
         </div>
         <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
           <button class="wp-btn" onclick="saveCheckerSettings()">💾 সেটিংস সেভ করুন</button>
           <button class="wp-btn wp-btn-secondary" onclick="sendTestGmailAlert()">📧 টেস্ট মেসেজ পাঠান</button>
-          <button class="wp-btn wp-btn-amber" onclick="toggleGasGuide()">📋 Apps Script কোড দেখুন</button>
+          <button class="wp-btn wp-btn-amber" onclick="toggleGasGuide()">📋 ২৪/৭ অটো-চেকার Apps Script কোড</button>
         </div>
 
         <div id="gasGuideBox" style="display:none; border:1px solid var(--wp-border); background:#f9f9f9; padding:12px; border-radius:4px;">
-          <p style="font-size:12.5px; font-weight:700; margin-bottom:6px;">কিভাবে ২ মিনিটে Google Apps Script সেট করবেন:</p>
+          <p style="font-size:12.5px; font-weight:700; margin-bottom:6px;">২৪ ঘণ্টা (১ ঘণ্টা পর পর) অটো-চেক চালু করার নিয়ম:</p>
           <ol style="font-size:12px; padding-left:18px; margin-bottom:8px; line-height:1.6;">
             <li><b>script.google.com</b>-এ <b>blogor6@gmail.com</b> দিয়ে ঢুকে <b>New Project</b> খুলুন।</li>
-            <li>নিচের কোড কপি করে বসিয়ে Save করুন।</li>
-            <li>উপরে <b>Deploy ➔ New deployment ➔ Web app</b> দিন (Execute as: <b>Me</b>, Who has access: <b>Anyone</b>)।</li>
-            <li>পাওয়া URL-টি উপরের বক্সে পেস্ট করে সেভ করুন।</li>
+            <li>নিচের কোডের ভেতরে <code>GITHUB_TOKEN</code>-এর জায়গায় আপনার GitHub টোকেন বসান (বাকি সব বসানোই আছে)।</li>
+            <li>উপরে রান বাটনে একবার <b>setupHourlyTrigger</b> ফাংশনটি Run করুন—তাহলে প্রতি ১ ঘণ্টা পর পর অটো-চেক চালু হয়ে যাবে!</li>
+            <li>তারপর <b>Deploy ➔ New deployment ➔ Web app</b> (Execute as: <b>Me</b>, Who has access: <b>Anyone</b>) করে পাওয়া URL উপরের বক্সে সেভ করুন।</li>
           </ol>
-          <textarea id="gasScriptText" class="wp-textarea" rows="8" readonly style="font-size:11px; font-family:monospace;"></textarea>
+          <textarea id="gasScriptText" class="wp-textarea" rows="10" readonly style="font-size:11px; font-family:monospace;"></textarea>
           <button class="wp-btn wp-btn-sm wp-btn-secondary" style="margin-top:6px;" onclick="copyGasCode()">📋 কোড কপি করুন</button>
         </div>
       </div>
@@ -291,12 +298,25 @@
           <span class="menu-count-pill" id="sidebarExpiredBadge">0</span>
         </li>
         <div class="wp-menu-divider"></div>
-        <li class="wp-menu-item" onclick="openSettingsModal()"><span>⚙️ Gmail ও চেকার সেটিংস</span></li>
+        <li class="wp-menu-item" onclick="openSettingsModal()"><span>⚙️ Gmail ও ১-ঘণ্টা অটো-চেক</span></li>
         <li class="wp-menu-item" onclick="logoutAdmin()" style="color:#f86368;"><span>🚪 লগআউট</span></li>
       </ul>
     </aside>
 
     <main class="wp-main">
+      <!-- 1-HOUR AUTO CHECK STATUS BAR -->
+      <div class="auto-check-bar" id="autoCheckBar">
+        <div>
+          <strong id="autoCheckLabel">⏰ ১ ঘণ্টা পর পর অটো-চেক: চালু (ON)</strong>
+          <span id="autoCheckTimerText" style="margin-left:8px; color:#2271b1; font-weight:700;"></span>
+          <span id="lastScanTimeText" style="margin-left:8px; color:#646970; font-size:12px;"></span>
+        </div>
+        <div style="display:flex; gap:6px; flex-wrap:wrap;">
+          <button class="wp-btn wp-btn-sm wp-btn-secondary" id="btnToggleAutoCheck" onclick="toggleAutoCheck()">⏸️ বন্ধ করুন</button>
+          <button class="wp-btn wp-btn-sm wp-btn-danger" onclick="scanAllMoviesLinks(true)">⚡ এখনই সব চেক করুন</button>
+        </div>
+      </div>
+
       <!-- LIVE SCAN PROGRESS -->
       <div class="scan-progress-box" id="scanProgressBox">
         <div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:700;">
@@ -310,7 +330,7 @@
         <div class="wp-page-header">
           <h2 class="wp-page-title">ড্যাশবোর্ড</h2>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="wp-btn wp-btn-danger" id="btnScanAllDash" onclick="scanAllMoviesLinks()">🔍 সব লিংক চেক করুন</button>
+            <button class="wp-btn wp-btn-danger" id="btnScanAllDash" onclick="scanAllMoviesLinks(true)">🔍 সব লিংক চেক করুন</button>
             <button class="wp-btn wp-btn-success" id="btnImportSheet" onclick="importFromGoogleSheet()">📥 Google Sheet থেকে সব মুভি আনো</button>
             <button class="wp-btn wp-btn-secondary" onclick="loadMoviesFromGitHub()">🔄 রিফ্রেশ</button>
             <button class="wp-btn" onclick="openAddNewMovie()">➕ নতুন মুভি যোগ</button>
@@ -327,7 +347,10 @@
         <div class="wp-card" id="expiredSummaryCard" style="display:none; border-color:#f86368;">
           <div class="wp-card-header" style="background:#fcf0f1; color:#b32d2e;">
             <span>🚨 মেয়াদ শেষ লিংকযুক্ত মুভি (👁️ চোখে ক্লিক করে দেখুন)</span>
-            <button class="wp-btn wp-btn-sm wp-btn-danger" onclick="switchTab('allMovies', 'Expired')">সবগুলো দেখুন ➔</button>
+            <div style="display:flex; gap:6px;">
+              <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="sendAllExpiredCombinedReport(true)">📧 আজকের রিপোর্ট Gmail-এ পাঠান</button>
+              <button class="wp-btn wp-btn-sm wp-btn-danger" onclick="switchTab('allMovies', 'Expired')">সবগুলো দেখুন ➔</button>
+            </div>
           </div>
           <div class="wp-card-body" id="expiredSummaryList"></div>
         </div>
@@ -345,7 +368,7 @@
         <div class="wp-page-header">
           <h2 class="wp-page-title">সব মুভি তালিকা</h2>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
-            <button class="wp-btn wp-btn-danger" onclick="scanAllMoviesLinks()">🔍 সব লিংক চেক</button>
+            <button class="wp-btn wp-btn-danger" onclick="scanAllMoviesLinks(true)">🔍 সব লিংক চেক</button>
             <button class="wp-btn wp-btn-secondary" onclick="loadMoviesFromGitHub()">🔄 রিফ্রেশ</button>
             <button class="wp-btn" onclick="openAddNewMovie()">➕ Add New</button>
           </div>
@@ -532,6 +555,15 @@
     const TMDB_API_KEY = "8265bd1679663a7ea12ac168da84d2e8";
     const ADMIN_PASS = "suaib5249";
     const DEFAULT_GMAIL = "blogor6@gmail.com";
+    const ONE_HOUR_MS = 60 * 60 * 1000;
+
+    function getDailyEmailSubject() {
+      const d = new Date();
+      const dd = String(d.getDate()).padStart(2, "0");
+      const mm = String(d.getMonth() + 1).padStart(2, "0");
+      const yyyy = d.getFullYear();
+      return `🚨 CineVibeBD মেয়াদ শেষ রিপোর্ট (${dd}-${mm}-${yyyy})`;
+    }
 
     const ALL_WORLD_CATEGORIES = [
       "Trending", "Series", "Hindi", "Hindi Dubbed", "Bollywood", "Bangla", "Bangla Dubbed",
@@ -550,34 +582,99 @@
       es: "Spanish (Español)", tr: "Turkish (Türkçe)", fr: "French (Français)", ur: "Urdu"
     };
 
-    const GAS_CODE_TEMPLATE = `function doPost(e) {
+    const GAS_CODE_TEMPLATE = `// === আপনার GitHub তথ্য এখানে দিন (ফোন বন্ধ থাকলেও ১ ঘণ্টা পর পর চেকের জন্য) ===
+var GITHUB_USER = "blogor6-prog";
+var GITHUB_REPO = "cinevibebd";
+var GITHUB_TOKEN = "এখানে_আপনার_ghp_টোকেন_বসান";
+var ALERT_EMAIL = "blogor6@gmail.com";
+
+function getDailySubjectBD() {
+  var dateStr = Utilities.formatDate(new Date(), "Asia/Dhaka", "dd-MM-yyyy");
+  return "🚨 CineVibeBD মেয়াদ শেষ রিপোর্ট (" + dateStr + ")";
+}
+
+function setupHourlyTrigger() {
+  var triggers = ScriptApp.getProjectTriggers();
+  triggers.forEach(function(t) {
+    if (t.getHandlerFunction() === "hourlyAutoCheck") ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger("hourlyAutoCheck").timeBased().everyHours(1).create();
+}
+
+function hourlyAutoCheck() {
+  if (!GITHUB_TOKEN || GITHUB_TOKEN.indexOf("ghp_") === -1) return;
+  var repoRes = UrlFetchApp.fetch("https://api.github.com/repos/" + GITHUB_USER + "/" + GITHUB_REPO, {
+    headers: { Authorization: "Bearer " + GITHUB_TOKEN, Accept: "application/vnd.github+json" }
+  });
+  var branch = JSON.parse(repoRes.getContentText()).default_branch || "main";
+  var fileUrl = "https://api.github.com/repos/" + GITHUB_USER + "/" + GITHUB_REPO + "/contents/movies.json?ref=" + branch;
+  var fileRes = UrlFetchApp.fetch(fileUrl, {
+    headers: { Authorization: "Bearer " + GITHUB_TOKEN, Accept: "application/vnd.github+json" }
+  });
+  var fileData = JSON.parse(fileRes.getContentText());
+  var sha = fileData.sha;
+  var movies = JSON.parse(Utilities.newBlob(Utilities.base64Decode(fileData.content.replace(/\\s/g, ""))).getDataAsString("UTF-8") || "[]");
+
+  var allItems = [];
+  movies.forEach(function(m, idx) {
+    extractLinks(m).forEach(function(l) {
+      allItems.push({ idx: idx, label: l.label, url: l.url });
+    });
+  });
+
+  var results = checkUrlsBatchParallel(allItems);
+  var byMovie = {};
+  results.forEach(function(r) {
+    if (r.expired) {
+      if (!byMovie[r.idx]) byMovie[r.idx] = [];
+      byMovie[r.idx].push({ label: r.label, url: r.url, reason: r.reason });
+    }
+  });
+
+  var newlyExpiredMovies = [];
+  var nowIso = new Date().toISOString();
+  movies.forEach(function(m, idx) {
+    var prevSet = {};
+    (m.expiredLinks || []).forEach(function(x) { prevSet[x.url] = true; });
+    var newExp = byMovie[idx] || [];
+    m.expiredLinks = newExp;
+    m.lastLinkCheck = nowIso;
+    if (newExp.length > 0 && newExp.some(function(x) { return !prevSet[x.url]; })) {
+      newlyExpiredMovies.push({ title: m.title, poster: m.image || "", category: m.category || "All", expired: newExp });
+    }
+  });
+
+  var putBody = {
+    message: "Auto 1-hour link check",
+    content: Utilities.base64Encode(Utilities.newBlob(JSON.stringify(movies, null, 2), "application/json", "movies.json").getBytes()),
+    sha: sha,
+    branch: branch
+  };
+  UrlFetchApp.fetch("https://api.github.com/repos/" + GITHUB_USER + "/" + GITHUB_REPO + "/contents/movies.json", {
+    method: "put",
+    contentType: "application/json",
+    headers: { Authorization: "Bearer " + GITHUB_TOKEN, Accept: "application/vnd.github+json" },
+    payload: JSON.stringify(putBody)
+  });
+
+  if (newlyExpiredMovies.length > 0) {
+    sendCombinedHtmlEmail(ALERT_EMAIL, newlyExpiredMovies, getDailySubjectBD());
+  }
+}
+
+function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     if (data.action === "checkUrls") {
-      var results = (data.urls || []).map(function(item) { return checkSingleUrl(item); });
-      return jsonResponse({ ok: true, results: results });
+      return jsonResponse({ ok: true, results: checkUrlsBatchParallel(data.urls || []) });
+    }
+    if (data.action === "sendCombinedAlert") {
+      sendCombinedHtmlEmail(data.email || ALERT_EMAIL, data.movies || [], data.subject || getDailySubjectBD());
+      return jsonResponse({ ok: true });
     }
     if (data.action === "sendAlert") {
-      var toEmail = data.email || "blogor6@gmail.com";
-      var movie = data.movie || {};
-      var expired = data.expired || [];
-      if (!toEmail || expired.length === 0) return jsonResponse({ ok: false, error: "Missing data" });
-      var subject = "⚠️ লিংক মেয়াদ শেষ: " + (movie.title || "Movie");
-      var rowsHtml = expired.map(function(l) {
-        return "<tr><td style='padding:8px;border:1px solid #ddd;'><b>" + esc(l.label) + "</b></td>" +
-               "<td style='padding:8px;border:1px solid #ddd;word-break:break-all;'><a href='" + esc(l.url) + "'>" + esc(l.url) + "</a></td>" +
-               "<td style='padding:8px;border:1px solid #ddd;color:#d63638;'><b>" + esc(l.reason) + "</b></td></tr>";
-      }).join("");
-      var htmlBody = "<div style='font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;'>" +
-        "<div style='background:#d63638;color:#fff;padding:14px 18px;font-size:18px;font-weight:bold;'>🚨 মুভির লিংক মেয়াদ শেষ হয়েছে!</div>" +
-        "<div style='padding:18px;'>" +
-        (movie.poster ? "<div style='text-align:center;margin-bottom:14px;'><img src='" + esc(movie.poster) + "' style='max-width:180px;border-radius:6px;border:1px solid #ccc;'></div>" : "") +
-        "<h2 style='margin:0 0 8px 0;color:#1d2327;'>" + esc(movie.title) + "</h2>" +
-        "<p style='color:#646970;margin:0 0 14px 0;'>ক্যাটাগরি: " + esc(movie.category || "All") + "</p>" +
-        "<table style='width:100%;border-collapse:collapse;font-size:13px;'>" +
-        "<tr style='background:#f6f7f7;'><th style='padding:8px;border:1px solid #ddd;text-align:left;'>ধরন</th><th style='padding:8px;border:1px solid #ddd;text-align:left;'>মেয়াদ শেষ লিংক</th><th style='padding:8px;border:1px solid #ddd;text-align:left;'>কারণ</th></tr>" +
-        rowsHtml + "</table></div></div>";
-      MailApp.sendEmail({ to: toEmail, subject: subject, htmlBody: htmlBody });
+      var m = data.movie || {};
+      sendCombinedHtmlEmail(data.email || ALERT_EMAIL, [{ title: m.title, poster: m.poster, category: m.category, expired: data.expired || [] }], data.subject || getDailySubjectBD());
       return jsonResponse({ ok: true });
     }
     return jsonResponse({ ok: false, error: "Unknown action" });
@@ -586,32 +683,94 @@
   }
 }
 
-function checkSingleUrl(item) {
-  var url = item.url;
-  try {
-    var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true, followRedirects: true, validateHttpsCertificates: false });
-    var code = resp.getResponseCode();
-    if (code >= 400 || code === 0) return { url: url, label: item.label, expired: true, status: code, reason: "HTTP " + code };
-    var ct = (resp.getHeaders()["Content-Type"] || resp.getHeaders()["content-type"] || "").toLowerCase();
-    if (ct.indexOf("text/html") !== -1) {
-      var text = resp.getContentText().slice(0, 8000).toLowerCase();
-      var dead = ["404 not found", "file not found", "file was deleted", "video has been removed", "this video is unavailable", "no longer available", "link expired", "has expired", "file does not exist", "video not found"];
-      for (var i = 0; i < dead.length; i++) {
-        if (text.indexOf(dead[i]) !== -1) return { url: url, label: item.label, expired: true, status: code, reason: dead[i] };
-      }
+function sendCombinedHtmlEmail(toEmail, moviesList, subjectText) {
+  if (!toEmail || !moviesList || moviesList.length === 0) return;
+  var dateLabel = Utilities.formatDate(new Date(), "Asia/Dhaka", "dd-MM-yyyy (hh:mm a)");
+  var blocks = moviesList.map(function(m) {
+    var rows = (m.expired || []).map(function(l) {
+      return "<tr><td style='padding:6px 8px;border:1px solid #ddd;'><b>" + esc(l.label) + "</b></td>" +
+             "<td style='padding:6px 8px;border:1px solid #ddd;word-break:break-all;'><a href='" + esc(l.url) + "'>" + esc(l.url) + "</a></td>" +
+             "<td style='padding:6px 8px;border:1px solid #ddd;color:#d63638;'><b>" + esc(l.reason) + "</b></td></tr>";
+    }).join("");
+    return "<div style='border:1px solid #f5c2c7;border-radius:6px;padding:12px;margin-bottom:14px;background:#fffafa;'>" +
+      "<div style='display:flex;gap:12px;align-items:center;margin-bottom:10px;'>" +
+      (m.poster ? "<img src='" + esc(m.poster) + "' style='width:60px;height:85px;object-fit:cover;border-radius:4px;border:1px solid #ccc;margin-right:12px;'>" : "") +
+      "<div><h3 style='margin:0;color:#b32d2e;'>🔴 " + esc(m.title) + "</h3>" +
+      "<div style='font-size:12px;color:#646970;'>ক্যাটাগরি: " + esc(m.category || "All") + " · মেয়াদ শেষ: " + (m.expired || []).length + "টি লিংক</div></div></div>" +
+      "<table style='width:100%;border-collapse:collapse;font-size:12.5px;background:#fff;'>" +
+      "<tr style='background:#f6f7f7;'><th style='padding:6px 8px;border:1px solid #ddd;text-align:left;'>ধরন</th><th style='padding:6px 8px;border:1px solid #ddd;text-align:left;'>লিংক</th><th style='padding:6px 8px;border:1px solid #ddd;text-align:left;'>কারণ</th></tr>" +
+      rows + "</table></div>";
+  }).join("");
+
+  var htmlBody = "<div style='font-family:sans-serif;max-width:680px;margin:auto;border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;'>" +
+    "<div style='background:#d63638;color:#fff;padding:14px 18px;font-size:17px;font-weight:bold;'>🚨 তারিখ: " + esc(dateLabel) + " — মোট " + moviesList.length + "টি মুভির লিংক মেয়াদ শেষ</div>" +
+    "<div style='padding:16px;'>" + blocks + "</div></div>";
+  MailApp.sendEmail({ to: toEmail, subject: subjectText || getDailySubjectBD(), htmlBody: htmlBody });
+}
+
+function checkUrlsBatchParallel(items) {
+  var out = [];
+  var chunkSize = 25;
+  for (var i = 0; i < items.length; i += chunkSize) {
+    var chunk = items.slice(i, i + chunkSize);
+    var reqs = chunk.map(function(it) {
+      return { url: it.url, method: "get", muteHttpExceptions: true, followRedirects: true, validateHttpsCertificates: false, headers: { "Range": "bytes=0-4096" } };
+    });
+    try {
+      var resps = UrlFetchApp.fetchAll(reqs);
+      for (var j = 0; j < chunk.length; j++) out.push(evaluateGasResponse(chunk[j], resps[j]));
+    } catch (e) {
+      for (var k = 0; k < chunk.length; k++) out.push(checkSingleUrl(chunk[k]));
     }
-    return { url: url, label: item.label, expired: false, status: code, reason: "OK" };
+  }
+  return out;
+}
+
+function checkSingleUrl(item) {
+  try {
+    var resp = UrlFetchApp.fetch(item.url, { method: "get", muteHttpExceptions: true, followRedirects: true, validateHttpsCertificates: false, headers: { "Range": "bytes=0-4096" } });
+    return evaluateGasResponse(item, resp);
   } catch (e) {
-    return { url: url, label: item.label, expired: true, status: 0, reason: "Unreachable / Dead" };
+    return { idx: item.idx, url: item.url, label: item.label, expired: true, status: 0, reason: "Unreachable / Dead" };
   }
 }
 
-function jsonResponse(obj) {
-  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+function evaluateGasResponse(item, resp) {
+  var code = resp.getResponseCode();
+  if (code >= 400 || code === 0) return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: "HTTP " + code };
+  var ct = (resp.getHeaders()["Content-Type"] || resp.getHeaders()["content-type"] || "").toLowerCase();
+  if (ct.indexOf("text/html") !== -1) {
+    var text = resp.getContentText().slice(0, 6000).toLowerCase();
+    var dead = ["404 not found", "file not found", "file was deleted", "video has been removed", "this video is unavailable", "no longer available", "link expired", "has expired", "file does not exist", "video not found"];
+    for (var i = 0; i < dead.length; i++) {
+      if (text.indexOf(dead[i]) !== -1) return { idx: item.idx, url: item.url, label: item.label, expired: true, status: code, reason: dead[i] };
+    }
+  }
+  return { idx: item.idx, url: item.url, label: item.label, expired: false, status: code, reason: "OK" };
 }
-function esc(s) {
-  return String(s || "").replace(/[&<>"']/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; });
-}`;
+
+function extractLinks(m) {
+  var arr = [];
+  var add = function(lbl, u) { if (u && /^https?:\\/\\//i.test(String(u).trim())) arr.push({ label: lbl, url: String(u).trim() }); };
+  add("Watch Online", m.watchUrl);
+  add("BG Video", m.bgVideo);
+  add("Trailer", m.trailer);
+  (m.links || []).forEach(function(l, i) { add("Download (" + (l.label || (i + 1)) + ")", l.link); });
+  if (m.episodes) {
+    if (m.episodes.indexOf("::") !== -1) {
+      m.episodes.split(" || ").forEach(function(ep) {
+        var sp = ep.split("::");
+        (sp[1] || "").split(";;").forEach(function(q) { var p = q.split("|"); add(sp[0].trim() + " (" + (p[1] || "HD").trim() + ")", p[0]); });
+      });
+    } else {
+      m.episodes.split(/,|\\n/).forEach(function(ep, i) { var p = ep.trim().split("|"); add(p[1] ? p[1].trim() : "Ep " + (i + 1), p[0]); });
+    }
+  }
+  return arr;
+}
+
+function jsonResponse(obj) { return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON); }
+function esc(s) { return String(s || "").replace(/[&<>"']/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }`;
 
     let ghConfig = JSON.parse(localStorage.getItem("cine_gh_config") || "null");
     let savedCheckerCfg = JSON.parse(localStorage.getItem("cine_checker_cfg") || "null");
@@ -619,6 +778,12 @@ function esc(s) {
       gmail: (savedCheckerCfg && savedCheckerCfg.gmail) ? savedCheckerCfg.gmail : DEFAULT_GMAIL,
       gasUrl: (savedCheckerCfg && savedCheckerCfg.gasUrl) ? savedCheckerCfg.gasUrl : ""
     };
+    let autoCheckEnabled = localStorage.getItem("cine_auto_check_on") !== "0";
+    let nextAutoCheckAt = Number(localStorage.getItem("cine_next_autocheck_at") || (Date.now() + ONE_HOUR_MS));
+    let lastScanAt = localStorage.getItem("cine_last_scan_at") || "";
+    let autoCheckIntervalId = null;
+    let isScanningNow = false;
+
     let defaultBranch = "main";
     let fileSha = null;
     let allMovies = [];
@@ -675,6 +840,56 @@ function esc(s) {
 
     function toggleSidebar() { document.getElementById("wpSidebar").classList.toggle("open"); }
 
+    function startAutoCheckTicker() {
+      if (autoCheckIntervalId) clearInterval(autoCheckIntervalId);
+      updateAutoCheckBarUI();
+      autoCheckIntervalId = setInterval(() => {
+        updateAutoCheckBarUI();
+        if (!autoCheckEnabled || isScanningNow || document.getElementById("adminShell").style.display === "none") return;
+        if (Date.now() >= nextAutoCheckAt) {
+          nextAutoCheckAt = Date.now() + ONE_HOUR_MS;
+          localStorage.setItem("cine_next_autocheck_at", String(nextAutoCheckAt));
+          scanAllMoviesLinks(false);
+        }
+      }, 1000);
+    }
+
+    function toggleAutoCheck() {
+      autoCheckEnabled = !autoCheckEnabled;
+      localStorage.setItem("cine_auto_check_on", autoCheckEnabled ? "1" : "0");
+      if (autoCheckEnabled && nextAutoCheckAt <= Date.now()) {
+        nextAutoCheckAt = Date.now() + ONE_HOUR_MS;
+        localStorage.setItem("cine_next_autocheck_at", String(nextAutoCheckAt));
+      }
+      updateAutoCheckBarUI();
+      showToast(autoCheckEnabled ? "⏰ ১ ঘণ্টা পর পর অটো-চেক চালু হয়েছে!" : "⏸️ অটো-চেক বন্ধ করা হয়েছে।");
+    }
+
+    function updateAutoCheckBarUI() {
+      const bar = document.getElementById("autoCheckBar");
+      const lbl = document.getElementById("autoCheckLabel");
+      const timerTxt = document.getElementById("autoCheckTimerText");
+      const lastTxt = document.getElementById("lastScanTimeText");
+      const btn = document.getElementById("btnToggleAutoCheck");
+      if (!bar) return;
+
+      if (autoCheckEnabled) {
+        bar.classList.remove("off");
+        lbl.innerText = "⏰ ১ ঘণ্টা পর পর অটো-চেক: চালু (ON)";
+        btn.innerText = "⏸️ বন্ধ করুন";
+        const diff = Math.max(0, Math.floor((nextAutoCheckAt - Date.now()) / 1000));
+        const mins = String(Math.floor(diff / 60)).padStart(2, "0");
+        const secs = String(diff % 60).padStart(2, "0");
+        timerTxt.innerText = isScanningNow ? "(এখন চেক চলছে...)" : `(পরবর্তী চেক: ${mins}:${secs})`;
+      } else {
+        bar.classList.add("off");
+        lbl.innerText = "⏸️ ১ ঘণ্টা অটো-চেক: বন্ধ (OFF)";
+        btn.innerText = "▶️ চালু করুন";
+        timerTxt.innerText = "";
+      }
+      lastTxt.innerText = lastScanAt ? `· সর্বশেষ চেক: ${new Date(lastScanAt).toLocaleTimeString()}` : "";
+    }
+
     async function handleGitHubLogin() {
       const user = document.getElementById("ghUser").value.trim();
       const repo = document.getElementById("ghRepo").value.trim();
@@ -717,6 +932,7 @@ function esc(s) {
         await loadMoviesFromGitHub(true);
         document.getElementById("loginView").style.display = "none";
         document.getElementById("adminShell").style.display = "block";
+        startAutoCheckTicker();
         return true;
       } catch (e) {
         showToast("নেটওয়ার্ক সমস্যা!", true);
@@ -863,6 +1079,7 @@ function esc(s) {
 
     function logoutAdmin() {
       localStorage.removeItem("cine_gh_logged");
+      if (autoCheckIntervalId) clearInterval(autoCheckIntervalId);
       document.getElementById("adminShell").style.display = "none";
       document.getElementById("loginView").style.display = "flex";
       document.getElementById("loginPassword").value = "";
@@ -923,7 +1140,7 @@ function esc(s) {
       const expCard = document.getElementById("expiredSummaryCard");
       if (expiredMovies.length > 0) {
         expCard.style.display = "block";
-        document.getElementById("expiredSummaryList").innerHTML = expiredMovies.slice(0, 6).map(({ m, idx }) => `
+        document.getElementById("expiredSummaryList").innerHTML = expiredMovies.slice(0, 8).map(({ m, idx }) => `
           <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f5c2c7; gap:10px; flex-wrap:wrap;">
             <div>
               <strong style="color:#b32d2e;">🔴 ${escapeHtml(m.title)}</strong>
@@ -1047,53 +1264,83 @@ function esc(s) {
       return items;
     }
 
-    async function checkUrlsBatch(items) {
-      if (!items || items.length === 0) return [];
+    async function checkUrlsFastParallel(allItems, onProgress) {
+      if (!allItems || allItems.length === 0) return [];
+      const results = [];
+
       if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
-        try {
-          const res = await fetch(checkerCfg.gasUrl.trim(), {
-            method: "POST",
-            headers: { "Content-Type": "text/plain;charset=utf-8" },
-            body: JSON.stringify({ action: "checkUrls", urls: items })
-          });
-          const data = await res.json();
-          if (data && data.ok && Array.isArray(data.results)) return data.results;
-        } catch (e) {
-          console.warn("GAS check failed, falling back to browser check", e);
+        const chunkSize = 25;
+        for (let i = 0; i < allItems.length; i += chunkSize) {
+          if (scanCancelled) break;
+          const chunk = allItems.slice(i, i + chunkSize);
+          try {
+            const res = await fetch(checkerCfg.gasUrl.trim(), {
+              method: "POST",
+              headers: { "Content-Type": "text/plain;charset=utf-8" },
+              body: JSON.stringify({ action: "checkUrls", urls: chunk })
+            });
+            const data = await res.json();
+            if (data && data.ok && Array.isArray(data.results)) {
+              results.push(...data.results);
+              if (onProgress) onProgress(Math.min(i + chunk.length, allItems.length), allItems.length);
+              continue;
+            }
+          } catch (e) { console.warn("GAS chunk failed, using browser parallel pool", e); }
+
+          const fallbackRes = await checkBrowserParallelPool(chunk, 12);
+          results.push(...fallbackRes);
+          if (onProgress) onProgress(Math.min(i + chunk.length, allItems.length), allItems.length);
+        }
+        return results;
+      }
+
+      return await checkBrowserParallelPool(allItems, 15, onProgress);
+    }
+
+    async function checkBrowserParallelPool(items, concurrency = 15, onProgress = null) {
+      const results = new Array(items.length);
+      let cursor = 0;
+      let done = 0;
+
+      async function worker() {
+        while (cursor < items.length && !scanCancelled) {
+          const i = cursor++;
+          results[i] = await checkUrlInBrowser(items[i]);
+          done++;
+          if (onProgress && (done % 5 === 0 || done === items.length)) {
+            onProgress(done, items.length);
+          }
         }
       }
 
-      const out = [];
-      for (const item of items) {
-        const r = await checkUrlInBrowser(item);
-        out.push(r);
-      }
-      return out;
+      const workers = [];
+      for (let w = 0; w < Math.min(concurrency, items.length); w++) workers.push(worker());
+      await Promise.all(workers);
+      return results.filter(Boolean);
     }
 
     async function checkUrlInBrowser(item) {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 8500);
+      const timer = setTimeout(() => controller.abort(), 5500);
       try {
         const res = await fetch(item.url, { method: "HEAD", signal: controller.signal });
         clearTimeout(timer);
         if (res.status >= 400) {
-          return { url: item.url, label: item.label, expired: true, status: res.status, reason: `HTTP ${res.status}` };
+          return { ...item, expired: true, status: res.status, reason: `HTTP ${res.status}` };
         }
-        return { url: item.url, label: item.label, expired: false, status: res.status, reason: "OK" };
+        return { ...item, expired: false, status: res.status, reason: "OK" };
       } catch (err) {
         try {
           const c2 = new AbortController();
-          const t2 = setTimeout(() => c2.abort(), 7500);
+          const t2 = setTimeout(() => c2.abort(), 5000);
           await fetch(item.url, { method: "HEAD", mode: "no-cors", signal: c2.signal });
           clearTimeout(t2);
-          return { url: item.url, label: item.label, expired: false, status: 0, reason: "Server Alive (CORS)" };
+          return { ...item, expired: false, status: 0, reason: "Server Alive (CORS)" };
         } catch (err2) {
           clearTimeout(timer);
           const isAbort = err2 && err2.name === "AbortError";
           return {
-            url: item.url,
-            label: item.label,
+            ...item,
             expired: true,
             status: 0,
             reason: isAbort ? "Timeout / Slow" : "Dead Link / DNS Error"
@@ -1102,13 +1349,16 @@ function esc(s) {
       }
     }
 
-    async function sendGmailAlertForMovie(movie, expiredList, manualNotify = false) {
+    // Send 1 separate email per date! (21st -> 1 email for 21st, 22nd -> 1 separate email for 22nd)
+    async function sendCombinedGmailAlert(moviesPayload, manualNotify = false) {
       const gmail = (checkerCfg.gmail || DEFAULT_GMAIL).trim();
       if (!gmail) {
         if (manualNotify) showToast("আগে ⚙️ Gmail সেটিংসে গিয়ে আপনার Gmail দিন!", true);
         return false;
       }
-      if (!expiredList || expiredList.length === 0) return false;
+      if (!moviesPayload || moviesPayload.length === 0) return false;
+
+      const dailySubject = getDailyEmailSubject();
 
       if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
         try {
@@ -1116,35 +1366,38 @@ function esc(s) {
             method: "POST",
             headers: { "Content-Type": "text/plain;charset=utf-8" },
             body: JSON.stringify({
-              action: "sendAlert",
+              action: "sendCombinedAlert",
               email: gmail,
-              movie: { title: movie.title, poster: movie.image || "", category: movie.category || "All" },
-              expired: expiredList
+              subject: dailySubject,
+              movies: moviesPayload
             })
           });
           const data = await res.json();
           if (data && data.ok) {
-            if (manualNotify) showToast(`📧 ${gmail}-এ পোস্টার ও লিংকসহ মেসেজ পাঠানো হয়েছে!`);
+            if (manualNotify) showToast(`📧 ${gmail}-এ আজকের তারিখে (${moviesPayload.length}টি মুভি) পাঠানো হয়েছে!`);
             return true;
           }
-        } catch (e) { console.warn("GAS email failed", e); }
+        } catch (e) { console.warn("GAS combined email failed", e); }
       }
 
       try {
-        const lines = expiredList.map(l => `• ${l.label}: ${l.url} (${l.reason})`).join("\n");
+        const textReport = moviesPayload.map((m, idx) => {
+          const linksStr = (m.expired || []).map(l => `   - ${l.label}: ${l.url} (${l.reason})`).join("\n");
+          return `${idx + 1}. ${m.title}\n   Poster: ${m.poster || "N/A"}\n${linksStr}`;
+        }).join("\n\n");
+
         const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(gmail)}`, {
           method: "POST",
           headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify({
-            _subject: `⚠️ লিংক মেয়াদ শেষ: ${movie.title}`,
-            Movie_Name: movie.title,
-            Poster_URL: movie.image || "No Poster",
-            Category: movie.category || "All",
-            Expired_Links: lines
+            _subject: dailySubject,
+            Date: new Date().toLocaleDateString(),
+            Total_Expired_Movies: `${moviesPayload.length}টি মুভি`,
+            Expired_Movies_Report: textReport
           })
         });
         if (res.ok) {
-          if (manualNotify) showToast(`📧 ${gmail}-এ মেসেজ পাঠানো হয়েছে!`);
+          if (manualNotify) showToast(`📧 ${gmail}-এ আজকের তারিখের রিপোর্ট পাঠানো হয়েছে!`);
           return true;
         }
       } catch (e) {
@@ -1153,16 +1406,27 @@ function esc(s) {
       return false;
     }
 
+    async function sendAllExpiredCombinedReport(manualNotify = true) {
+      const list = allMovies
+        .filter(m => hasExpiredLinks(m))
+        .map(m => ({ title: m.title, poster: m.image || "", category: m.category || "All", expired: m.expiredLinks }));
+      if (list.length === 0) {
+        showToast("মেয়াদ শেষ কোনো মুভি নেই!");
+        return;
+      }
+      await sendCombinedGmailAlert(list, manualNotify);
+    }
+
     async function checkSingleMovieAndSave(idx, openModalAfter = false) {
       const m = allMovies[idx];
       if (!m) return;
-      const items = extractMovieLinks(m);
+      const items = extractMovieLinks(m).map(x => ({ ...x, idx }));
       if (items.length === 0) {
         showToast("এই মুভিতে চেক করার মতো কোনো লিংক নেই!", true);
         return;
       }
-      showToast(`🔍 "${m.title}"-এর ${items.length}টি লিংক চেক হচ্ছে...`);
-      const results = await checkUrlsBatch(items);
+      showToast(`🔍 "${m.title}"-এর ${items.length}টি লিংক একসাথে চেক হচ্ছে...`);
+      const results = await checkUrlsFastParallel(items);
       const expiredList = results.filter(r => r.expired).map(r => ({ label: r.label, url: r.url, reason: r.reason }));
 
       const updated = [...allMovies];
@@ -1173,8 +1437,8 @@ function esc(s) {
         renderDashboardStats();
         renderMoviesTable();
         if (expiredList.length > 0) {
-          showToast(`🔴 ${expiredList.length}টি লিংকের মেয়াদ শেষ পাওয়া গেছে!`, true);
-          await sendGmailAlertForMovie(updated[idx], expiredList, false);
+          showToast(`🔴 ${expiredList.length}টি লিংকের মেয়াদ শেষ!`, true);
+          await sendCombinedGmailAlert([{ title: m.title, poster: m.image || "", category: m.category || "All", expired: expiredList }], false);
         } else {
           showToast("✅ সব লিংক সচল আছে!");
         }
@@ -1184,57 +1448,91 @@ function esc(s) {
       }
     }
 
-    async function scanAllMoviesLinks() {
-      if (allMovies.length === 0) { showToast("চেক করার মতো কোনো মুভি নেই!", true); return; }
+    async function scanAllMoviesLinks(isManual = true) {
+      if (isScanningNow) return;
+      if (allMovies.length === 0) {
+        if (isManual) showToast("চেক করার মতো কোনো মুভি নেই!", true);
+        return;
+      }
+      isScanningNow = true;
       scanCancelled = false;
+
       const box = document.getElementById("scanProgressBox");
       const txt = document.getElementById("scanProgressText");
       const fill = document.getElementById("scanProgressFill");
       box.style.display = "block";
+      fill.style.width = "5%";
+
+      const allItems = [];
+      allMovies.forEach((m, idx) => {
+        extractMovieLinks(m).forEach(l => allItems.push({ idx, label: l.label, url: l.url }));
+      });
+
+      txt.innerText = `⚡ মোট ${allMovies.length}টি মুভির ${allItems.length}টি লিংক দ্রুত প্যারালাল চেক হচ্ছে...`;
+
+      const results = await checkUrlsFastParallel(allItems, (done, total) => {
+        const pct = Math.max(5, Math.round((done / Math.max(1, total)) * 100));
+        fill.style.width = pct + "%";
+        txt.innerText = `⚡ লিংক চেক হচ্ছে: ${done} / ${total} টি (${pct}%)`;
+      });
+
+      box.style.display = "none";
+      isScanningNow = false;
+
+      if (scanCancelled) {
+        showToast("চেকিং থামানো হয়েছে।", true);
+        updateAutoCheckBarUI();
+        return;
+      }
+
+      const byMovie = {};
+      results.forEach(r => {
+        if (r && r.expired) {
+          if (!byMovie[r.idx]) byMovie[r.idx] = [];
+          byMovie[r.idx].push({ label: r.label, url: r.url, reason: r.reason });
+        }
+      });
 
       const updated = [...allMovies];
-      let totalExpiredMovies = 0;
-      let emailedCount = 0;
+      const newlyExpiredMovies = [];
+      const allExpiredMoviesPayload = [];
+      const nowIso = new Date().toISOString();
 
       for (let i = 0; i < updated.length; i++) {
-        if (scanCancelled) break;
         const m = updated[i];
-        const pct = Math.round(((i + 1) / updated.length) * 100);
-        txt.innerText = `🔍 চেক হচ্ছে (${i + 1}/${updated.length}): ${m.title}`;
-        fill.style.width = pct + "%";
-
-        const items = extractMovieLinks(m);
-        if (items.length === 0) continue;
-
-        const prevExpiredUrls = new Set((m.expiredLinks || []).map(x => x.url));
-        const results = await checkUrlsBatch(items);
-        const expiredList = results.filter(r => r.expired).map(r => ({ label: r.label, url: r.url, reason: r.reason }));
-
-        updated[i] = { ...m, expiredLinks: expiredList, lastLinkCheck: new Date().toISOString() };
-
-        if (expiredList.length > 0) {
-          totalExpiredMovies++;
-          const hasNewlyExpired = expiredList.some(x => !prevExpiredUrls.has(x.url));
-          if (hasNewlyExpired && (checkerCfg.gmail || DEFAULT_GMAIL)) {
-            const ok = await sendGmailAlertForMovie(updated[i], expiredList, false);
-            if (ok) emailedCount++;
+        const prevSet = new Set((m.expiredLinks || []).map(x => x.url));
+        const newExp = byMovie[i] || [];
+        updated[i] = { ...m, expiredLinks: newExp, lastLinkCheck: nowIso };
+        if (newExp.length > 0) {
+          const itemPayload = { title: m.title, poster: m.image || "", category: m.category || "All", expired: newExp };
+          allExpiredMoviesPayload.push(itemPayload);
+          if (newExp.some(x => !prevSet.has(x.url))) {
+            newlyExpiredMovies.push(itemPayload);
           }
         }
       }
 
-      box.style.display = "none";
-      if (scanCancelled) {
-        showToast("চেকিং থামানো হয়েছে।", true);
-        return;
-      }
+      lastScanAt = nowIso;
+      localStorage.setItem("cine_last_scan_at", lastScanAt);
+      nextAutoCheckAt = Date.now() + ONE_HOUR_MS;
+      localStorage.setItem("cine_next_autocheck_at", String(nextAutoCheckAt));
+      updateAutoCheckBarUI();
 
       try {
         showToast("💾 লিংক স্ট্যাটাস GitHub-এ সেভ হচ্ছে...");
-        await pushMoviesToGitHub(updated, "Batch link expiration check");
+        await pushMoviesToGitHub(updated, "Fast parallel link expiration check");
         renderDashboardStats();
         renderMoviesTable();
-        if (totalExpiredMovies > 0) {
-          showToast(`🔴 ${totalExpiredMovies}টি মুভিতে মেয়াদ শেষ লিংক পাওয়া গেছে! ${emailedCount > 0 ? `(blogor6@gmail.com-এ ${emailedCount}টি মেসেজ গেছে)` : ""}`, true);
+
+        // Only send NEW expirations in auto-scan, or all current expirations on manual scan (1 email for today's date)
+        const toEmailList = isManual ? allExpiredMoviesPayload : newlyExpiredMovies;
+        let emailSent = false;
+        if (toEmailList.length > 0) {
+          emailSent = await sendCombinedGmailAlert(toEmailList, false);
+        }
+
+        if (allExpiredMoviesPayload.length > 0) {
+          showToast(`🔴 ${allExpiredMoviesPayload.length}টি মুভিতে মেয়াদ শেষ! ${emailSent ? "(আজকের তারিখে blogor6@gmail.com-এ পাঠানো হয়েছে)" : ""}`, true);
         } else {
           showToast("✅ সব মুভির লিংক সচল আছে!");
         }
@@ -1320,7 +1618,7 @@ function esc(s) {
     async function sendManualAlertFromEye(idx) {
       const m = allMovies[idx];
       if (!m || !hasExpiredLinks(m)) return;
-      await sendGmailAlertForMovie(m, m.expiredLinks, true);
+      await sendCombinedGmailAlert([{ title: m.title, poster: m.image || "", category: m.category || "All", expired: m.expiredLinks }], true);
     }
 
     async function markSingleUrlExpired(idx, btn) {
@@ -1337,7 +1635,7 @@ function esc(s) {
         renderDashboardStats();
         renderMoviesTable();
         openEyeModal(idx);
-        await sendGmailAlertForMovie(updated[idx], list, false);
+        await sendCombinedGmailAlert([{ title: m.title, poster: m.image || "", category: m.category || "All", expired: list }], false);
         showToast("🔴 মেয়াদ শেষ হিসেবে মার্ক ও সেভ হয়েছে!");
       } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
     }
@@ -1386,7 +1684,7 @@ function esc(s) {
       checkerCfg.gasUrl = document.getElementById("cfgGasUrl").value.trim();
       localStorage.setItem("cine_checker_cfg", JSON.stringify(checkerCfg));
       const sampleMovie = allMovies[0] || { title: "Test Movie (2025)", image: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg", category: "Trending" };
-      await sendGmailAlertForMovie(sampleMovie, [{ label: "Watch Online (Test)", url: "https://example.com/expired-test.mp4", reason: "HTTP 404 (Test)" }], true);
+      await sendCombinedGmailAlert([{ title: sampleMovie.title, poster: sampleMovie.image || "", category: sampleMovie.category || "All", expired: [{ label: "Watch Online (Test)", url: "https://example.com/expired-test.mp4", reason: "HTTP 404 (Test)" }] }], true);
     }
 
     function renderCategoryChips() {
