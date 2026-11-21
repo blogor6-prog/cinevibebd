@@ -34,13 +34,17 @@
     .form-group label { display: block; font-size: 13px; font-weight: 700; margin-bottom: 4px; }
     .wp-input, .wp-select, .wp-textarea { width: 100%; padding: 8px 10px; border: 1px solid #8c8f94; border-radius: 4px; font-size: 13.5px; background: #fff; outline: none; }
     .wp-input:focus, .wp-select:focus, .wp-textarea:focus { border-color: var(--wp-blue); box-shadow: 0 0 0 1px var(--wp-blue); }
+    .input-expired { border-color: var(--wp-red) !important; background: #fff5f5 !important; box-shadow: 0 0 0 1px var(--wp-red) !important; }
 
     .wp-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 8px 14px; border-radius: 4px; border: 1px solid var(--wp-blue); background: var(--wp-blue); color: #fff; font-size: 13px; font-weight: 700; cursor: pointer; }
     .wp-btn:hover { background: var(--wp-blue-hover); }
     .wp-btn:disabled { opacity: 0.6; cursor: not-allowed; }
     .wp-btn-secondary { background: #f6f7f7; color: var(--wp-blue); border-color: var(--wp-blue); }
+    .wp-btn-secondary:hover { background: #eef4f9; }
     .wp-btn-danger { background: var(--wp-red); border-color: var(--wp-red); color: #fff; }
+    .wp-btn-danger:hover { background: #b32d2e; }
     .wp-btn-success { background: var(--wp-green); border-color: var(--wp-green); color: #fff; }
+    .wp-btn-amber { background: var(--wp-amber); border-color: var(--wp-amber); color: #1d2327; }
     .wp-btn-sm { padding: 5px 10px; font-size: 12px; }
 
     .wp-topbar { position: fixed; top: 0; left: 0; width: 100%; height: 44px; background: var(--wp-dark); color: #fff; display: flex; align-items: center; justify-content: space-between; padding: 0 14px; z-index: 1000; }
@@ -50,14 +54,15 @@
     .wp-topbar-link { color: #72aee6; font-size: 12.5px; font-weight: 700; cursor: pointer; text-decoration: none; }
 
     .wp-shell { display: none; padding-top: 44px; min-height: 100vh; }
-    .wp-sidebar { position: fixed; top: 44px; left: 0; bottom: 0; width: 205px; background: var(--wp-dark); color: #f0f0f1; overflow-y: auto; z-index: 900; transition: transform 0.2s ease; }
+    .wp-sidebar { position: fixed; top: 44px; left: 0; bottom: 0; width: 215px; background: var(--wp-dark); color: #f0f0f1; overflow-y: auto; z-index: 900; transition: transform 0.2s ease; }
     .wp-menu { list-style: none; padding: 10px 0; }
-    .wp-menu-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; font-size: 13.5px; cursor: pointer; border-left: 4px solid transparent; }
+    .wp-menu-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 14px; font-size: 13.5px; cursor: pointer; border-left: 4px solid transparent; }
     .wp-menu-item:hover { background: var(--wp-darker); color: #72aee6; }
     .wp-menu-item.active { background: var(--wp-blue); color: #fff; font-weight: 700; border-left-color: #fff; }
     .wp-menu-divider { height: 1px; background: #2c3338; margin: 8px 0; }
+    .menu-count-pill { background: var(--wp-red); color: #fff; font-size: 11px; font-weight: 800; padding: 1px 7px; border-radius: 999px; display: none; }
 
-    .wp-main { margin-left: 205px; padding: 18px; }
+    .wp-main { margin-left: 215px; padding: 18px; }
     .wp-page-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
     .wp-page-title { font-size: 20px; font-weight: 700; }
 
@@ -65,7 +70,7 @@
     .stat-card { background: #fff; border: 1px solid var(--wp-border); padding: 14px; border-left: 4px solid var(--wp-blue); }
     .stat-card.green { border-left-color: var(--wp-green); }
     .stat-card.amber { border-left-color: var(--wp-amber); }
-    .stat-card.red { border-left-color: var(--wp-red); }
+    .stat-card.red { border-left-color: var(--wp-red); cursor: pointer; }
     .stat-num { font-size: 24px; font-weight: 800; }
     .stat-label { font-size: 12px; color: var(--wp-muted); font-weight: 600; }
 
@@ -77,16 +82,45 @@
     .filter-tabs { display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; }
     .filter-tab { color: var(--wp-blue); cursor: pointer; font-weight: 600; }
     .filter-tab.active { color: var(--wp-dark); font-weight: 800; text-decoration: underline; }
+    .filter-tab.red-tab { color: var(--wp-red); }
 
     .wp-table-wrap { width: 100%; overflow-x: auto; background: #fff; border: 1px solid var(--wp-border); }
-    table.wp-table { width: 100%; border-collapse: collapse; min-width: 650px; font-size: 13px; }
+    table.wp-table { width: 100%; border-collapse: collapse; min-width: 720px; font-size: 13px; }
     table.wp-table th, table.wp-table td { padding: 9px 11px; text-align: left; border-bottom: 1px solid #e5e5e5; vertical-align: middle; }
     table.wp-table th { border-bottom: 1px solid var(--wp-border); font-weight: 700; }
     table.wp-table tr:nth-child(even) { background: #f9f9f9; }
+    table.wp-table tr.row-expired { background: #fff0f1 !important; }
+    table.wp-table tr.row-expired td:first-child { border-left: 4px solid var(--wp-red); }
+
     .thumb-img { width: 40px; height: 56px; object-fit: cover; border-radius: 3px; background: #1d2327; }
     .badge { display: inline-block; padding: 2px 7px; border-radius: 3px; font-size: 11px; font-weight: 700; background: #e5e5e5; }
     .badge-ok { background: #edfaef; color: #007017; border: 1px solid #68de7c; }
     .badge-warn { background: #fcf0f1; color: #b32d2e; border: 1px solid #f86368; }
+    .badge-expired { background: #d63638; color: #fff; border: 1px solid #b32d2e; }
+    .badge-trend { background: #fff3cd; color: #8a5300; border: 1px solid #f0b849; }
+
+    .eye-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+      padding: 4px 9px; border-radius: 4px; border: 1px solid #c3c4c7; background: #fff;
+      cursor: pointer; font-size: 12px; font-weight: 700; color: var(--wp-dark);
+    }
+    .eye-btn:hover { background: #f0f0f1; }
+    .eye-btn.eye-red {
+      background: #d63638; border-color: #b32d2e; color: #fff;
+      animation: pulseRed 1.6s infinite;
+    }
+    @keyframes pulseRed {
+      0% { box-shadow: 0 0 0 0 rgba(214, 54, 56, 0.55); }
+      70% { box-shadow: 0 0 0 7px rgba(214, 54, 56, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(214, 54, 56, 0); }
+    }
+
+    .scan-progress-box {
+      display: none; background: #fff; border: 1px solid var(--wp-border); border-left: 4px solid var(--wp-blue);
+      padding: 12px 14px; margin-bottom: 14px;
+    }
+    .scan-progress-track { width: 100%; height: 8px; background: #e5e5e5; border-radius: 999px; overflow: hidden; margin-top: 7px; }
+    .scan-progress-fill { height: 100%; width: 0%; background: var(--wp-blue); transition: width 0.2s ease; }
 
     .editor-grid { display: grid; grid-template-columns: 1fr 290px; gap: 16px; align-items: start; }
     .two-col-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -108,7 +142,32 @@
     .tmdb-hit-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 3px; }
     .tmdb-hit-title { font-size: 11px; font-weight: 700; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .wp-toast { position: fixed; bottom: 20px; right: 20px; background: var(--wp-dark); color: #fff; padding: 11px 16px; border-radius: 4px; border-left: 4px solid var(--wp-green); font-size: 13px; font-weight: 700; z-index: 3000; display: none; }
+    .editor-expired-alert {
+      display: none; background: #fcf0f1; border: 1px solid #f86368; border-left: 5px solid var(--wp-red);
+      padding: 12px 14px; margin-bottom: 14px; border-radius: 4px;
+    }
+
+    .wp-modal-backdrop {
+      position: fixed; inset: 0; background: rgba(16, 21, 23, 0.7);
+      display: none; align-items: center; justify-content: center; padding: 14px; z-index: 2500;
+    }
+    .wp-modal {
+      width: 100%; max-width: 650px; max-height: 90vh; overflow-y: auto;
+      background: #fff; border: 1px solid var(--wp-border); border-radius: 6px; box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
+    .wp-modal-head {
+      padding: 12px 16px; border-bottom: 1px solid var(--wp-border); background: #f6f7f7;
+      display: flex; align-items: center; justify-content: space-between; gap: 10px; position: sticky; top: 0; z-index: 5;
+    }
+    .wp-modal-body { padding: 16px; }
+    .eye-link-item {
+      border: 1px solid #e5e5e5; border-radius: 5px; padding: 10px; margin-bottom: 8px; background: #fafafa;
+    }
+    .eye-link-item.dead { border-color: #f86368; background: #fff5f5; }
+    .eye-link-item.ok { border-color: #68de7c; background: #f3fcf4; }
+    .eye-link-url { font-size: 12px; color: var(--wp-blue); word-break: break-all; display: block; margin: 4px 0; }
+
+    .wp-toast { position: fixed; bottom: 20px; right: 20px; background: var(--wp-dark); color: #fff; padding: 11px 16px; border-radius: 4px; border-left: 4px solid var(--wp-green); font-size: 13px; font-weight: 700; z-index: 3000; display: none; max-width: 340px; }
     .wp-toast.error { border-left-color: var(--wp-red); }
 
     @media (max-width: 860px) { .editor-grid { grid-template-columns: 1fr; } }
@@ -124,6 +183,57 @@
 <body>
 
   <div class="wp-toast" id="wpToast"></div>
+
+  <!-- EYE MODAL (কোন কোন লিংকের মেয়াদ শেষ তা দেখার জন্য) -->
+  <div class="wp-modal-backdrop" id="eyeModalBackdrop" onclick="if(event.target===this) closeEyeModal()">
+    <div class="wp-modal">
+      <div class="wp-modal-head">
+        <strong id="eyeModalHeader">👁️ লিংক স্ট্যাটাস রিপোর্ট</strong>
+        <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="closeEyeModal()">✕ বন্ধ</button>
+      </div>
+      <div class="wp-modal-body" id="eyeModalBody"></div>
+    </div>
+  </div>
+
+  <!-- GMAIL & CHECKER SETTINGS MODAL -->
+  <div class="wp-modal-backdrop" id="settingsModalBackdrop" onclick="if(event.target===this) closeSettingsModal()">
+    <div class="wp-modal">
+      <div class="wp-modal-head">
+        <strong>⚙️ Gmail অ্যালার্ট ও লিংক চেকার সেটিংস</strong>
+        <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="closeSettingsModal()">✕ বন্ধ</button>
+      </div>
+      <div class="wp-modal-body">
+        <div class="form-group">
+          <label>📧 আপনার Gmail এড্রেস (যেখানে মেয়াদ শেষ লিংকের মেসেজ যাবে)</label>
+          <input type="email" id="cfgGmail" class="wp-input" value="blogor6@gmail.com" placeholder="blogor6@gmail.com">
+        </div>
+        <div class="form-group">
+          <label>🔗 Google Apps Script Web App URL (পোস্টারের ছবিসহ Gmail ও ১০০% নির্ভুল লিংক চেকের জন্য)</label>
+          <input type="url" id="cfgGasUrl" class="wp-input" placeholder="https://script.google.com/macros/s/...../exec">
+          <p style="font-size:11.5px; color:#646970; margin-top:4px;">
+            Google Apps Script URL দিলে Google Drive, R2 বা যেকোনো সার্ভারের লিংক CORS ছাড়াই চেক হবে এবং মেয়াদ শেষ হলে সরাসরি আপনার <b>blogor6@gmail.com</b>-এ মুভির নাম, পোস্টার ছবি ও লিংক পাঠাবে।
+          </p>
+        </div>
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+          <button class="wp-btn" onclick="saveCheckerSettings()">💾 সেটিংস সেভ করুন</button>
+          <button class="wp-btn wp-btn-secondary" onclick="sendTestGmailAlert()">📧 টেস্ট মেসেজ পাঠান</button>
+          <button class="wp-btn wp-btn-amber" onclick="toggleGasGuide()">📋 Apps Script কোড দেখুন</button>
+        </div>
+
+        <div id="gasGuideBox" style="display:none; border:1px solid var(--wp-border); background:#f9f9f9; padding:12px; border-radius:4px;">
+          <p style="font-size:12.5px; font-weight:700; margin-bottom:6px;">কিভাবে ২ মিনিটে Google Apps Script সেট করবেন:</p>
+          <ol style="font-size:12px; padding-left:18px; margin-bottom:8px; line-height:1.6;">
+            <li><b>script.google.com</b>-এ <b>blogor6@gmail.com</b> দিয়ে ঢুকে <b>New Project</b> খুলুন।</li>
+            <li>নিচের কোড কপি করে বসিয়ে Save করুন।</li>
+            <li>উপরে <b>Deploy ➔ New deployment ➔ Web app</b> দিন (Execute as: <b>Me</b>, Who has access: <b>Anyone</b>)।</li>
+            <li>পাওয়া URL-টি উপরের বক্সে পেস্ট করে সেভ করুন।</li>
+          </ol>
+          <textarea id="gasScriptText" class="wp-textarea" rows="8" readonly style="font-size:11px; font-family:monospace;"></textarea>
+          <button class="wp-btn wp-btn-sm wp-btn-secondary" style="margin-top:6px;" onclick="copyGasCode()">📋 কোড কপি করুন</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- LOGIN -->
   <div class="login-wrap" id="loginView">
@@ -162,6 +272,7 @@
         <div class="wp-topbar-brand">🎬 CineVibeBD Admin</div>
       </div>
       <div style="display:flex; gap:12px; align-items:center;">
+        <span class="wp-topbar-link" onclick="openSettingsModal()">⚙️ Gmail সেটিংস</span>
         <a href="index.html" target="_blank" class="wp-topbar-link">🌐 সাইট দেখুন</a>
         <span class="wp-topbar-link" style="color:#f86368;" onclick="logoutAdmin()">লগআউট</span>
       </div>
@@ -169,22 +280,37 @@
 
     <aside class="wp-sidebar" id="wpSidebar">
       <ul class="wp-menu">
-        <li class="wp-menu-item active" data-tab="dashboard" onclick="switchTab('dashboard')">📊 ড্যাশবোর্ড</li>
+        <li class="wp-menu-item active" data-tab="dashboard" onclick="switchTab('dashboard')"><span>📊 ড্যাশবোর্ড</span></li>
         <div class="wp-menu-divider"></div>
-        <li class="wp-menu-item" data-tab="allMovies" onclick="switchTab('allMovies', 'All')">🎬 সব মুভি (All)</li>
-        <li class="wp-menu-item" data-tab="addMovie" onclick="openAddNewMovie()">➕ নতুন মুভি যোগ</li>
-        <li class="wp-menu-item" data-tab="seriesOnly" onclick="switchTab('allMovies', 'Series')">📺 ওয়েব সিরিজ</li>
-        <li class="wp-menu-item" data-tab="adultOnly" onclick="switchTab('allMovies', '18+ Adult')">🔞 18+ Adult</li>
+        <li class="wp-menu-item" data-tab="allMovies" onclick="switchTab('allMovies', 'All')"><span>🎬 সব মুভি (All)</span></li>
+        <li class="wp-menu-item" data-tab="addMovie" onclick="openAddNewMovie()"><span>➕ নতুন মুভি যোগ</span></li>
+        <li class="wp-menu-item" data-tab="seriesOnly" onclick="switchTab('allMovies', 'Series')"><span>📺 ওয়েব সিরিজ</span></li>
+        <li class="wp-menu-item" data-tab="adultOnly" onclick="switchTab('allMovies', '18+ Adult')"><span>🔞 18+ Adult</span></li>
+        <li class="wp-menu-item" data-tab="expiredOnly" onclick="switchTab('allMovies', 'Expired')" style="color:#ff9b9d;">
+          <span>🔴 মেয়াদ শেষ লিংক</span>
+          <span class="menu-count-pill" id="sidebarExpiredBadge">0</span>
+        </li>
         <div class="wp-menu-divider"></div>
-        <li class="wp-menu-item" onclick="logoutAdmin()" style="color:#f86368;">🚪 লগআউট</li>
+        <li class="wp-menu-item" onclick="openSettingsModal()"><span>⚙️ Gmail ও চেকার সেটিংস</span></li>
+        <li class="wp-menu-item" onclick="logoutAdmin()" style="color:#f86368;"><span>🚪 লগআউট</span></li>
       </ul>
     </aside>
 
     <main class="wp-main">
+      <!-- LIVE SCAN PROGRESS -->
+      <div class="scan-progress-box" id="scanProgressBox">
+        <div style="display:flex; justify-content:space-between; align-items:center; font-size:13px; font-weight:700;">
+          <span id="scanProgressText">🔍 লিংক চেক হচ্ছে...</span>
+          <button class="wp-btn wp-btn-sm wp-btn-danger" onclick="cancelAllScan()">থামান</button>
+        </div>
+        <div class="scan-progress-track"><div class="scan-progress-fill" id="scanProgressFill"></div></div>
+      </div>
+
       <section id="tabDashboard">
         <div class="wp-page-header">
           <h2 class="wp-page-title">ড্যাশবোর্ড</h2>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="wp-btn wp-btn-danger" id="btnScanAllDash" onclick="scanAllMoviesLinks()">🔍 সব লিংক চেক করুন</button>
             <button class="wp-btn wp-btn-success" id="btnImportSheet" onclick="importFromGoogleSheet()">📥 Google Sheet থেকে সব মুভি আনো</button>
             <button class="wp-btn wp-btn-secondary" onclick="loadMoviesFromGitHub()">🔄 রিফ্রেশ</button>
             <button class="wp-btn" onclick="openAddNewMovie()">➕ নতুন মুভি যোগ</button>
@@ -194,8 +320,18 @@
           <div class="stat-card"><div class="stat-num" id="statTotal">0</div><div class="stat-label">মোট মুভি ও সিরিজ</div></div>
           <div class="stat-card green"><div class="stat-num" id="statWatch">0</div><div class="stat-label">Watch লিংক যুক্ত</div></div>
           <div class="stat-card amber"><div class="stat-num" id="statSeries">0</div><div class="stat-label">ওয়েব সিরিজ</div></div>
+          <div class="stat-card red" onclick="switchTab('allMovies', 'Expired')"><div class="stat-num" id="statExpired" style="color:var(--wp-red);">0</div><div class="stat-label">🔴 মেয়াদ শেষ (ক্লিক করুন)</div></div>
           <div class="stat-card red"><div class="stat-num" id="statAdult">0</div><div class="stat-label">18+ Adult</div></div>
         </div>
+
+        <div class="wp-card" id="expiredSummaryCard" style="display:none; border-color:#f86368;">
+          <div class="wp-card-header" style="background:#fcf0f1; color:#b32d2e;">
+            <span>🚨 মেয়াদ শেষ লিংকযুক্ত মুভি (👁️ চোখে ক্লিক করে দেখুন)</span>
+            <button class="wp-btn wp-btn-sm wp-btn-danger" onclick="switchTab('allMovies', 'Expired')">সবগুলো দেখুন ➔</button>
+          </div>
+          <div class="wp-card-body" id="expiredSummaryList"></div>
+        </div>
+
         <div class="wp-card">
           <div class="wp-card-header">
             <span>🆕 সর্বশেষ যুক্ত করা ৫টি মুভি</span>
@@ -208,7 +344,8 @@
       <section id="tabAllMovies" style="display:none;">
         <div class="wp-page-header">
           <h2 class="wp-page-title">সব মুভি তালিকা</h2>
-          <div style="display:flex; gap:8px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="wp-btn wp-btn-danger" onclick="scanAllMoviesLinks()">🔍 সব লিংক চেক</button>
             <button class="wp-btn wp-btn-secondary" onclick="loadMoviesFromGitHub()">🔄 রিফ্রেশ</button>
             <button class="wp-btn" onclick="openAddNewMovie()">➕ Add New</button>
           </div>
@@ -222,14 +359,15 @@
             <span class="filter-tab" onclick="setTableFilter('Hindi', this)">Hindi</span> |
             <span class="filter-tab" onclick="setTableFilter('Bollywood', this)">Bollywood</span> |
             <span class="filter-tab" onclick="setTableFilter('Hollywood', this)">Hollywood</span> |
-            <span class="filter-tab" onclick="setTableFilter('18+ Adult', this)">18+ Adult</span>
+            <span class="filter-tab" onclick="setTableFilter('18+ Adult', this)">18+ Adult</span> |
+            <span class="filter-tab red-tab" onclick="setTableFilter('Expired', this)">🔴 মেয়াদ শেষ</span>
           </div>
           <input type="text" id="adminSearchInput" class="wp-input" style="width:210px;" placeholder="মুভির নাম খুঁজুন..." oninput="renderMoviesTable()">
         </div>
         <div class="wp-table-wrap">
           <table class="wp-table">
             <thead>
-              <tr><th>পোস্টার</th><th>নাম ও তথ্য</th><th>ক্যাটাগরি</th><th>সিরিয়াল</th><th>Watch লিংক</th><th>অ্যাকশন</th></tr>
+              <tr><th>পোস্টার</th><th>নাম ও তথ্য</th><th>ক্যাটাগরি</th><th>সিরিয়াল / ট্রেন্ডিং</th><th>লিংক ও 👁️ চোখ</th><th>অ্যাকশন</th></tr>
             </thead>
             <tbody id="moviesTableBody"></tbody>
           </table>
@@ -239,8 +377,13 @@
       <section id="tabEditor" style="display:none;">
         <div class="wp-page-header">
           <h2 class="wp-page-title" id="editorPageTitle">নতুন মুভি যোগ করুন</h2>
-          <button class="wp-btn wp-btn-secondary" onclick="switchTab('allMovies', 'All')">⬅️ তালিকায় ফিরুন</button>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button type="button" class="wp-btn wp-btn-amber" id="btnCheckCurrentMovie" onclick="checkEditorCurrentMovie()" style="display:none;">🔍 এই মুভির লিংক চেক করুন</button>
+            <button class="wp-btn wp-btn-secondary" onclick="switchTab('allMovies', 'All')">⬅️ তালিকায় ফিরুন</button>
+          </div>
         </div>
+
+        <div class="editor-expired-alert" id="editorExpiredAlert"></div>
 
         <div class="wp-card">
           <div class="wp-card-header">✨ TMDB অটো-ফিল (নাম লিখলেই সব তথ্য, ল্যাঙ্গুয়েজ, রিলিজ ডেট, জেনরা, স্ক্রিনশট ও ক্যাটাগরি অটো বসবে)</div>
@@ -269,9 +412,10 @@
                   <div class="form-group"><label>🎬 Genre</label><input type="text" id="fGenre" class="wp-input" placeholder="Action, Drama"></div>
                 </div>
 
-                <div class="two-col-inputs">
+                <div class="three-col-inputs">
                   <div class="form-group"><label>⭐ IMDb রেটিং</label><input type="text" id="fRating" class="wp-input" placeholder="8.2"></div>
                   <div class="form-group"><label>🔢 সিরিয়াল নম্বর (২ বা ৩ দিলে ওই নম্বরে যাবে)</label><input type="number" min="1" id="fSortOrder" class="wp-input" placeholder="যেমন: 2 বা 3"></div>
+                  <div class="form-group"><label>🔥 ট্রেন্ডিং সিরিয়াল নম্বর (Trending-এ সিরিয়াল)</label><input type="number" min="1" id="fTrendingOrder" class="wp-input" placeholder="যেমন: 1 বা 2"></div>
                 </div>
 
                 <div class="form-group">
@@ -304,7 +448,6 @@
               </div>
             </div>
 
-            <!-- মুভির দৃশ্যের ছবি / স্ক্রিনশট বক্স -->
             <div class="wp-card">
               <div class="wp-card-header">
                 <span>📸 মুভির দৃশ্যের ছবি / স্ক্রিনশট (পোস্টার নয়)</span>
@@ -388,6 +531,7 @@
     const GOOGLE_SHEET_ID = "1RtUsHpLyk3NoxLCPSb8u4iqBqwMqtfUmWYMkD8tPWeU";
     const TMDB_API_KEY = "8265bd1679663a7ea12ac168da84d2e8";
     const ADMIN_PASS = "suaib5249";
+    const DEFAULT_GMAIL = "blogor6@gmail.com";
 
     const ALL_WORLD_CATEGORIES = [
       "Trending", "Series", "Hindi", "Hindi Dubbed", "Bollywood", "Bangla", "Bangla Dubbed",
@@ -406,7 +550,75 @@
       es: "Spanish (Español)", tr: "Turkish (Türkçe)", fr: "French (Français)", ur: "Urdu"
     };
 
+    const GAS_CODE_TEMPLATE = `function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    if (data.action === "checkUrls") {
+      var results = (data.urls || []).map(function(item) { return checkSingleUrl(item); });
+      return jsonResponse({ ok: true, results: results });
+    }
+    if (data.action === "sendAlert") {
+      var toEmail = data.email || "blogor6@gmail.com";
+      var movie = data.movie || {};
+      var expired = data.expired || [];
+      if (!toEmail || expired.length === 0) return jsonResponse({ ok: false, error: "Missing data" });
+      var subject = "⚠️ লিংক মেয়াদ শেষ: " + (movie.title || "Movie");
+      var rowsHtml = expired.map(function(l) {
+        return "<tr><td style='padding:8px;border:1px solid #ddd;'><b>" + esc(l.label) + "</b></td>" +
+               "<td style='padding:8px;border:1px solid #ddd;word-break:break-all;'><a href='" + esc(l.url) + "'>" + esc(l.url) + "</a></td>" +
+               "<td style='padding:8px;border:1px solid #ddd;color:#d63638;'><b>" + esc(l.reason) + "</b></td></tr>";
+      }).join("");
+      var htmlBody = "<div style='font-family:sans-serif;max-width:600px;margin:auto;border:1px solid #e0e0e0;border-radius:8px;overflow:hidden;'>" +
+        "<div style='background:#d63638;color:#fff;padding:14px 18px;font-size:18px;font-weight:bold;'>🚨 মুভির লিংক মেয়াদ শেষ হয়েছে!</div>" +
+        "<div style='padding:18px;'>" +
+        (movie.poster ? "<div style='text-align:center;margin-bottom:14px;'><img src='" + esc(movie.poster) + "' style='max-width:180px;border-radius:6px;border:1px solid #ccc;'></div>" : "") +
+        "<h2 style='margin:0 0 8px 0;color:#1d2327;'>" + esc(movie.title) + "</h2>" +
+        "<p style='color:#646970;margin:0 0 14px 0;'>ক্যাটাগরি: " + esc(movie.category || "All") + "</p>" +
+        "<table style='width:100%;border-collapse:collapse;font-size:13px;'>" +
+        "<tr style='background:#f6f7f7;'><th style='padding:8px;border:1px solid #ddd;text-align:left;'>ধরন</th><th style='padding:8px;border:1px solid #ddd;text-align:left;'>মেয়াদ শেষ লিংক</th><th style='padding:8px;border:1px solid #ddd;text-align:left;'>কারণ</th></tr>" +
+        rowsHtml + "</table></div></div>";
+      MailApp.sendEmail({ to: toEmail, subject: subject, htmlBody: htmlBody });
+      return jsonResponse({ ok: true });
+    }
+    return jsonResponse({ ok: false, error: "Unknown action" });
+  } catch (err) {
+    return jsonResponse({ ok: false, error: err.toString() });
+  }
+}
+
+function checkSingleUrl(item) {
+  var url = item.url;
+  try {
+    var resp = UrlFetchApp.fetch(url, { muteHttpExceptions: true, followRedirects: true, validateHttpsCertificates: false });
+    var code = resp.getResponseCode();
+    if (code >= 400 || code === 0) return { url: url, label: item.label, expired: true, status: code, reason: "HTTP " + code };
+    var ct = (resp.getHeaders()["Content-Type"] || resp.getHeaders()["content-type"] || "").toLowerCase();
+    if (ct.indexOf("text/html") !== -1) {
+      var text = resp.getContentText().slice(0, 8000).toLowerCase();
+      var dead = ["404 not found", "file not found", "file was deleted", "video has been removed", "this video is unavailable", "no longer available", "link expired", "has expired", "file does not exist", "video not found"];
+      for (var i = 0; i < dead.length; i++) {
+        if (text.indexOf(dead[i]) !== -1) return { url: url, label: item.label, expired: true, status: code, reason: dead[i] };
+      }
+    }
+    return { url: url, label: item.label, expired: false, status: code, reason: "OK" };
+  } catch (e) {
+    return { url: url, label: item.label, expired: true, status: 0, reason: "Unreachable / Dead" };
+  }
+}
+
+function jsonResponse(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
+}
+function esc(s) {
+  return String(s || "").replace(/[&<>"']/g, function(c) { return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; });
+}`;
+
     let ghConfig = JSON.parse(localStorage.getItem("cine_gh_config") || "null");
+    let savedCheckerCfg = JSON.parse(localStorage.getItem("cine_checker_cfg") || "null");
+    let checkerCfg = {
+      gmail: (savedCheckerCfg && savedCheckerCfg.gmail) ? savedCheckerCfg.gmail : DEFAULT_GMAIL,
+      gasUrl: (savedCheckerCfg && savedCheckerCfg.gasUrl) ? savedCheckerCfg.gasUrl : ""
+    };
     let defaultBranch = "main";
     let fileSha = null;
     let allMovies = [];
@@ -415,8 +627,10 @@
     let pendingDeleteIndex = null;
     let selectedCategories = [];
     let episodeCounter = 0;
+    let scanCancelled = false;
 
     document.getElementById("catSelectDropdown").innerHTML = ALL_WORLD_CATEGORIES.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+    document.getElementById("gasScriptText").value = GAS_CODE_TEMPLATE;
 
     if (ghConfig && ghConfig.user && ghConfig.repo && ghConfig.token) {
       document.getElementById("ghUser").value = ghConfig.user;
@@ -456,7 +670,7 @@
       toast.innerText = msg;
       toast.className = "wp-toast" + (isError ? " error" : "");
       toast.style.display = "block";
-      setTimeout(() => { toast.style.display = "none"; }, 3500);
+      setTimeout(() => { toast.style.display = "none"; }, 3800);
     }
 
     function toggleSidebar() { document.getElementById("wpSidebar").classList.toggle("open"); }
@@ -617,6 +831,7 @@
             links: linksArr,
             badge: cell(c, 10) || "1080p",
             sortOrder: (!isNaN(sortNum) && sortNum > 0) ? sortNum : null,
+            trendingOrder: null,
             episodes: cell(c, 12),
             cast: cell(c, 13),
             trailer: cell(c, 14),
@@ -626,7 +841,8 @@
             releaseDate: cell(c, 17),
             genre: cell(c, 18),
             addedDate: getTodayIsoDate(),
-            screenshots: []
+            screenshots: [],
+            expiredLinks: []
           });
         }
         imported.reverse();
@@ -660,6 +876,7 @@
       document.querySelectorAll(".wp-menu-item").forEach(el => el.classList.remove("active"));
       if (filterCat === "Series") document.querySelector('[data-tab="seriesOnly"]').classList.add("active");
       else if (filterCat === "18+ Adult") document.querySelector('[data-tab="adultOnly"]').classList.add("active");
+      else if (filterCat === "Expired") document.querySelector('[data-tab="expiredOnly"]').classList.add("active");
       else {
         const el = document.querySelector(`[data-tab="${tab}"]`);
         if (el) el.classList.add("active");
@@ -667,7 +884,11 @@
 
       if (filterCat) {
         currentFilter = filterCat;
-        document.querySelectorAll(".filter-tab").forEach(t => t.classList.toggle("active", t.innerText.trim() === filterCat));
+        document.querySelectorAll(".filter-tab").forEach(t => {
+          const txt = t.innerText.trim();
+          const match = (filterCat === "Expired") ? txt.includes("মেয়াদ শেষ") : txt === filterCat;
+          t.classList.toggle("active", match);
+        });
         renderMoviesTable();
       }
       document.getElementById("wpSidebar").classList.remove("open");
@@ -679,17 +900,56 @@
              (m.category || "").toLowerCase().includes("18+") || (m.category || "").toLowerCase().includes("adult");
     }
 
+    function hasExpiredLinks(m) {
+      return Array.isArray(m.expiredLinks) && m.expiredLinks.length > 0;
+    }
+
     function renderDashboardStats() {
+      const expiredMovies = allMovies.map((m, idx) => ({ m, idx })).filter(({ m }) => hasExpiredLinks(m));
       document.getElementById("statTotal").innerText = allMovies.length;
       document.getElementById("statWatch").innerText = allMovies.filter(m => m.watchUrl).length;
       document.getElementById("statSeries").innerText = allMovies.filter(m => (m.category || "").toLowerCase().includes("series")).length;
       document.getElementById("statAdult").innerText = allMovies.filter(m => isAdultRow(m)).length;
+      document.getElementById("statExpired").innerText = expiredMovies.length;
+
+      const sideBadge = document.getElementById("sidebarExpiredBadge");
+      if (expiredMovies.length > 0) {
+        sideBadge.innerText = expiredMovies.length;
+        sideBadge.style.display = "inline-block";
+      } else {
+        sideBadge.style.display = "none";
+      }
+
+      const expCard = document.getElementById("expiredSummaryCard");
+      if (expiredMovies.length > 0) {
+        expCard.style.display = "block";
+        document.getElementById("expiredSummaryList").innerHTML = expiredMovies.slice(0, 6).map(({ m, idx }) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #f5c2c7; gap:10px; flex-wrap:wrap;">
+            <div>
+              <strong style="color:#b32d2e;">🔴 ${escapeHtml(m.title)}</strong>
+              <div style="font-size:12px; color:#646970;">মেয়াদ শেষ: ${m.expiredLinks.length}টি লিংক</div>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="eye-btn eye-red" onclick="openEyeModal(${idx})">👁️ লিংক দেখুন</button>
+              <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="openEditMovie(${idx})">✏️ এডিট</button>
+            </div>
+          </div>
+        `).join("");
+      } else {
+        expCard.style.display = "none";
+      }
 
       const top5 = allMovies.slice(0, 5);
       document.getElementById("recentFiveList").innerHTML = top5.length === 0 ? "<p>কোনো মুভি নেই। উপরে 'Google Sheet থেকে সব মুভি আনো' চাপুন অথবা নতুন মুভি যোগ করুন।</p>" : top5.map((m, idx) => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid #eee; gap:10px;">
-          <div><strong>${escapeHtml(m.title)}</strong><div style="font-size:12px; color:#646970;">${escapeHtml(m.category)} ${m.sortOrder ? "• #" + m.sortOrder : ""}</div></div>
-          <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="openEditMovie(${idx})">✏️ এডিট</button>
+          <div>
+            <strong>${hasExpiredLinks(m) ? "🔴 " : ""}${escapeHtml(m.title)}</strong>
+            <div style="font-size:12px; color:#646970;">${escapeHtml(m.category)} ${m.sortOrder ? "• #" + m.sortOrder : ""} ${m.trendingOrder ? "• 🔥#" + m.trendingOrder : ""}</div>
+          </div>
+          <div style="display:flex; gap:6px;">
+            ${hasExpiredLinks(m) ? `<button class="eye-btn eye-red" onclick="openEyeModal(${idx})">👁️</button>` : ""}
+            <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="openEditMovie(${idx})">✏️ এডিট</button>
+          </div>
         </div>
       `).join("");
     }
@@ -707,6 +967,7 @@
       const rows = allMovies.map((m, idx) => ({ m, idx })).filter(({ m }) => {
         if (q && !m.title.toLowerCase().includes(q) && !(m.category || "").toLowerCase().includes(q)) return false;
         if (currentFilter === "All") return true;
+        if (currentFilter === "Expired") return hasExpiredLinks(m);
         if (currentFilter === "18+ Adult") return isAdultRow(m);
         if (currentFilter === "Series") return (m.category || "").toLowerCase().includes("series");
         return (m.category || "").toLowerCase().includes(currentFilter.toLowerCase());
@@ -717,21 +978,415 @@
         return;
       }
 
-      tbody.innerHTML = rows.map(({ m, idx }) => `
-        <tr>
-          <td><img class="thumb-img" src="${escapeHtml(m.image)}" onerror="this.style.display='none'"></td>
-          <td><strong>${escapeHtml(m.title)}</strong><br><span style="font-size:11.5px; color:#646970;">⭐ ${escapeHtml(m.rating || "Auto")} · ${escapeHtml(m.badge || "HD")} ${m.addedDate ? "· 📅 " + escapeHtml(m.addedDate) : ""}</span></td>
-          <td><span class="badge">${escapeHtml(m.category)}</span></td>
-          <td>${m.sortOrder ? `<span class="badge badge-ok">#${m.sortOrder}</span>` : "—"}</td>
-          <td>${m.watchUrl ? '<span class="badge badge-ok">✔ যুক্ত আছে</span>' : '<span class="badge badge-warn">নেই</span>'}</td>
-          <td>
-            <div style="display:flex; gap:6px;">
-              <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="openEditMovie(${idx})">✏️</button>
-              <button class="wp-btn wp-btn-sm wp-btn-danger" id="delBtn_${idx}" onclick="deleteMovieRow(${idx})">🗑️</button>
+      tbody.innerHTML = rows.map(({ m, idx }) => {
+        const expired = hasExpiredLinks(m);
+        const serialHtml = [
+          m.sortOrder ? `<span class="badge badge-ok">সিরিয়াল #${m.sortOrder}</span>` : "",
+          m.trendingOrder ? `<span class="badge badge-trend">🔥 ট্রেন্ডিং #${m.trendingOrder}</span>` : ""
+        ].filter(Boolean).join(" ") || "—";
+
+        const statusHtml = expired
+          ? `<span class="badge badge-expired">🔴 মেয়াদ শেষ (${m.expiredLinks.length}টি)</span>`
+          : (m.watchUrl ? '<span class="badge badge-ok">✔ Watch যুক্ত</span>' : '<span class="badge badge-warn">Watch নেই</span>');
+
+        return `
+          <tr class="${expired ? 'row-expired' : ''}">
+            <td><img class="thumb-img" src="${escapeHtml(m.image)}" onerror="this.style.display='none'"></td>
+            <td>
+              <strong style="${expired ? 'color:#b32d2e;' : ''}">${escapeHtml(m.title)}</strong><br>
+              <span style="font-size:11.5px; color:#646970;">⭐ ${escapeHtml(m.rating || "Auto")} · ${escapeHtml(m.badge || "HD")} ${m.addedDate ? "· 📅 " + escapeHtml(m.addedDate) : ""}</span>
+            </td>
+            <td><span class="badge">${escapeHtml(m.category)}</span></td>
+            <td><div style="display:flex; flex-direction:column; gap:4px; align-items:flex-start;">${serialHtml}</div></td>
+            <td>
+              <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+                ${statusHtml}
+                <button class="eye-btn ${expired ? 'eye-red' : ''}" title="কোন কোন লিংক আছে ও মেয়াদ শেষ তা দেখুন" onclick="openEyeModal(${idx})">👁️</button>
+              </div>
+            </td>
+            <td>
+              <div style="display:flex; gap:6px;">
+                <button class="wp-btn wp-btn-sm wp-btn-amber" title="লিংক চেক করুন" onclick="checkSingleMovieAndSave(${idx})">🔍</button>
+                <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="openEditMovie(${idx})">✏️</button>
+                <button class="wp-btn wp-btn-sm wp-btn-danger" id="delBtn_${idx}" onclick="deleteMovieRow(${idx})">🗑️</button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function extractMovieLinks(m) {
+      const items = [];
+      const addIfValid = (label, url) => {
+        const u = String(url || "").trim();
+        if (/^https?:\/\//i.test(u)) items.push({ label, url: u });
+      };
+      addIfValid("Watch Online", m.watchUrl);
+      addIfValid("BG Video", m.bgVideo);
+      addIfValid("Trailer", m.trailer);
+      if (Array.isArray(m.links)) {
+        m.links.forEach((l, i) => addIfValid(`Download (${l.label || "#" + (i + 1)})`, l.link));
+      }
+      if (m.episodes) {
+        if (m.episodes.includes("::")) {
+          m.episodes.split(" || ").forEach(epStr => {
+            const [epName, qRaw] = epStr.split("::");
+            (qRaw || "").split(";;").forEach(q => {
+              const p = q.split("|");
+              addIfValid(`${(epName || "Episode").trim()} (${(p[1] || "HD").trim()})`, p[0]);
+            });
+          });
+        } else {
+          m.episodes.split(/,|\n/).forEach((part, i) => {
+            const p = part.trim().split("|");
+            addIfValid(p[1] ? p[1].trim() : `Episode ${i + 1}`, p[0]);
+          });
+        }
+      }
+      return items;
+    }
+
+    async function checkUrlsBatch(items) {
+      if (!items || items.length === 0) return [];
+      if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
+        try {
+          const res = await fetch(checkerCfg.gasUrl.trim(), {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({ action: "checkUrls", urls: items })
+          });
+          const data = await res.json();
+          if (data && data.ok && Array.isArray(data.results)) return data.results;
+        } catch (e) {
+          console.warn("GAS check failed, falling back to browser check", e);
+        }
+      }
+
+      const out = [];
+      for (const item of items) {
+        const r = await checkUrlInBrowser(item);
+        out.push(r);
+      }
+      return out;
+    }
+
+    async function checkUrlInBrowser(item) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), 8500);
+      try {
+        const res = await fetch(item.url, { method: "HEAD", signal: controller.signal });
+        clearTimeout(timer);
+        if (res.status >= 400) {
+          return { url: item.url, label: item.label, expired: true, status: res.status, reason: `HTTP ${res.status}` };
+        }
+        return { url: item.url, label: item.label, expired: false, status: res.status, reason: "OK" };
+      } catch (err) {
+        try {
+          const c2 = new AbortController();
+          const t2 = setTimeout(() => c2.abort(), 7500);
+          await fetch(item.url, { method: "HEAD", mode: "no-cors", signal: c2.signal });
+          clearTimeout(t2);
+          return { url: item.url, label: item.label, expired: false, status: 0, reason: "Server Alive (CORS)" };
+        } catch (err2) {
+          clearTimeout(timer);
+          const isAbort = err2 && err2.name === "AbortError";
+          return {
+            url: item.url,
+            label: item.label,
+            expired: true,
+            status: 0,
+            reason: isAbort ? "Timeout / Slow" : "Dead Link / DNS Error"
+          };
+        }
+      }
+    }
+
+    async function sendGmailAlertForMovie(movie, expiredList, manualNotify = false) {
+      const gmail = (checkerCfg.gmail || DEFAULT_GMAIL).trim();
+      if (!gmail) {
+        if (manualNotify) showToast("আগে ⚙️ Gmail সেটিংসে গিয়ে আপনার Gmail দিন!", true);
+        return false;
+      }
+      if (!expiredList || expiredList.length === 0) return false;
+
+      if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
+        try {
+          const res = await fetch(checkerCfg.gasUrl.trim(), {
+            method: "POST",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: JSON.stringify({
+              action: "sendAlert",
+              email: gmail,
+              movie: { title: movie.title, poster: movie.image || "", category: movie.category || "All" },
+              expired: expiredList
+            })
+          });
+          const data = await res.json();
+          if (data && data.ok) {
+            if (manualNotify) showToast(`📧 ${gmail}-এ পোস্টার ও লিংকসহ মেসেজ পাঠানো হয়েছে!`);
+            return true;
+          }
+        } catch (e) { console.warn("GAS email failed", e); }
+      }
+
+      try {
+        const lines = expiredList.map(l => `• ${l.label}: ${l.url} (${l.reason})`).join("\n");
+        const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(gmail)}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
+          body: JSON.stringify({
+            _subject: `⚠️ লিংক মেয়াদ শেষ: ${movie.title}`,
+            Movie_Name: movie.title,
+            Poster_URL: movie.image || "No Poster",
+            Category: movie.category || "All",
+            Expired_Links: lines
+          })
+        });
+        if (res.ok) {
+          if (manualNotify) showToast(`📧 ${gmail}-এ মেসেজ পাঠানো হয়েছে!`);
+          return true;
+        }
+      } catch (e) {
+        if (manualNotify) showToast("Gmail-এ পাঠাতে ব্যর্থ! Apps Script সেটআপ করুন।", true);
+      }
+      return false;
+    }
+
+    async function checkSingleMovieAndSave(idx, openModalAfter = false) {
+      const m = allMovies[idx];
+      if (!m) return;
+      const items = extractMovieLinks(m);
+      if (items.length === 0) {
+        showToast("এই মুভিতে চেক করার মতো কোনো লিংক নেই!", true);
+        return;
+      }
+      showToast(`🔍 "${m.title}"-এর ${items.length}টি লিংক চেক হচ্ছে...`);
+      const results = await checkUrlsBatch(items);
+      const expiredList = results.filter(r => r.expired).map(r => ({ label: r.label, url: r.url, reason: r.reason }));
+
+      const updated = [...allMovies];
+      updated[idx] = { ...m, expiredLinks: expiredList, lastLinkCheck: new Date().toISOString() };
+
+      try {
+        await pushMoviesToGitHub(updated, `Link check: ${m.title}`);
+        renderDashboardStats();
+        renderMoviesTable();
+        if (expiredList.length > 0) {
+          showToast(`🔴 ${expiredList.length}টি লিংকের মেয়াদ শেষ পাওয়া গেছে!`, true);
+          await sendGmailAlertForMovie(updated[idx], expiredList, false);
+        } else {
+          showToast("✅ সব লিংক সচল আছে!");
+        }
+        if (openModalAfter) openEyeModal(idx);
+      } catch (e) {
+        showToast("সেভ করতে সমস্যা: " + e.message, true);
+      }
+    }
+
+    async function scanAllMoviesLinks() {
+      if (allMovies.length === 0) { showToast("চেক করার মতো কোনো মুভি নেই!", true); return; }
+      scanCancelled = false;
+      const box = document.getElementById("scanProgressBox");
+      const txt = document.getElementById("scanProgressText");
+      const fill = document.getElementById("scanProgressFill");
+      box.style.display = "block";
+
+      const updated = [...allMovies];
+      let totalExpiredMovies = 0;
+      let emailedCount = 0;
+
+      for (let i = 0; i < updated.length; i++) {
+        if (scanCancelled) break;
+        const m = updated[i];
+        const pct = Math.round(((i + 1) / updated.length) * 100);
+        txt.innerText = `🔍 চেক হচ্ছে (${i + 1}/${updated.length}): ${m.title}`;
+        fill.style.width = pct + "%";
+
+        const items = extractMovieLinks(m);
+        if (items.length === 0) continue;
+
+        const prevExpiredUrls = new Set((m.expiredLinks || []).map(x => x.url));
+        const results = await checkUrlsBatch(items);
+        const expiredList = results.filter(r => r.expired).map(r => ({ label: r.label, url: r.url, reason: r.reason }));
+
+        updated[i] = { ...m, expiredLinks: expiredList, lastLinkCheck: new Date().toISOString() };
+
+        if (expiredList.length > 0) {
+          totalExpiredMovies++;
+          const hasNewlyExpired = expiredList.some(x => !prevExpiredUrls.has(x.url));
+          if (hasNewlyExpired && (checkerCfg.gmail || DEFAULT_GMAIL)) {
+            const ok = await sendGmailAlertForMovie(updated[i], expiredList, false);
+            if (ok) emailedCount++;
+          }
+        }
+      }
+
+      box.style.display = "none";
+      if (scanCancelled) {
+        showToast("চেকিং থামানো হয়েছে।", true);
+        return;
+      }
+
+      try {
+        showToast("💾 লিংক স্ট্যাটাস GitHub-এ সেভ হচ্ছে...");
+        await pushMoviesToGitHub(updated, "Batch link expiration check");
+        renderDashboardStats();
+        renderMoviesTable();
+        if (totalExpiredMovies > 0) {
+          showToast(`🔴 ${totalExpiredMovies}টি মুভিতে মেয়াদ শেষ লিংক পাওয়া গেছে! ${emailedCount > 0 ? `(blogor6@gmail.com-এ ${emailedCount}টি মেসেজ গেছে)` : ""}`, true);
+        } else {
+          showToast("✅ সব মুভির লিংক সচল আছে!");
+        }
+      } catch (e) {
+        showToast("সেভ ব্যর্থ: " + e.message, true);
+      }
+    }
+
+    function cancelAllScan() { scanCancelled = true; }
+
+    function openEyeModal(idx) {
+      const m = allMovies[idx];
+      if (!m) return;
+      const allLinks = extractMovieLinks(m);
+      const expiredList = Array.isArray(m.expiredLinks) ? m.expiredLinks : [];
+      const expiredMap = new Map(expiredList.map(e => [e.url, e]));
+
+      const expiredItems = [];
+      const workingItems = [];
+      allLinks.forEach(item => {
+        if (expiredMap.has(item.url)) expiredItems.push({ ...item, reason: expiredMap.get(item.url).reason || "Expired" });
+        else workingItems.push(item);
+      });
+      expiredList.forEach(e => {
+        if (!expiredItems.some(x => x.url === e.url)) expiredItems.push(e);
+      });
+
+      document.getElementById("eyeModalHeader").innerText = `👁️ ${m.title} — লিংক রিপোর্ট`;
+
+      const expHtml = expiredItems.length > 0
+        ? expiredItems.map((e, i) => `
+          <div class="eye-link-item dead">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+              <strong style="color:#b32d2e;">🔴 ${escapeHtml(e.label)}</strong>
+              <span class="badge badge-expired">${escapeHtml(e.reason || "মেয়াদ শেষ")}</span>
             </div>
-          </td>
-        </tr>
-      `).join("");
+            <a class="eye-link-url" href="${escapeHtml(e.url)}" target="_blank">${escapeHtml(e.url)}</a>
+            <button class="wp-btn wp-btn-sm wp-btn-secondary" onclick="toggleManualLinkStatus(${idx}, ${i})">✅ সচল মার্ক করুন</button>
+          </div>
+        `).join("")
+        : `<p style="color:#007017; font-weight:700; padding:8px 0;">✅ এই মুহূর্তে কোনো লিংক মেয়াদ শেষ হিসেবে চিহ্নিত নেই।</p>`;
+
+      const workHtml = workingItems.length > 0
+        ? workingItems.map(w => `
+          <div class="eye-link-item ok">
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; flex-wrap:wrap;">
+              <strong>✅ ${escapeHtml(w.label)}</strong>
+              <button class="wp-btn wp-btn-sm wp-btn-danger" data-url="${escapeHtml(w.url)}" data-label="${escapeHtml(w.label)}" onclick="markSingleUrlExpired(${idx}, this)">🔴 মেয়াদ শেষ মার্ক</button>
+            </div>
+            <a class="eye-link-url" href="${escapeHtml(w.url)}" target="_blank">${escapeHtml(w.url)}</a>
+          </div>
+        `).join("")
+        : `<p style="color:#646970; font-size:12.5px;">কোনো সচল লিংক যুক্ত নেই।</p>`;
+
+      document.getElementById("eyeModalBody").innerHTML = `
+        <div style="display:flex; gap:14px; align-items:center; margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid #eee;">
+          <img src="${escapeHtml(m.image)}" style="width:62px; height:86px; object-fit:cover; border-radius:4px; background:#1d2327;" onerror="this.style.display='none'">
+          <div style="flex:1;">
+            <h3 style="font-size:16px; margin-bottom:3px;">${escapeHtml(m.title)}</h3>
+            <div style="font-size:12px; color:#646970;">ক্যাটাগরি: ${escapeHtml(m.category)}</div>
+            <div style="font-size:12px; color:#646970;">মোট লিংক: ${allLinks.length}টি · মেয়াদ শেষ: <b style="color:#d63638;">${expiredItems.length}টি</b></div>
+            ${m.lastLinkCheck ? `<div style="font-size:11px; color:#646970;">সর্বশেষ চেক: ${new Date(m.lastLinkCheck).toLocaleString()}</div>` : ""}
+          </div>
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;">
+          <button class="wp-btn wp-btn-sm wp-btn-amber" onclick="checkSingleMovieAndSave(${idx}, true)">🔄 পুনরায় লিংক চেক করুন</button>
+          <button class="wp-btn wp-btn-sm" onclick="closeEyeModal(); openEditMovie(${idx});">✏️ এডিট করে লিংক ঠিক করুন</button>
+          ${expiredItems.length > 0 ? `<button class="wp-btn wp-btn-sm wp-btn-danger" onclick="sendManualAlertFromEye(${idx})">📧 Gmail-এ পাঠান</button>` : ""}
+        </div>
+
+        <h4 style="color:#b32d2e; margin-bottom:8px;">🔴 মেয়াদ শেষ লিংকসমূহ (${expiredItems.length})</h4>
+        ${expHtml}
+
+        <h4 style="color:#007017; margin:14px 0 8px 0;">✅ অন্যান্য / সচল লিংকসমূহ (${workingItems.length})</h4>
+        ${workHtml}
+      `;
+      document.getElementById("eyeModalBackdrop").style.display = "flex";
+    }
+
+    function closeEyeModal() { document.getElementById("eyeModalBackdrop").style.display = "none"; }
+
+    async function sendManualAlertFromEye(idx) {
+      const m = allMovies[idx];
+      if (!m || !hasExpiredLinks(m)) return;
+      await sendGmailAlertForMovie(m, m.expiredLinks, true);
+    }
+
+    async function markSingleUrlExpired(idx, btn) {
+      const url = btn.getAttribute("data-url");
+      const label = btn.getAttribute("data-label");
+      const m = allMovies[idx];
+      if (!m || !url) return;
+      const list = Array.isArray(m.expiredLinks) ? [...m.expiredLinks] : [];
+      if (!list.some(x => x.url === url)) list.push({ label, url, reason: "Manual Marked Expired" });
+      const updated = [...allMovies];
+      updated[idx] = { ...m, expiredLinks: list, lastLinkCheck: new Date().toISOString() };
+      try {
+        await pushMoviesToGitHub(updated, `Mark expired: ${m.title}`);
+        renderDashboardStats();
+        renderMoviesTable();
+        openEyeModal(idx);
+        await sendGmailAlertForMovie(updated[idx], list, false);
+        showToast("🔴 মেয়াদ শেষ হিসেবে মার্ক ও সেভ হয়েছে!");
+      } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
+    }
+
+    async function toggleManualLinkStatus(idx, expIdx) {
+      const m = allMovies[idx];
+      if (!m || !Array.isArray(m.expiredLinks)) return;
+      const list = m.expiredLinks.filter((_, i) => i !== expIdx);
+      const updated = [...allMovies];
+      updated[idx] = { ...m, expiredLinks: list };
+      try {
+        await pushMoviesToGitHub(updated, `Clear expired mark: ${m.title}`);
+        renderDashboardStats();
+        renderMoviesTable();
+        openEyeModal(idx);
+        showToast("✅ লিংক সচল হিসেবে আপডেট হয়েছে!");
+      } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
+    }
+
+    function openSettingsModal() {
+      document.getElementById("cfgGmail").value = checkerCfg.gmail || DEFAULT_GMAIL;
+      document.getElementById("cfgGasUrl").value = checkerCfg.gasUrl || "";
+      document.getElementById("settingsModalBackdrop").style.display = "flex";
+    }
+    function closeSettingsModal() { document.getElementById("settingsModalBackdrop").style.display = "none"; }
+    function saveCheckerSettings() {
+      checkerCfg = {
+        gmail: document.getElementById("cfgGmail").value.trim() || DEFAULT_GMAIL,
+        gasUrl: document.getElementById("cfgGasUrl").value.trim()
+      };
+      localStorage.setItem("cine_checker_cfg", JSON.stringify(checkerCfg));
+      showToast("✅ Gmail ও চেকার সেটিংস সেভ হয়েছে!");
+      closeSettingsModal();
+    }
+    function toggleGasGuide() {
+      const box = document.getElementById("gasGuideBox");
+      box.style.display = box.style.display === "none" ? "block" : "none";
+    }
+    function copyGasCode() {
+      const ta = document.getElementById("gasScriptText");
+      ta.select();
+      navigator.clipboard.writeText(ta.value).then(() => showToast("📋 Apps Script কোড কপি হয়েছে!"));
+    }
+    async function sendTestGmailAlert() {
+      checkerCfg.gmail = document.getElementById("cfgGmail").value.trim() || DEFAULT_GMAIL;
+      checkerCfg.gasUrl = document.getElementById("cfgGasUrl").value.trim();
+      localStorage.setItem("cine_checker_cfg", JSON.stringify(checkerCfg));
+      const sampleMovie = allMovies[0] || { title: "Test Movie (2025)", image: "https://image.tmdb.org/t/p/w500/8cdWjvZQUExUUTzyp4t6EDMubfO.jpg", category: "Trending" };
+      await sendGmailAlertForMovie(sampleMovie, [{ label: "Watch Online (Test)", url: "https://example.com/expired-test.mp4", reason: "HTTP 404 (Test)" }], true);
     }
 
     function renderCategoryChips() {
@@ -788,12 +1443,12 @@
       else addScreenshotRow("");
     }
 
-    function addDownloadRow(url = "", label = "") {
+    function addDownloadRow(url = "", label = "", isExpired = false) {
       const container = document.getElementById("downloadLinksContainer");
       const row = document.createElement("div");
       row.className = "builder-row dl-row";
       row.innerHTML = `
-        <input type="text" class="wp-input dl-url" style="flex:2; min-width:160px;" placeholder="ডাউনলোড লিংক দিন..." value="${escapeHtml(url)}">
+        <input type="text" class="wp-input dl-url ${isExpired ? 'input-expired' : ''}" style="flex:2; min-width:160px;" placeholder="ডাউনলোড লিংক দিন..." value="${escapeHtml(url)}">
         <input type="text" class="wp-input dl-label" style="flex:1; min-width:110px;" placeholder="কোয়ালিটি নাম (যেমন: 480p)" value="${escapeHtml(label)}">
         <button type="button" class="wp-btn wp-btn-sm wp-btn-danger" onclick="this.parentElement.remove()">✕</button>
       `;
@@ -810,7 +1465,7 @@
       return list;
     }
 
-    function addEpisodeBlock(epName = "", qualities = []) {
+    function addEpisodeBlock(epName = "", qualities = [], expiredSet = new Set()) {
       episodeCounter++;
       const epId = "epBlock_" + episodeCounter;
       const container = document.getElementById("episodesBuilderContainer");
@@ -829,17 +1484,17 @@
         <div class="ep-qualities-list"></div>
       `;
       container.appendChild(card);
-      if (qualities && qualities.length > 0) qualities.forEach(q => addQualityToEpisode(epId, q.url, q.label));
-      else addQualityToEpisode(epId, "", "480p");
+      if (qualities && qualities.length > 0) qualities.forEach(q => addQualityToEpisode(epId, q.url, q.label, expiredSet.has(q.url)));
+      else addQualityToEpisode(epId, "", "480p", false);
     }
 
-    function addQualityToEpisode(epId, url = "", label = "") {
+    function addQualityToEpisode(epId, url = "", label = "", isExpired = false) {
       const list = document.querySelector(`#${epId} .ep-qualities-list`);
       if (!list) return;
       const row = document.createElement("div");
       row.className = "builder-row ep-q-row";
       row.innerHTML = `
-        <input type="text" class="wp-input ep-q-url" style="flex:2; min-width:150px;" placeholder="ভিডিও / ডাউনলোড লিংক..." value="${escapeHtml(url)}">
+        <input type="text" class="wp-input ep-q-url ${isExpired ? 'input-expired' : ''}" style="flex:2; min-width:150px;" placeholder="ভিডিও / ডাউনলোড লিংক..." value="${escapeHtml(url)}">
         <input type="text" class="wp-input ep-q-label" style="flex:1; min-width:95px;" placeholder="কোয়ালিটি (যেমন: 720p)" value="${escapeHtml(label)}">
         <button type="button" class="wp-btn wp-btn-sm wp-btn-danger" onclick="this.parentElement.remove()">✕</button>
       `;
@@ -861,7 +1516,7 @@
       return eps.join(" || ");
     }
 
-    function populateEpisodesFromStr(raw) {
+    function populateEpisodesFromStr(raw, expiredSet = new Set()) {
       const container = document.getElementById("episodesBuilderContainer");
       container.innerHTML = "";
       if (!raw) return;
@@ -872,7 +1527,7 @@
             const p = q.split("|");
             return { url: (p[0] || "").trim(), label: (p[1] || "HD").trim() };
           }).filter(x => x.url);
-          if (qs.length > 0) addEpisodeBlock(epName.trim(), qs);
+          if (qs.length > 0) addEpisodeBlock(epName.trim(), qs, expiredSet);
         });
       } else {
         raw.split(/,|\n/).forEach((item, idx) => {
@@ -880,17 +1535,24 @@
           if (!clean) return;
           if (clean.includes("|")) {
             const p = clean.split("|");
-            addEpisodeBlock(p[1].trim() || `Episode ${idx + 1}`, [{ url: p[0].trim(), label: "HD" }]);
-          } else addEpisodeBlock(`Episode ${idx + 1}`, [{ url: clean, label: "HD" }]);
+            addEpisodeBlock(p[1].trim() || `Episode ${idx + 1}`, [{ url: p[0].trim(), label: "HD" }], expiredSet);
+          } else addEpisodeBlock(`Episode ${idx + 1}`, [{ url: clean, label: "HD" }], expiredSet);
         });
       }
     }
 
+    function clearEditorExpiredHighlights() {
+      ["fWatchUrl", "fBgVideo", "fTrailer"].forEach(id => document.getElementById(id).classList.remove("input-expired"));
+      document.getElementById("editorExpiredAlert").style.display = "none";
+    }
+
     function openAddNewMovie() {
       editingIndex = null;
+      clearEditorExpiredHighlights();
+      document.getElementById("btnCheckCurrentMovie").style.display = "none";
       document.getElementById("editorPageTitle").innerText = "➕ নতুন মুভি যোগ করুন";
       document.getElementById("btnSaveMovie").innerText = "💾 পাবলিশ করুন";
-      ["fTitle","fLanguage","fReleaseDate","fGenre","fRating","fSortOrder","fImage","fAd1","fAd2","fCast","fTrailer","fBgVideo","fWatchUrl","tmdbSearchInput","customCatInput"].forEach(id => document.getElementById(id).value = "");
+      ["fTitle","fLanguage","fReleaseDate","fGenre","fRating","fSortOrder","fTrendingOrder","fImage","fAd1","fAd2","fCast","fTrailer","fBgVideo","fWatchUrl","tmdbSearchInput","customCatInput"].forEach(id => document.getElementById(id).value = "");
       document.getElementById("fBadge").value = "1080p";
       setTodayAddedDate();
       selectedCategories = [];
@@ -908,6 +1570,8 @@
       const m = allMovies[idx];
       if (!m) return;
       editingIndex = idx;
+      clearEditorExpiredHighlights();
+      document.getElementById("btnCheckCurrentMovie").style.display = "inline-flex";
       document.getElementById("editorPageTitle").innerText = "✏️ মুভি এডিট করুন";
       document.getElementById("btnSaveMovie").innerText = "💾 আপডেট সেভ করুন";
       document.getElementById("fTitle").value = m.title || "";
@@ -916,6 +1580,7 @@
       document.getElementById("fGenre").value = m.genre || "";
       document.getElementById("fRating").value = m.rating || "";
       document.getElementById("fSortOrder").value = m.sortOrder || "";
+      document.getElementById("fTrendingOrder").value = m.trendingOrder || "";
       document.getElementById("fImage").value = m.image || "";
       document.getElementById("fAd1").value = m.ad1 || "";
       document.getElementById("fAd2").value = m.ad2 || "";
@@ -924,6 +1589,23 @@
       document.getElementById("fTrailer").value = m.trailer || "";
       document.getElementById("fBgVideo").value = m.bgVideo || "";
       document.getElementById("fWatchUrl").value = m.watchUrl || "";
+
+      const expiredList = Array.isArray(m.expiredLinks) ? m.expiredLinks : [];
+      const expiredSet = new Set(expiredList.map(x => x.url));
+      if (expiredSet.has((m.watchUrl || "").trim())) document.getElementById("fWatchUrl").classList.add("input-expired");
+      if (expiredSet.has((m.bgVideo || "").trim())) document.getElementById("fBgVideo").classList.add("input-expired");
+      if (expiredSet.has((m.trailer || "").trim())) document.getElementById("fTrailer").classList.add("input-expired");
+
+      if (expiredList.length > 0) {
+        const alertEl = document.getElementById("editorExpiredAlert");
+        alertEl.style.display = "block";
+        alertEl.innerHTML = `
+          <strong style="color:#b32d2e;">🔴 এই মুভির ${expiredList.length}টি লিংকের মেয়াদ শেষ (লাল বর্ডার দেওয়া হয়েছে):</strong>
+          <ul style="margin:6px 0 0 18px; font-size:12.5px;">
+            ${expiredList.map(e => `<li><b>${escapeHtml(e.label)}:</b> ${escapeHtml(e.url)} <span style="color:#b32d2e;">(${escapeHtml(e.reason)})</span></li>`).join("")}
+          </ul>
+        `;
+      }
 
       if (m.addedDate) {
         document.getElementById("fAddedDate").value = m.addedDate;
@@ -939,12 +1621,18 @@
 
       const dlBox = document.getElementById("downloadLinksContainer");
       dlBox.innerHTML = "";
-      if (m.links && m.links.length > 0) m.links.forEach(l => addDownloadRow(l.link, l.label));
-      else addDownloadRow("", "720p");
+      if (m.links && m.links.length > 0) m.links.forEach(l => addDownloadRow(l.link, l.label, expiredSet.has((l.link || "").trim())));
+      else addDownloadRow("", "720p", false);
 
-      populateEpisodesFromStr(m.episodes || "");
+      populateEpisodesFromStr(m.episodes || "", expiredSet);
       updatePosterPreview();
       switchTab("addMovie");
+    }
+
+    async function checkEditorCurrentMovie() {
+      if (editingIndex === null) return;
+      await checkSingleMovieAndSave(editingIndex, false);
+      openEditMovie(editingIndex);
     }
 
     function updatePosterPreview() {
@@ -958,6 +1646,7 @@
       const title = document.getElementById("fTitle").value.trim();
       if (!title) { showToast("মুভির নাম দিন!", true); return; }
       const sortRaw = parseInt(document.getElementById("fSortOrder").value.trim(), 10);
+      const trendRaw = parseInt(document.getElementById("fTrendingOrder").value.trim(), 10);
 
       const movieObj = {
         id: editingIndex !== null ? allMovies[editingIndex].id : Date.now(),
@@ -965,6 +1654,7 @@
         category: selectedCategories.length > 0 ? selectedCategories.join(", ") : "All",
         rating: document.getElementById("fRating").value.trim(),
         sortOrder: (!isNaN(sortRaw) && sortRaw > 0) ? sortRaw : null,
+        trendingOrder: (!isNaN(trendRaw) && trendRaw > 0) ? trendRaw : null,
         image: document.getElementById("fImage").value.trim(),
         ad1: document.getElementById("fAd1").value.trim(),
         ad2: document.getElementById("fAd2").value.trim(),
@@ -981,6 +1671,13 @@
         addedDate: document.getElementById("fAddedDate").value.trim() || getTodayIsoDate(),
         screenshots: collectScreenshots()
       };
+
+      const currentUrlSet = new Set(extractMovieLinks(movieObj).map(x => x.url));
+      const oldExpired = (editingIndex !== null && Array.isArray(allMovies[editingIndex].expiredLinks)) ? allMovies[editingIndex].expiredLinks : [];
+      movieObj.expiredLinks = oldExpired.filter(e => currentUrlSet.has(e.url));
+      if (editingIndex !== null && allMovies[editingIndex].lastLinkCheck) {
+        movieObj.lastLinkCheck = allMovies[editingIndex].lastLinkCheck;
+      }
 
       const updated = [...allMovies];
       if (editingIndex !== null) updated[editingIndex] = movieObj;
