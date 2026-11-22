@@ -1,5 +1,44 @@
 [
   {
+    "id": 1795355996880,
+    "title": "Never Surrender (2026)",
+    "category": "Action, Crime, Thriller",
+    "rating": "6.8",
+    "sortOrder": 39,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/hKROmLddpzpjkxKKVFYFRAOXX1b.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Never%20Surrender.2026.720p.WEB-DL.HIN-ENG.x264-Fmxbd.com.mkv",
+        "label": "720p -1GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Never.Surrender.2026.1080p.WEB-DL.Hindi.English.DD5.1.ESubs.x264.-Fmxbd.com.mkv",
+        "label": "1080p -2.o3Gab"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Lukman Sardi, Callista Arum, Sulthan Hamonangan, Derby Romero, Donny Alamsyah, Dennis Adishwara",
+    "trailer": "https://www.youtube.com/watch?v=o0d1IA85D9o",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Never%20Surrender.2026.720p.WEB-DL.HIN-ENG.x264-Fmxbd.com.mkv",
+    "language": "ID",
+    "releaseDate": "2026-11-11",
+    "genre": "Action, Crime, Thriller",
+    "addedDate": "2026-11-22",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/bjt53Hjqwl9VrtJkDv39GwmE1QN.jpg",
+      "https://image.tmdb.org/t/p/w500/umxN2kMcUm6VoxSOdcEcQoXuC4q.jpg",
+      "https://image.tmdb.org/t/p/w500/hir35iIjs1FIzp7PrY1JK2Eg40n.jpg",
+      "https://image.tmdb.org/t/p/w500/1ngwrORtxlaCFMnJBTaQp2O2U3e.jpg",
+      "https://image.tmdb.org/t/p/w500/idWYM68ru3F43zCR8nLksJSyG8V.jpg"
+    ],
+    "expiredLinks": []
+  },
+  {
     "id": 1795355744461,
     "title": "Allen (2026)",
     "category": "Hollywood, Science Fiction, Adventure, Comedy",
