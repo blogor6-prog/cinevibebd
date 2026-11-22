@@ -1849,11 +1849,11 @@
   {
     "id": 1794743350459,
     "title": "Raavan (2022)",
-    "category": "Hindi",
-    "rating": "",
+    "category": "Bangla, Action, Romance",
+    "rating": "5.5",
     "sortOrder": null,
     "trendingOrder": null,
-    "image": "https://i.postimg.cc/7L4HhwXs/poster-hm5j1790967711.jpg",
+    "image": "https://image.tmdb.org/t/p/w500/pvetSN4WvqsFjjIlmyFkD9KkHak.jpg",
     "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
     "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
     "links": [
@@ -1868,15 +1868,17 @@
     ],
     "badge": "WEB-DL",
     "episodes": "",
-    "cast": "",
-    "trailer": "",
+    "cast": "Jeet, Shataf Figar, Kharaj Mukherjee, Lahoma Bhattacharya, Tanushree Chakraborty, Biswanath Basu",
+    "trailer": "https://www.youtube.com/watch?v=gSlnh_0mzeQ",
     "bgVideo": "",
     "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/RAAVAN.2022.720p.AMZN.WEB-DL.Hindi-Bengali.x264-Fmxbd.com.mkv",
-    "language": "",
-    "releaseDate": "",
-    "genre": "",
+    "language": "Bengali (বাংলা)",
+    "releaseDate": "2022-04-28",
+    "genre": "Action, Romance",
     "addedDate": "2026-11-15",
-    "screenshots": [],
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/tK6zJqW1MZ3ASoHnuX6gH1tRFtE.jpg"
+    ],
     "expiredLinks": [],
     "lastLinkCheck": "2026-11-22T14:47:24.124Z"
   },
