@@ -960,20 +960,14 @@
     "episodes": "",
     "cast": "",
     "trailer": "",
-    "bgVideo": "https://huggingface.co/datasets/sp5249/trailers/resolve/main/Trailer%20-%20Pressure%20Cooker%20_%20Raihan%20Rafi%20_%20Nazifa%20Tushi_%20Ch",
+    "bgVideo": "https://huggingface.co/datasets/sp5249/trailers/resolve/main/Trailer%20-%20Pressure%20Cooker%20_%20Raihan%20Rafi%20_%20Nazifa%20Tushi_%20Chanchal%20C%20_%20Watch%20Now%20_%20hoichoi(720P_HD).mp4",
     "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Pressure%20Cooker%202026%20Bengali%20ORG%201080p%20WEB-DL%20x264-Fmxbd.com.mkv",
     "language": "",
     "releaseDate": "",
     "genre": "",
     "addedDate": "2026-11-15",
     "screenshots": [],
-    "expiredLinks": [
-      {
-        "label": "BG Video",
-        "url": "https://huggingface.co/datasets/sp5249/trailers/resolve/main/Trailer%20-%20Pressure%20Cooker%20_%20Raihan%20Rafi%20_%20Nazifa%20Tushi_%20Ch",
-        "reason": "HTTP 404 (Not Found)"
-      }
-    ],
+    "expiredLinks": [],
     "lastLinkCheck": "2026-11-22T06:52:34.429Z"
   },
   {
