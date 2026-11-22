@@ -1,5 +1,44 @@
 [
   {
+    "id": 1795355744461,
+    "title": "Allen (2026)",
+    "category": "Hollywood, Science Fiction, Adventure, Comedy",
+    "rating": "6.4",
+    "sortOrder": 22,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/alhhrpj1PSAn5bfz4Os1k7Bweoj.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Allen.2026.720p.WEB-DL.HIN-ENG.x264.ESub-Fmxbd.com.mkv",
+        "label": "720p - 848 MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Allen.2026.1080p.WEB-DL.Hindi.English.DD5.1.ESubs.x264.-Fmxbd.com.mkv",
+        "label": "1080p - 2.25 GB"
+      }
+    ],
+    "badge": "1080p",
+    "episodes": "",
+    "cast": "T.J. Power, Charlotte Nicdao, Josh Helman, Emily Barclay, Benedict Hardie, Elijah Tamati",
+    "trailer": "https://www.youtube.com/watch?v=P8G5Y25W3eA",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Allen.2026.720p.WEB-DL.HIN-ENG.x264.ESub-Fmxbd.com.mkv",
+    "language": "(English-Hindi)",
+    "releaseDate": "2026-11-12",
+    "genre": "Science Fiction, Adventure, Comedy",
+    "addedDate": "2026-11-22",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/51fGmBW7WjyJouP9TjIcxRpCUNk.jpg",
+      "https://image.tmdb.org/t/p/w500/1hQEhz0uMKsEZXWUe7IB1qZoLRs.jpg",
+      "https://image.tmdb.org/t/p/w500/lx28W2g0lWtOYSKWHV58ydj7G6V.jpg",
+      "https://image.tmdb.org/t/p/w500/eowzuJXdoR7byFtvOj9krY90vgc.jpg",
+      "https://image.tmdb.org/t/p/w500/zZxtUAwWTa9gvkIK79hkh1zl9WH.jpg"
+    ],
+    "expiredLinks": []
+  },
+  {
     "id": 1795355587466,
     "title": "Cold Storage (2026)",
     "category": "Hollywood, Horror, Science Fiction, Comedy",
