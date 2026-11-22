@@ -1854,37 +1854,35 @@
     "id": 1794743350460,
     "title": "Checkout  (2026)",
     "category": "bangla",
-    "rating": "",
+    "rating": "0",
+    "sortOrder": null,
+    "trendingOrder": null,
     "image": "https://i.postimg.cc/fRJ2d92g/poster-tou11790860910.jpg",
     "ad1": "https://asiafilm.org/4/a555ec6bc7d6af27618f9ba45943fffd",
     "ad2": "https://auctionr.org/4/81600715177eea404486411b72771077",
     "links": [
       {
-        "link": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/HBnvMXk6/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=c1b7560f973f06fd0e7d67b1ae417404062677f3fa560c538a097c06d972e86b",
-        "label": "480p • 434.74 MB"
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Checkout.2026.Bongo.WEB-DL.720p.AAC2.0.x264-Fmxbd.com.mkv",
+        "label": "720p - 774MB"
       },
       {
-        "link": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/sPT7qgKn/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=8f0f6d1933e21f10bdf5939d6354d5a29718dca976bc4bd1d136c8700f466873",
-        "label": "720p • 722.92 MB"
-      },
-      {
-        "link": "https://dae58eb144f4ee65b680ec3f000ffaac.r2.cloudflarestorage.com/october2026/media/kezU2My4/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=d3d0f172ff9e0f5aca8a429462c54146%2F20261106%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261106T060000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=5cf0d14c6b12ac2279a4fc4536a651d537bb2b6a55274977601ca2af263743a6",
-        "label": "1080p • 1.5 GB"
-      },
-      {
-        "link": "https://t.me/hdvirallink18",
-        "label": "🔞 viral zone"
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Checkout.2026.Bongo.WEB-DL.1080p.AAC2.0.x264-Fmxbd.com.mkv",
+        "label": "1080p - 1.56 GB"
       }
     ],
     "badge": "WEB-DL",
-    "sortOrder": null,
     "episodes": "",
-    "cast": "",
+    "cast": "No",
     "trailer": "",
-    "watchUrl": "",
-    "language": "",
-    "releaseDate": "",
-    "genre": "",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Checkout.2026.Bongo.WEB-DL.1080p.AAC2.0.x264-Fmxbd.com.mkv",
+    "language": "Bengali (বাংলা)",
+    "releaseDate": "Oct. 01, 2026",
+    "genre": "Drama,Comedy",
+    "addedDate": "2026-11-15",
+    "screenshots": [
+      "https://i.postimg.cc/PJ4VMdS2/nc33wl-V-md.jpg"
+    ],
     "expiredLinks": [],
     "lastLinkCheck": "2026-11-22T14:47:24.124Z"
   },
