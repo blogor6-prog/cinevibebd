@@ -196,6 +196,22 @@
     .nav-item.active { color: var(--primary); font-weight: bold; }
     .nav-icon { font-size: 18px; }
     .notif-dot { position: absolute; top: -1px; right: 2px; width: 8px; height: 8px; border-radius: 50%; background: #e11d48; display: none; box-shadow: 0 0 6px #e11d48; }
+    .tg-nav-item { color: #38bdf8 !important; font-weight: 700; }
+    .tg-shake-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      animation: tgWiggle 1.2s ease-in-out infinite;
+      transform-origin: center bottom;
+    }
+    @keyframes tgWiggle {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      15% { transform: rotate(-14deg) scale(1.12); }
+      30% { transform: rotate(14deg) scale(1.12); }
+      45% { transform: rotate(-10deg) scale(1.08); }
+      60% { transform: rotate(10deg) scale(1.08); }
+      75% { transform: rotate(-5deg) scale(1.04); }
+    }
 
     .bottom-ad-section { margin: 22px 12px 10px 12px; padding-top: 15px; border-top: 1px solid var(--border-color); display: flex; flex-direction: column; gap: 14px; }
     .entry-ad-banner { background: linear-gradient(135deg, #1f1024, #3b0a18); border-radius: 10px; padding: 12px; text-align: center; border: 1px dashed rgba(225, 29, 72, 0.6); cursor: pointer; }
@@ -371,7 +387,7 @@
     .indicator-light { width: 10px; height: 10px; border-radius: 50%; }
     .light-blue { background-color: #22c55e; }
 
-    /* ১০ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে */
+    /* ৭ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে */
     .monetag-overlay-modal {
       display: none;
       position: fixed;
@@ -840,17 +856,17 @@
     </div>
   </div>
 
-  <!-- ১০ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে মডাল -->
+  <!-- ৭ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে মডাল -->
   <div class="monetag-overlay-modal" id="monetagUnlockModal">
     <div class="monetag-ad-card">
       <div class="monetag-top-row">
-        <span class="monetag-timer-pill" id="monetagTimerPill">⏳ অপেক্ষা করুন: 10s</span>
+        <span class="monetag-timer-pill" id="monetagTimerPill">⏳ অপেক্ষা করুন: 7s</span>
         <button type="button" class="monetag-close-x" id="monetagCloseBtn" onclick="handleMonetagCloseClick()">✕</button>
       </div>
       <div class="monetag-offer-box">
         <span class="sponsor-tag" style="margin-bottom:6px;">SPONSOR AD</span>
         <h4 id="monetagStepHeading">🔓 ধাপ ভেরিফিকেশন চলছে...</h4>
-        <p id="monetagStepDesc">নিচের অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
+        <p id="monetagStepDesc">নিচের অ্যাডটি ৭ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
         <div class="modal-ad-300x250-wrap" id="modalAd300x250Wrap">
           <script>
             atOptions = {
@@ -865,7 +881,7 @@
         </div>
         <button type="button" class="monetag-visit-btn" id="monetagOfferBtn" onclick="openCurrentMonetagLink()">🎁 স্পনসর অফার দেখুন (Click Here)</button>
       </div>
-      <div class="monetag-warn-note">⚠️ ১০ সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!</div>
+      <div class="monetag-warn-note">⚠️ ৭ সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!</div>
     </div>
   </div>
 
@@ -936,6 +952,15 @@
     <div class="nav-item" onclick="selectCategory('Series')"><span class="nav-icon">📺</span><span>Series</span></div>
     <div class="nav-item" onclick="openRequestModal()"><span class="nav-icon">📩</span><span>Request</span></div>
     <div class="nav-item" onclick="openNotificationNotice()"><span class="notif-dot" id="notifDot"></span><span class="nav-icon">🔔</span><span>Notice</span></div>
+    <div class="nav-item tg-nav-item" onclick="openSafeUrl('https://t.me/supersp52')">
+      <span class="nav-icon tg-shake-icon">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+          <circle cx="12" cy="12" r="11" fill="#229ED9"/>
+          <path d="M17.2 7.4L15.1 17.3C14.95 18 14.53 18.17 13.95 17.84L10.75 15.48L9.2 16.97C9.03 17.14 8.88 17.28 8.55 17.28L8.78 14.02L14.72 8.66C14.98 8.43 14.66 8.3 14.32 8.53L6.98 13.15L3.82 12.16C3.13 11.95 3.12 11.47 3.96 11.14L16.32 6.38C16.89 6.17 17.39 6.52 17.2 7.4Z" fill="#ffffff"/>
+        </svg>
+      </span>
+      <span>Telegram</span>
+    </div>
   </nav>
 
   <script>
@@ -977,11 +1002,11 @@
     let topNoticeClosed = false;
     let topNoticeCycleStarted = false;
 
-    // 4-Step Adsterra + ১০ সেকেন্ড ভেরিফিকেশন স্টেট
+    // 4-Step Adsterra + ৭ সেকেন্ড ভেরিফিকেশন স্টেট
     let waitingReturnStep = 0;
     let returnFallbackTimer = null;
     let monetagCountdownTimer = null;
-    let monetagTimeLeft = 10;
+    let monetagTimeLeft = 7;
     let monetagCompleted = false;
     let monetagActiveStep = 1;
     let monetagVignetteInjected = false;
@@ -1222,8 +1247,8 @@
       const t = title.toLowerCase(), c = category.toLowerCase();
       if (t.includes('hindi') || c.includes('hindi') || c.includes('bollywood')) return "Hindi (हिंदी)";
       if (t.includes('bangla') || t.includes('bengali') || c.includes('bangla')) return "Bengali (বাংলা)";
-      if (t.includes('tamil') || t.includes('tamil')) return "Tamil (தமிழ்)";
-      if (t.includes('telugu') || t.includes('telugu')) return "Telugu (తెలుగు)";
+      if (t.includes('tamil') || c.includes('tamil')) return "Tamil (தமிழ்)";
+      if (t.includes('telugu') || c.includes('telugu')) return "Telugu (తెలుగు)";
       if (t.includes('english') || c.includes('hollywood')) return "English";
       if (tmdbLang && ACCURATE_LANG_MAP[tmdbLang]) return (c.includes('bangla') && tmdbLang !== 'bn') ? "Bengali (বাংলা)" : ACCURATE_LANG_MAP[tmdbLang];
       return c.includes('bangla') ? "Bengali (বাংলা)" : "Hindi (हिंदी)";
@@ -2137,7 +2162,7 @@
       injectMonetagVignette();
       monetagActiveStep = step;
       monetagCompleted = false;
-      monetagTimeLeft = 10;
+      monetagTimeLeft = 7;
 
       const modal = document.getElementById('monetagUnlockModal');
       const timerPill = document.getElementById('monetagTimerPill');
@@ -2146,7 +2171,7 @@
       const desc = document.getElementById('monetagStepDesc');
 
       if (heading) heading.innerText = `🔓 স্টেপ ${step}/৩ ভেরিফিকেশন চলছে...`;
-      if (desc) desc.innerHTML = 'নিচের অ্যাডটি ১০ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।';
+      if (desc) desc.innerHTML = 'নিচের অ্যাডটি ৭ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।';
       if (timerPill) timerPill.innerText = `⏳ অপেক্ষা করুন: ${monetagTimeLeft}s`;
       if (closeBtn) {
         closeBtn.classList.remove('ready');
@@ -2163,7 +2188,7 @@
           clearInterval(monetagCountdownTimer);
           monetagCountdownTimer = null;
           monetagCompleted = true;
-          if (timerPill) timerPill.innerText = '✅ ১০ সেকেন্ড পূর্ণ হয়েছে!';
+          if (timerPill) timerPill.innerText = '✅ ৭ সেকেন্ড পূর্ণ হয়েছে!';
           if (closeBtn) {
             closeBtn.classList.add('ready');
             closeBtn.innerText = '✕ এগিয়ে যান';
@@ -2179,7 +2204,7 @@
       if (modal) modal.style.display = 'none';
 
       if (!monetagCompleted) {
-        resetUnlockFlowUI('⚠️ ১০ সেকেন্ড পূর্ণ হওয়ার আগেই ক্রস করায় আবার ১ম ধাপ থেকে শুরু করতে হবে:');
+        resetUnlockFlowUI('⚠️ ৭ সেকেন্ড পূর্ণ হওয়ার আগেই ক্রস করায় আবার ১ম ধাপ থেকে শুরু করতে হবে:');
         return;
       }
 
@@ -2228,7 +2253,7 @@
         btn.innerText = '⏳ বিজ্ঞাপন দেখে ব্যাক আসুন...';
       }
       if (notice) {
-        notice.innerText = `স্টেপ ${stepToRun}/৩: বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই ১০ সেকেন্ডের ভেরিফিকেশন চালু হবে।`;
+        notice.innerText = `স্টেপ ${stepToRun}/৩: বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই ৭ সেকেন্ডের ভেরিফিকেশন চালু হবে।`;
       }
 
       openSafeUrl(getAdsterraUrlForStep(stepToRun));
