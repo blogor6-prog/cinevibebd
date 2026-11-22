@@ -1557,9 +1557,11 @@
   {
     "id": 1794743350468,
     "title": "Parivarik ManuRanjan (2026)",
-    "category": "All",
-    "rating": "",
-    "image": "",
+    "category": "Bollywood, Hindi, Romance, Comedy",
+    "rating": "5.3",
+    "sortOrder": null,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/2gKGkD0pN2Ss9LrHA6tv5hEjHOs.jpg",
     "ad1": "https://asiafilm.org/4/a555ec6bc7d6af27618f9ba45943fffd",
     "ad2": "https://auctionr.org/4/81600715177eea404486411b72771077",
     "links": [
@@ -1570,21 +1572,25 @@
       {
         "link": "http://radical-benita-imovies-32fb5cce.koyeb.app/82791/%40PrakyTV+-+Parivarik+ManuRanjan+%282026%29+Hindi+HQ+HDRip+-+.mkv?hash=AgADly",
         "label": "1080p"
-      },
-      {
-        "link": "https://t.me/hdvirallink18",
-        "label": "🔞 viral zone"
       }
     ],
-    "badge": "WEB-DL",
-    "sortOrder": null,
+    "badge": "1080p",
     "episodes": "",
-    "cast": "",
-    "trailer": "",
-    "watchUrl": "",
-    "language": "",
-    "releaseDate": "",
-    "genre": "",
+    "cast": "Pankaj Tripathi, Aditi Rao Hydari, Brijendra Kala, Sunita Rajwar, Vijayant Kohli, Mukesh Tiwari",
+    "trailer": "https://www.youtube.com/watch?v=ym4y_aPk0io",
+    "bgVideo": "",
+    "watchUrl": "http://radical-benita-imovies-32fb5cce.koyeb.app/82787/%40PrakyTV+-+Parivarik+ManuRanjan+%282026%29+Hindi+HQ+HDRip+-+.mkv?hash=AgADuy",
+    "language": "Hindi (हिंदी)",
+    "releaseDate": "2026-11-12",
+    "genre": "Romance, Comedy",
+    "addedDate": "2026-11-15",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/9j9DtcTGSSZJVrimys2emN5kVh3.jpg",
+      "https://image.tmdb.org/t/p/w500/PPjNOAXZBCbW1EiOobqbZa9HBo.jpg",
+      "https://image.tmdb.org/t/p/w500/fJhbT2QyqC1zZ5apUyaFVfqoGhP.jpg",
+      "https://image.tmdb.org/t/p/w500/7j6Krwf0AyPHldoowHkdLphHjxE.jpg",
+      "https://image.tmdb.org/t/p/w500/tez7bvfUwniF07SQm1W3ivtWbxa.jpg"
+    ],
     "expiredLinks": [],
     "lastLinkCheck": "2026-11-22T14:47:24.124Z"
   },
