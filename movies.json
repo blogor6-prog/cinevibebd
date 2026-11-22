@@ -5,16 +5,26 @@
     "category": "South Indian, Romance, Comedy, Mystery, Horror, Fantasy",
     "rating": "7.5",
     "sortOrder": null,
+    "trendingOrder": null,
     "image": "https://image.tmdb.org/t/p/w500/k14luImbnzAhFZzqFKgvVrnOF4D.jpg",
     "ad1": "",
     "ad2": "",
-    "links": [],
+    "links": [
+      {
+        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87076/%28FilmyFly.CA%29+Drones+%282026%29+%28Hindi+%2B+Tamil%29+Dual+Audio+U.mkv?hash=AgADES",
+        "label": "720p - 770.84 MB"
+      },
+      {
+        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87081/%28FilmyFly.CA%29+Drones+%282026%29+%28Hindi+%2B+Tamil%29+Dual+Audio+U.mkv?hash=AgADDi",
+        "label": "720p - 1.32 GB"
+      }
+    ],
     "badge": "1080p",
     "episodes": "",
     "cast": "Siddhi Idnani, Anjali Nair, Dravid Selvam, KPY Kuraishi, Devadarshini, Cinemawala Sathish",
     "trailer": "",
     "bgVideo": "",
-    "watchUrl": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/DRONES.2026.720p.AMZN.WEB-DL.DUAL.DDP2.0.H.264--Fmxbd.com.mkv",
     "language": "Tamil (தமிழ்)",
     "releaseDate": "2026-10-16",
     "genre": "Romance, Comedy, Mystery, Horror, Fantasy",
