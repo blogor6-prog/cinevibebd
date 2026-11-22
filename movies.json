@@ -1464,24 +1464,37 @@
   {
     "id": 1794735100689,
     "title": "Khalifa: The Ruler (2026)",
-    "category": "Hindi",
+    "category": "South Indian, Action, Thriller, Crime",
     "rating": "5.2",
     "sortOrder": null,
+    "trendingOrder": null,
     "image": "https://image.tmdb.org/t/p/w500/3HOC3omTbl7lB9gxKu7uCEpOtuC.jpg",
-    "ad1": "",
-    "ad2": "",
-    "links": [],
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Khalifa.2026.720p.DS4K.WEB-DL.Hindi.5.1-Malayalam.5.1.ESub.x264-Fmxbd.com.mkv",
+        "label": "720p - 1.53GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Khalifa.2026.1080p.DS4K.WEB-DL.Hindi.5.1-Malayalam.5.1.ESub.x264-Fmxbd.com.mkv",
+        "label": "1080p - 1.53GB"
+      }
+    ],
     "badge": "1080p",
     "episodes": "",
     "cast": "Prithviraj Sukumaran, Mohanlal, Neil Nitin Mukesh, Indrans, Shammi Thilakan, Malvika Sharma",
     "trailer": "https://vimeo.com/1248371401",
-    "bgVideo": "https://vimeo.com/1248371401",
-    "watchUrl": "",
-    "language": "",
-    "releaseDate": "",
-    "genre": "",
+    "bgVideo": "https://huggingface.co/datasets/sp5249/trailers/resolve/main/KHALIFA%20Official%20Trailer%20_%20Prithviraj%20Sukumaran%20_%20Mohanlal%20_%20Vysakh%20_%20Jinu%20V%20Abraham(720P_HD).mp4",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Khalifa.2026.720p.DS4K.WEB-DL.Hindi.5.1-Malayalam.5.1.ESub.x264-Fmxbd.com.mkv",
+    "language": "(Malayalam - Hindi)",
+    "releaseDate": "2026-08-20",
+    "genre": "Action, Thriller, Crime",
     "addedDate": "2026-11-15",
-    "screenshots": [],
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/6Jz7rnnZrSkgs9ySWUxewpcxr7Q.jpg",
+      "https://image.tmdb.org/t/p/w500/vSCltVcBSmckausl25hCnNcZXer.jpg"
+    ],
     "expiredLinks": [],
     "lastLinkCheck": "2026-11-22T14:47:24.124Z"
   },
