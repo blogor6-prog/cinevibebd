@@ -1,5 +1,43 @@
 [
   {
+    "id": 1795355444706,
+    "title": "Vibe (2026)",
+    "category": "Bollywood, Hindi, Action, Comedy, Drama",
+    "rating": "5.8",
+    "sortOrder": 20,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/1K2cYaK42vcQkg1iITxF6xcbJrs.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Vibe.2026.720p.AMZN.WEB-DL.Hindi.DDP5.1.H.264-Fmxbd.com.mkv",
+        "label": "720p - 1.37 GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Vibe.2026.1080p.AMZN.WEB-DL.DDP5.1.Atmos.H.264-Fmxbd.com.mkv",
+        "label": "1080p - 3.50 GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Preity Zinta, Kunal Kemmu, Sparsh Shrivastava, Vanshika Dhir, Dinesh Lal Yadav Nirahua, Yashpal Sharma",
+    "trailer": "",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Vibe.2026.720p.AMZN.WEB-DL.Hindi.DDP5.1.H.264-Fmxbd.com.mkv",
+    "language": "Hindi (हिंदी)",
+    "releaseDate": "2026-09-17",
+    "genre": "Action, Comedy, Drama",
+    "addedDate": "2026-11-22",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/paZuQDNYwuD0WBwZERfvgSNQZDz.jpg",
+      "https://image.tmdb.org/t/p/w500/xQ9Sxut6KLE6fZjIaaRa0GnwAox.jpg",
+      "https://image.tmdb.org/t/p/w500/jXVNSIVvKpWf7GM5TiN7R8Jk0BZ.jpg",
+      "https://image.tmdb.org/t/p/w500/q0vtZicuxRIzVSFDZU6WBrzT2Cw.jpg"
+    ],
+    "expiredLinks": []
+  },
+  {
     "id": 1795355030222,
     "title": "Fight Against Evil 3 (2026)",
     "category": "Action, Crime, Comedy, Drama",
