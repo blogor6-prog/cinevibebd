@@ -387,7 +387,7 @@
     .indicator-light { width: 10px; height: 10px; border-radius: 50%; }
     .light-blue { background-color: #22c55e; }
 
-    /* ৭ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে */
+    /* ৫ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে */
     .monetag-overlay-modal {
       display: none;
       position: fixed;
@@ -856,17 +856,17 @@
     </div>
   </div>
 
-  <!-- ৭ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে মডাল -->
+  <!-- ৫ সেকেন্ডের ভেরিফিকেশন + 300x250 ব্যানার ওভারলে মডাল -->
   <div class="monetag-overlay-modal" id="monetagUnlockModal">
     <div class="monetag-ad-card">
       <div class="monetag-top-row">
-        <span class="monetag-timer-pill" id="monetagTimerPill">⏳ অপেক্ষা করুন: 7s</span>
+        <span class="monetag-timer-pill" id="monetagTimerPill">⏳ অপেক্ষা করুন: 5s</span>
         <button type="button" class="monetag-close-x" id="monetagCloseBtn" onclick="handleMonetagCloseClick()">✕</button>
       </div>
       <div class="monetag-offer-box">
         <span class="sponsor-tag" style="margin-bottom:6px;">SPONSOR AD</span>
         <h4 id="monetagStepHeading">🔓 ধাপ ভেরিফিকেশন চলছে...</h4>
-        <p id="monetagStepDesc">নিচের অ্যাডটি ৭ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
+        <p id="monetagStepDesc">নিচের অ্যাডটি ৫ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে ক্লিক করলেই পরের ধাপ আনলক হবে।</p>
         <div class="modal-ad-300x250-wrap" id="modalAd300x250Wrap">
           <script>
             atOptions = {
@@ -881,7 +881,7 @@
         </div>
         <button type="button" class="monetag-visit-btn" id="monetagOfferBtn" onclick="openCurrentMonetagLink()">🎁 স্পনসর অফার দেখুন (Click Here)</button>
       </div>
-      <div class="monetag-warn-note">⚠️ ৭ সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!</div>
+      <div class="monetag-warn-note">⚠️ ৫ সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!</div>
     </div>
   </div>
 
@@ -979,6 +979,10 @@
     const MONETAG_BACKUP_1 = "https://uplcm.com/4/12154636";
     const MONETAG_BACKUP_2 = "https://uplcm.com/4/12312510";
 
+    // শুধু এখানে সংখ্যা বদলালেই পুরো সাইটে একসাথে বদলে যাবে:
+    const UNLOCK_WAIT_SEC = 5;
+    const toBnDigits = (n) => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
+
     const USER_SEARCH_TTL = 2 * 24 * 60 * 60 * 1000;
 
     const GENRE_MAP = { 28:"Action",12:"Adventure",16:"Animation",35:"Comedy",80:"Crime",99:"Documentary",18:"Drama",10751:"Family",14:"Fantasy",36:"History",27:"Horror",10402:"Music",9648:"Mystery",10749:"Romance",878:"Sci-Fi",10770:"TV Movie",53:"Thriller",10752:"War",37:"Western",10759:"Action & Adventure",10762:"Kids",10764:"Reality",10765:"Sci-Fi & Fantasy" };
@@ -1002,11 +1006,11 @@
     let topNoticeClosed = false;
     let topNoticeCycleStarted = false;
 
-    // 4-Step Adsterra + ৭ সেকেন্ড ভেরিফিকেশন স্টেট
+    // 4-Step Adsterra + ভেরিফিকেশন স্টেট
     let waitingReturnStep = 0;
     let returnFallbackTimer = null;
     let monetagCountdownTimer = null;
-    let monetagTimeLeft = 7;
+    let monetagTimeLeft = UNLOCK_WAIT_SEC;
     let monetagCompleted = false;
     let monetagActiveStep = 1;
     let monetagVignetteInjected = false;
@@ -2162,16 +2166,19 @@
       injectMonetagVignette();
       monetagActiveStep = step;
       monetagCompleted = false;
-      monetagTimeLeft = 7;
+      monetagTimeLeft = UNLOCK_WAIT_SEC;
+      const bnSec = toBnDigits(UNLOCK_WAIT_SEC);
 
       const modal = document.getElementById('monetagUnlockModal');
       const timerPill = document.getElementById('monetagTimerPill');
       const closeBtn = document.getElementById('monetagCloseBtn');
       const heading = document.getElementById('monetagStepHeading');
       const desc = document.getElementById('monetagStepDesc');
+      const warnNote = document.querySelector('.monetag-warn-note');
 
       if (heading) heading.innerText = `🔓 স্টেপ ${step}/৩ ভেরিফিকেশন চলছে...`;
-      if (desc) desc.innerHTML = 'নিচের অ্যাডটি ৭ সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।';
+      if (desc) desc.innerHTML = `নিচের অ্যাডটি ${bnSec} সেকেন্ড দেখুন। সময় শেষ হলে উপরের <b>✕</b> বাটনে চাপলেই পরের ধাপ আসবে।`;
+      if (warnNote) warnNote.innerHTML = `⚠️ ${bnSec} সেকেন্ড শেষ হওয়ার আগে <b>✕</b> চাপলে আবার ১ম ধাপ থেকে শুরু হবে!`;
       if (timerPill) timerPill.innerText = `⏳ অপেক্ষা করুন: ${monetagTimeLeft}s`;
       if (closeBtn) {
         closeBtn.classList.remove('ready');
@@ -2188,7 +2195,7 @@
           clearInterval(monetagCountdownTimer);
           monetagCountdownTimer = null;
           monetagCompleted = true;
-          if (timerPill) timerPill.innerText = '✅ ৭ সেকেন্ড পূর্ণ হয়েছে!';
+          if (timerPill) timerPill.innerText = `✅ ${bnSec} সেকেন্ড পূর্ণ হয়েছে!`;
           if (closeBtn) {
             closeBtn.classList.add('ready');
             closeBtn.innerText = '✕ এগিয়ে যান';
@@ -2204,7 +2211,7 @@
       if (modal) modal.style.display = 'none';
 
       if (!monetagCompleted) {
-        resetUnlockFlowUI('⚠️ ৭ সেকেন্ড পূর্ণ হওয়ার আগেই ক্রস করায় আবার ১ম ধাপ থেকে শুরু করতে হবে:');
+        resetUnlockFlowUI(`⚠️ ${toBnDigits(UNLOCK_WAIT_SEC)} সেকেন্ড পূর্ণ হওয়ার আগেই ক্রস করায় আবার ১ম ধাপ থেকে শুরু করতে হবে:`);
         return;
       }
 
@@ -2253,7 +2260,7 @@
         btn.innerText = '⏳ বিজ্ঞাপন দেখে ব্যাক আসুন...';
       }
       if (notice) {
-        notice.innerText = `স্টেপ ${stepToRun}/৩: বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই ৭ সেকেন্ডের ভেরিফিকেশন চালু হবে।`;
+        notice.innerText = `স্টেপ ${stepToRun}/৩: বিজ্ঞাপন ওপেন হয়েছে—ব্যাক এলেই ${toBnDigits(UNLOCK_WAIT_SEC)} সেকেন্ডের ভেরিফিকেশন চালু হবে।`;
       }
 
       openSafeUrl(getAdsterraUrlForStep(stepToRun));
@@ -2810,4 +2817,4 @@
     fetchMoviesFromGitHub();
   </script>
 </body>
-  </html>
+    </html>
