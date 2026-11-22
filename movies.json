@@ -523,18 +523,31 @@
     "category": "Trending, Hindi",
     "rating": "",
     "sortOrder": null,
+    "trendingOrder": null,
     "image": "https://image.tmdb.org/t/p/w500/cXaCyYYbafVyMrs8rwKmxezBYPJ.jpg",
-    "ad1": "",
-    "ad2": "",
-    "links": [],
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87099/%5B%40RunningMoviesHD%5D+-+Ranabaali+%282026%29+UNCUT+720p+HDRip+x.mkv?hash=AgAD9x",
+        "label": "720p - 1.67 GB"
+      },
+      {
+        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87101/%5B%40RunningMoviesHD%5D+-+Ranabaali+%282026%29+UNCUT+720p+HEVC+HD.mkv?hash=AgAD9R",
+        "label": "720p - 957.24 MB"
+      }
+    ],
     "badge": "1080p",
-    "episodes": "1::https://999c8bfadce536bf3068e488c127691c.r2.cloudflarestorage.com/movielinkbd/media/3rjkLSnH/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=a42b844b9f9d69b522136d088cb62f8d%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T000000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=eca7aadf424d3b10e6c98e8ab6ed7dc9648c70d6882a552ce978070847465c6d|HD || 2::https://999c8bfadce536bf3068e488c127691c.r2.cloudflarestorage.com/movielinkbd/media/3rjkLSnH/main?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=a42b844b9f9d69b522136d088cb62f8d%2F20261115%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261115T000000Z&X-Amz-Expires=172800&X-Amz-SignedHeaders=host&X-Amz-Signature=eca7aadf424d3b10e6c98e8ab6ed7dc9648c70d6882a552ce978070847465c6d|HD",
+    "episodes": "",
     "cast": "Vijay Deverakonda, Rashmika Mandanna, Arnold Vosloo, Easwari Rao, Vinod Sagar, Kishore Kumar Polimera",
     "trailer": "https://www.youtube.com/watch?v=4AejYUbJiDs",
-    "watchUrl": "",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Ranabaali.2026.720p.NF.WEB-DL.DUAL.DDP5.1.H.264-Fmxbd.com.mkv",
     "language": "",
     "releaseDate": "",
     "genre": "",
+    "addedDate": "2026-11-15",
+    "screenshots": [],
     "expiredLinks": [],
     "lastLinkCheck": "2026-11-22T06:58:32.316Z"
   },
