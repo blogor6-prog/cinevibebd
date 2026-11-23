@@ -1,5 +1,61 @@
 [
   {
+    "id": 1795428139919,
+    "title": "Money Heist (2017)",
+    "category": "Series, Crime, Drama",
+    "rating": "8.2",
+    "sortOrder": 81,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/reEMJA1uzscCbkpeRJeTT2bjqUp.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money%20Heist%20S01%20Dual%20Audio%20Hindi-English%20720p%20HEVC-Fmxbd.com.mkv",
+        "label": "720p - S01 Completed"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money%20Heist%20S02%20Dual%20Audio%20Hindi-English%20720p%20HEVC%20WEB-DL%20ESub%20-Fmxbd.com.mkv",
+        "label": "720p - S02 Completed"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money%20Heist%20S03%20Dual%20Audio%20Hindi-English%20720p%20HEVC%20WEB-DL%20ESub%20-Fmxbd.com.mkv",
+        "label": "720p - S03 Completed"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money%20Heist%20S04%20Dual%20Audio%20Hindi-English%20720p%20HEVC%20WEB-DL%20ESub-Fmxbd.com.mkv",
+        "label": "720p - S04 Completed"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money%20Heist%20S05%20-%20VOL-1%20Dual%20Audio%20Hindi-English%20720p%20WEB-DL%20ESub%20-Fmxbd.com.mkv",
+        "label": "720p - S05 Part-1"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money.Heist.S05-VOL.2.720p.WEB-DL.Hindi.5.1-English.ESub.x264-Fmxbd.com.mkv",
+        "label": "720p - S05 Part-2"
+      }
+    ],
+    "badge": "SERIES",
+    "episodes": "",
+    "cast": "Úrsula Corberó, Itziar Ituño, Álvaro Morte, Pedro Alonso, Miguel Herrán, Jaime Lorente",
+    "trailer": "https://www.youtube.com/watch?v=_InqQJRqGW4",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Money%20Heist%20S01%20Dual%20Audio%20Hindi-English%20720p%20HEVC-Fmxbd.com.mkv",
+    "language": "Spanish (Español)",
+    "releaseDate": "2017-05-02",
+    "genre": "Crime, Drama",
+    "addedDate": "2026-11-23",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/xGexTKCJDkl12dTW4YCBDXWb1AD.jpg",
+      "https://image.tmdb.org/t/p/w500/gFZriCkpJYsApPZEF3jhxL4yLzG.jpg",
+      "https://image.tmdb.org/t/p/w500/tNlkKrypFs6QSUjFVQntFISoFv5.jpg",
+      "https://image.tmdb.org/t/p/w500/vUeM9CrnuNEFEop1JoxslSJDRGt.jpg",
+      "https://image.tmdb.org/t/p/w500/AfX3K8oGdRl4nyGxtonwNIkRDuf.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795425877429,
     "title": "Son Of (2026)",
     "category": "Hindi, Telugu, South Indian",
