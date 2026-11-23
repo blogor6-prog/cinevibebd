@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795425879455,
+    "time": "23/11/2026, 15:24:39",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Son Of (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795425345292,
     "time": "23/11/2026, 15:15:45",
     "admin": "Main Admin",
