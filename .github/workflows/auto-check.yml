@@ -1,0 +1,258 @@
+name: 24/7 Smart Link Checker
+
+on:
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run Smart Link Checker
+        id: scan
+        run: |
+          node << 'EOF'
+          const fs = require('fs');
+
+          const MOVIES_FILE = 'movies.json';
+          if (!fs.existsSync(MOVIES_FILE)) {
+            console.log('movies.json not found, skipping.');
+            process.exit(0);
+          }
+
+          const movies = JSON.parse(fs.readFileSync(MOVIES_FILE, 'utf8') || '[]');
+
+          function extractMovieLinks(m) {
+            const items = [];
+            const add = (label, raw) => {
+              let u = String(raw || '').trim();
+              if (!u) return;
+              if (/^www\./i.test(u)) u = 'https://' + u;
+              if (/^https?:\/\//i.test(u)) items.push({ label, url: u });
+            };
+            add('Watch Online', m.watchUrl);
+            add('BG Video', m.bgVideo);
+            add('Trailer', m.trailer);
+            if (Array.isArray(m.links)) {
+              m.links.forEach((l, i) => add(`Download (${l.label || '#' + (i + 1)})`, l.link));
+            }
+            if (m.episodes) {
+              if (m.episodes.includes('::')) {
+                m.episodes.split(' || ').forEach(ep => {
+                  const [name, qRaw] = ep.split('::');
+                  (qRaw || '').split(';;').forEach(q => {
+                    const p = q.split('|');
+                    add(`${(name || 'Ep').trim()} (${(p[1] || 'HD').trim()})`, p[0]);
+                  });
+                });
+              } else {
+                m.episodes.split(/,|\n/).forEach((ep, i) => {
+                  const p = ep.trim().split('|');
+                  add(p[1] ? p[1].trim() : `Ep ${i + 1}`, p[0]);
+                });
+              }
+            }
+            return items;
+          }
+
+          async function checkSingleUrl(item) {
+            const u = item.url;
+
+            // YouTube smart check
+            if (/(youtube\.com|youtu\.be)/i.test(u)) {
+              const ctrl = new AbortController();
+              const tid = setTimeout(() => ctrl.abort(), 7000);
+              try {
+                const res = await fetch(`https://www.youtube.com/oembed?url=${encodeURIComponent(u)}&format=json`, { signal: ctrl.signal });
+                clearTimeout(tid);
+                if (res.status === 404) {
+                  return { ...item, expired: true, reason: 'YouTube Video Removed (404)' };
+                }
+                return { ...item, expired: false, reason: 'OK' };
+              } catch (e) {
+                clearTimeout(tid);
+                return { ...item, expired: false, reason: 'OK' };
+              }
+            }
+
+            const ctrl = new AbortController();
+            const tid = setTimeout(() => ctrl.abort(), 8000);
+            try {
+              const res = await fetch(u, {
+                method: 'GET',
+                redirect: 'follow',
+                signal: ctrl.signal,
+                headers: {
+                  'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+                  'Range': 'bytes=0-1023'
+                }
+              });
+              clearTimeout(tid);
+
+              if (res.status === 404 || res.status === 410) {
+                if (res.body) res.body.cancel().catch(() => {});
+                return { ...item, expired: true, reason: `HTTP ${res.status} (Not Found)` };
+              }
+
+              const ct = (res.headers.get('content-type') || '').toLowerCase();
+              if (res.status === 200 && ct.includes('text/html')) {
+                const text = (await res.text()).slice(0, 25000);
+                const titleMatch = text.match(/<title[^>]*>([\s\S]*?)<\/title>/i);
+                const pageTitle = titleMatch ? titleMatch[1].toLowerCase().trim() : '';
+                if (/\b404\b|page not found|file not found|video not found|error 404/.test(pageTitle)) {
+                  return { ...item, expired: true, reason: 'Dead Page Title' };
+                }
+                const visible = text
+                  .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+                  .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+                  .replace(/<[^>]+>/g, ' ')
+                  .replace(/\s+/g, ' ')
+                  .toLowerCase();
+
+                const deadPhrases = [
+                  'sorry, the file you have requested does not exist',
+                  'this file has been removed',
+                  'this video has been removed',
+                  'file was deleted',
+                  'file has been deleted',
+                  '404 - file or directory not found',
+                  'the link has expired',
+                  "video doesn't exist",
+                  'account associated with this video has been terminated'
+                ];
+                for (const p of deadPhrases) {
+                  if (visible.includes(p)) {
+                    return { ...item, expired: true, reason: p };
+                  }
+                }
+              } else {
+                if (res.body) res.body.cancel().catch(() => {});
+              }
+
+              return { ...item, expired: false, reason: `OK (${res.status})` };
+            } catch (err) {
+              clearTimeout(tid);
+              if (err?.cause?.code === 'ENOTFOUND') {
+                return { ...item, expired: true, reason: 'Domain Dead / DNS Error' };
+              }
+              return { ...item, expired: false, reason: 'OK (Slow/Protected)' };
+            }
+          }
+
+          async function runPool(items, concurrency = 15) {
+            const out = new Array(items.length);
+            let cursor = 0;
+            async function worker() {
+              while (cursor < items.length) {
+                const i = cursor++;
+                out[i] = await checkSingleUrl(items[i]);
+              }
+            }
+            await Promise.all(Array.from({ length: Math.min(concurrency, items.length) }, worker));
+            return out;
+          }
+
+          (async () => {
+            const allItems = [];
+            movies.forEach((m, idx) => {
+              extractMovieLinks(m).forEach(l => allItems.push({ idx, label: l.label, url: l.url }));
+            });
+
+            console.log(`Checking ${allItems.length} links across ${movies.length} movies...`);
+            const results = await runPool(allItems, 15);
+
+            const byMovie = {};
+            results.forEach(r => {
+              if (r && r.expired) {
+                if (!byMovie[r.idx]) byMovie[r.idx] = [];
+                byMovie[r.idx].push({ label: r.label, url: r.url, reason: r.reason });
+              }
+            });
+
+            let changed = false;
+            const newlyExpiredMovies = [];
+            const nowIso = new Date().toISOString();
+
+            movies.forEach((m, idx) => {
+              const prevList = Array.isArray(m.expiredLinks) ? m.expiredLinks : [];
+              const prevKey = prevList.map(x => `${x.url}|${x.reason}`).sort().join('||');
+              const newList = byMovie[idx] || [];
+              const newKey = newList.map(x => `${x.url}|${x.reason}`).sort().join('||');
+
+              if (prevKey !== newKey) {
+                changed = true;
+                m.expiredLinks = newList;
+                m.lastLinkCheck = nowIso;
+
+                const prevUrls = new Set(prevList.map(x => x.url));
+                if (newList.some(x => !prevUrls.has(x.url))) {
+                  newlyExpiredMovies.push({ title: m.title, expired: newList });
+                }
+              }
+            });
+
+            if (changed) {
+              fs.writeFileSync(MOVIES_FILE, JSON.stringify(movies, null, 2));
+              console.log('movies.json updated with changed link statuses.');
+            } else {
+              console.log('No link status changes detected.');
+            }
+
+            if (newlyExpiredMovies.length > 0) {
+              const html = `<h3>🚨 CineVibeBD মেয়াদ শেষ লিংক রিপোর্ট</h3>` +
+                newlyExpiredMovies.map(m =>
+                  `<p><b>🎬 ${m.title}</b></p><ul>` +
+                  m.expired.map(e => `<li>${e.label}: <a href="${e.url}">${e.url}</a> (${e.reason})</li>`).join('') +
+                  `</ul>`
+                ).join('');
+              fs.writeFileSync('/tmp/email_report.html', html);
+            }
+
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `changed=${changed}\n`);
+            fs.appendFileSync(process.env.GITHUB_OUTPUT, `has_new_expired=${newlyExpiredMovies.length > 0}\n`);
+          })();
+          EOF
+
+      - name: Commit and push if movies.json changed
+        if: steps.scan.outputs.changed == 'true'
+        run: |
+          git config user.name "CineVibeBD AutoChecker"
+          git config user.email "actions@github.com"
+          git add movies.json
+          git diff --staged --quiet || git commit -m "Auto 1-hour smart link check"
+          git push
+
+      - name: Send optional Gmail alert
+        if: steps.scan.outputs.has_new_expired == 'true' && env.GMAIL_USER != '' && env.GMAIL_APP_PASS != ''
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
+        run: |
+          npm install --no-save nodemailer
+          node << 'EOF'
+          const fs = require('fs');
+          const nodemailer = require('nodemailer');
+          const html = fs.readFileSync('/tmp/email_report.html', 'utf8');
+          const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASS }
+          });
+          transporter.sendMail({
+            from: process.env.GMAIL_USER,
+            to: process.env.GMAIL_USER,
+            subject: `🚨 CineVibeBD মেয়াদ শেষ রিপোর্ট (${new Date().toLocaleDateString('en-GB')})`,
+            html
+          }).then(() => console.log('Email sent!')).catch(console.error);
+          EOF
