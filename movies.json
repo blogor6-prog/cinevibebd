@@ -2211,6 +2211,7 @@
     "category": "Bollywood",
     "rating": "",
     "sortOrder": null,
+    "trendingOrder": null,
     "image": "https://i.postimg.cc/k4PgmjmH/l1r-C9HMKvn-Koo-IPVf-NVN2Oukzx6.jpg",
     "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
     "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
@@ -2235,8 +2236,8 @@
     "genre": "",
     "addedDate": "2026-11-15",
     "screenshots": [],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-23T08:23:23.301Z"
+    "draft": false,
+    "expiredLinks": []
   },
   {
     "id": 1794743350451,
