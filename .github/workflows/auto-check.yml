@@ -70,7 +70,6 @@ jobs:
           async function checkSingleUrl(item) {
             const u = item.url;
 
-            // YouTube smart check
             if (/(youtube\.com|youtu\.be)/i.test(u)) {
               const ctrl = new AbortController();
               const tid = setTimeout(() => ctrl.abort(), 7000);
@@ -235,24 +234,34 @@ jobs:
           git push
 
       - name: Send optional Gmail alert
-        if: steps.scan.outputs.has_new_expired == 'true' && env.GMAIL_USER != '' && env.GMAIL_APP_PASS != ''
+        if: steps.scan.outputs.has_new_expired == 'true'
         env:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASS: ${{ secrets.GMAIL_APP_PASS }}
         run: |
+          if [ -z "$GMAIL_USER" ] || [ -z "$GMAIL_APP_PASS" ]; then
+            echo "Gmail secrets not set, skipping email."
+            exit 0
+          fi
           npm install --no-save nodemailer
           node << 'EOF'
           const fs = require('fs');
           const nodemailer = require('nodemailer');
-          const html = fs.readFileSync('/tmp/email_report.html', 'utf8');
-          const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASS }
+          (async () => {
+            const html = fs.readFileSync('/tmp/email_report.html', 'utf8');
+            const transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: { user: process.env.GMAIL_USER, pass: process.env.GMAIL_APP_PASS }
+            });
+            await transporter.sendMail({
+              from: process.env.GMAIL_USER,
+              to: process.env.GMAIL_USER,
+              subject: `🚨 CineVibeBD মেয়াদ শেষ রিপোর্ট (${new Date().toLocaleDateString('en-GB')})`,
+              html
+            });
+            console.log('Email sent successfully!');
+          })().catch(err => {
+            console.error('Email failed:', err);
+            process.exitCode = 1;
           });
-          transporter.sendMail({
-            from: process.env.GMAIL_USER,
-            to: process.env.GMAIL_USER,
-            subject: `🚨 CineVibeBD মেয়াদ শেষ রিপোর্ট (${new Date().toLocaleDateString('en-GB')})`,
-            html
-          }).then(() => console.log('Email sent!')).catch(console.error);
           EOF
