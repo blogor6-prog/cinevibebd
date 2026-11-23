@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795424745032,
+    "time": "23/11/2026, 15:05:45",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Permanent Delete",
+    "target": "Awarapan 2 (2026) bangla",
+    "details": ""
+  },
+  {
     "id": 1795424741405,
     "time": "23/11/2026, 15:05:41",
     "admin": "Main Admin",
