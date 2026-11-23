@@ -1,5 +1,47 @@
 [
   {
+    "id": 1795425343113,
+    "title": "Mayookha (2026)",
+    "category": "South Indian, Thriller",
+    "rating": "9.0",
+    "sortOrder": null,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/7DPJPa3IX8jgthqK8sSnENrVzhA.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Mayookha.2026.480p.WEB-DL.Hindi-Telugu.ESub.x264-Fmxbd.com.mkv",
+        "label": "480p - 497 MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Mayookha.2026.720p.WEB-DL.Hindi.5.1-Telugu.5.1.ESub.x264-Fmxbd.com.mkv",
+        "label": "720p - 1.27 GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Mayookha.2026.1080p.WEB-DL.Hindi.5.1-Telugu.5.1.ESub.x264-Fmxbd.com.mkv",
+        "label": "1080p - 2.78 GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Payal Chengappa",
+    "trailer": "https://www.youtube.com/watch?v=pYB9ImQYNjY",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Mayookha.2026.720p.WEB-DL.Hindi.5.1-Telugu.5.1.ESub.x264-Fmxbd.com.mkv",
+    "language": "Telugu (తెలుగు)",
+    "releaseDate": "2026-10-09",
+    "genre": "Thriller",
+    "addedDate": "2026-11-23",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/qg1rZSV4aIkAlNchhyYIlPsxjtU.jpg",
+      "https://image.tmdb.org/t/p/w500/dNzKxu3iSGYSiAlGdPTKUro0bCI.jpg",
+      "https://image.tmdb.org/t/p/w500/oFC0jhqvn6FSAkNFOrDNRnDx4ga.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795358646007,
     "title": "Prem Shots (2026)",
     "category": "Series, Bangla, Comedy, Drama",
