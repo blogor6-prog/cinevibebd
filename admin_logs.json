@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795428142343,
+    "time": "23/11/2026, 16:02:22",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Money Heist (2017)",
+    "details": "Published"
+  },
+  {
     "id": 1795426127833,
     "time": "23/11/2026, 15:28:47",
     "admin": "Main Admin",
