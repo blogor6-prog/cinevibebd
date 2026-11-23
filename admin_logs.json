@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795424154081,
+    "time": "23/11/2026, 14:55:54",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Edit Movie",
+    "target": "Awarapan 2 (2026) Hindi",
+    "details": "Published"
+  },
+  {
     "id": 1795424118195,
     "time": "23/11/2026, 14:55:18",
     "admin": "Main Admin",
