@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>CineVibeBD - Lifetime Movie Radar & Admin Hub</title>
+  <title>CineVibeBD - Channel Auto Poster & Movie Radar</title>
   <meta name="theme-color" content="#050507">
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
@@ -23,7 +23,6 @@
     body { background: var(--bg); color: #fff; padding: 12px 12px 80px; min-height: 100vh; }
 
     .header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; position: sticky; top: 0; background: rgba(5,5,7,0.95); backdrop-filter: blur(10px); padding: 8px 0; z-index: 100; border-bottom: 1px solid var(--border); }
-    .brand { display: flex; align-items: center; gap: 8px; }
     .brand h1 { font-size: 17px; font-weight: 800; background: linear-gradient(90deg, #fff, #fda4af, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .header-actions { display: flex; gap: 6px; }
     .icon-pill-btn { background: var(--card); border: 1px solid var(--border); color: #fff; padding: 6px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 700; cursor: pointer; }
@@ -33,7 +32,6 @@
     .settings-panel.open { display: block; }
     .settings-panel label { display: block; font-size: 11px; color: var(--yellow); font-weight: 700; margin-bottom: 3px; }
     .settings-panel input { width: 100%; padding: 8px 11px; border-radius: 8px; border: 1px solid var(--border); background: #07080d; color: #fff; font-size: 12.5px; margin-bottom: 8px; outline: none; }
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
     .save-btn { width: 100%; padding: 9px; border: none; border-radius: 999px; background: linear-gradient(135deg, #22c55e, #16a34a); color: #050507; font-size: 12.5px; font-weight: 800; cursor: pointer; }
 
     .search-filter-bar { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
@@ -45,7 +43,7 @@
     .filter-controls-row::-webkit-scrollbar { display: none; }
     .filter-btn { background: var(--card); border: 1px solid var(--border); color: #e4e4e7; padding: 6px 11px; border-radius: 999px; font-size: 11.5px; font-weight: 700; white-space: nowrap; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; }
     .filter-btn.active { background: rgba(56,189,248,0.18); border-color: var(--blue); color: var(--blue); }
-    .select-pill { background: var(--card); border: 1px solid var(--border); color: #fff; padding: 6px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; outline: none; }
+    .select-pill { background: var(--card); border: 1px solid var(--border); color: #fff; padding: 6px 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; outline: none; max-width: 155px; }
 
     .selected-countries-strip { display: none; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
     .c-tag { background: rgba(225,29,72,0.2); border: 1px solid rgba(225,29,72,0.5); color: #fda4af; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; cursor: pointer; }
@@ -57,12 +55,11 @@
 
     .bulk-bar { display: flex; align-items: center; justify-content: space-between; gap: 6px; background: rgba(18,19,26,0.9); border: 1px solid var(--border); border-radius: 10px; padding: 7px 10px; margin-bottom: 10px; flex-wrap: wrap; }
     .status-msg { font-size: 11.5px; color: var(--blue); font-weight: 700; flex: 1; min-width: 140px; }
-    .bulk-btns { display: flex; gap: 5px; }
-    .mini-btn { border: none; border-radius: 999px; padding: 5px 10px; font-size: 10.5px; font-weight: 800; cursor: pointer; color: #fff; }
+    .mini-btn { border: none; border-radius: 999px; padding: 6px 12px; font-size: 11px; font-weight: 800; cursor: pointer; color: #fff; background: linear-gradient(135deg, #2563eb, #0284c7); }
 
     .card-list { display: flex; flex-direction: column; gap: 10px; }
     .movie-card { display: flex; gap: 11px; background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 10px; position: relative; }
-    .movie-card.on-site { border-color: rgba(34, 197, 94, 0.45); }
+    .movie-card.on-site { border-color: rgba(34, 197, 94, 0.5); }
     .poster-col { position: relative; width: 82px; flex-shrink: 0; }
     .poster-col img { width: 82px; height: 120px; object-fit: cover; border-radius: 8px; background: #1c1d28; display: block; }
     .play-trailer-chip { position: absolute; bottom: 5px; left: 5px; right: 5px; background: rgba(0,0,0,0.82); border: 1px solid rgba(255,255,255,0.25); color: #fff; font-size: 9.5px; font-weight: 800; text-align: center; padding: 2px 0; border-radius: 5px; cursor: pointer; }
@@ -80,8 +77,7 @@
     .item-meta { font-size: 11px; color: #cbd5e1; line-height: 1.45; margin-bottom: 7px; }
 
     .btn-row { display: flex; flex-wrap: wrap; gap: 5px; }
-    .act-btn { border: none; border-radius: 999px; padding: 5px 9px; font-size: 10.5px; font-weight: 800; cursor: pointer; color: #fff; }
-    .btn-dm { background: #16a34a; }
+    .act-btn { border: none; border-radius: 999px; padding: 6px 10px; font-size: 11px; font-weight: 800; cursor: pointer; color: #fff; }
     .btn-ch { background: #2563eb; }
     .btn-admin { background: linear-gradient(135deg, #f97316, #e11d48); }
     .btn-cp { background: #27272a; border: 1px solid rgba(255,255,255,0.18); }
@@ -91,10 +87,9 @@
     .news-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
     .news-card h3 { font-size: 13.5px; color: #fff; line-height: 1.45; margin-bottom: 8px; }
 
-    /* ফ্লোটিং টোস্ট নোটিফিকেশন */
     .toast-banner {
       display: none; position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
-      background: rgba(15, 16, 24, 0.96); border: 1px solid rgba(56, 189, 248, 0.65);
+      background: rgba(15, 16, 24, 0.96); border: 1px solid rgba(56, 189, 248, 0.7);
       color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 12px; font-weight: 800;
       z-index: 9999; max-width: 92vw; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.85);
     }
@@ -117,7 +112,7 @@
 
   <div class="header">
     <div class="brand">
-      <h1>🎬 CineVibeBD Radar</h1>
+      <h1>🎬 CineVibeBD Channel Hub</h1>
     </div>
     <div class="header-actions">
       <button class="icon-pill-btn" onclick="toggleSettings()">⚙️ সেটিংস</button>
@@ -125,24 +120,18 @@
     </div>
   </div>
 
+  <!-- সেটিংস -->
   <div class="settings-panel" id="settingsPanel">
-    <label>🤖 Telegram Bot Token (শুধু আপনার ফোনে সেভ থাকবে):</label>
+    <label>🤖 চ্যানেল পোস্ট করার Bot Token (আপনার ফোনে সেভ থাকবে):</label>
     <input type="text" id="botTokenInput" placeholder="যেমন: 9241231506:AAH...">
-    <div class="grid-2">
-      <div>
-        <label>📩 আপনার Telegram ID:</label>
-        <input type="text" id="adminIdInput" value="7731713912">
-      </div>
-      <div>
-        <label>📢 চ্যানেল Username:</label>
-        <input type="text" id="channelIdInput" value="@supersp52">
-      </div>
-    </div>
-    <label>⚡ আপনার Admin Panel URL (আপনার আসল এডমিন প্যানেলের লিংক দিন):</label>
-    <input type="text" id="adminPanelUrlInput" value="./admin.html" placeholder="যেমন: https://cinevibebd.pages.dev/admin.html">
-    <button class="save-btn" onclick="saveConfig()">💾 সব সেটিংস সেভ করুন</button>
+    <label>📢 আপনার টেলিগ্রাম চ্যানেল (@username):</label>
+    <input type="text" id="channelIdInput" value="@supersp52">
+    <label>⚡ আপনার Admin Panel URL:</label>
+    <input type="text" id="adminPanelUrlInput" value="https://blogor6-prog.github.io/cinevibebd/admin.html">
+    <button class="save-btn" onclick="saveConfig()">💾 সেটিংস সেভ করুন</button>
   </div>
 
+  <!-- সার্চ ও সব দেশ / সব ভাষা / জেনার ফিল্টার -->
   <div class="search-filter-bar">
     <div class="search-row">
       <input type="text" id="searchQueryInput" placeholder="যেকোনো মুভি বা সিরিজের নাম লিখে খুঁজুন..." onkeydown="if(event.key==='Enter') doLiveSearch()">
@@ -150,7 +139,11 @@
     </div>
 
     <div class="filter-controls-row">
-      <button class="filter-btn" id="countryFilterBtn" onclick="openCountryModal()">🌍 দেশ বাছাই (সকল দেশ) ▾</button>
+      <button class="filter-btn" id="countryFilterBtn" onclick="openCountryModal()">🌍 দেশ (সব দেশ) ▾</button>
+
+      <select class="select-pill" id="langFilterSelect" onchange="reloadCurrentTab()">
+        <option value="">🗣️ ভাষা (সব ভাষা)</option>
+      </select>
 
       <select class="select-pill" id="genreFilterSelect" onchange="reloadCurrentTab()">
         <option value="">🎭 সব জেনার</option>
@@ -172,8 +165,8 @@
 
       <select class="select-pill" id="rangeFilterSelect" onchange="reloadCurrentTab()">
         <option value="today">📅 আজকের দিন</option>
-        <option value="7">🗓️ ৭ দিনের মধ্যে</option>
-        <option value="30">📆 ৩০ দিনের মধ্যে</option>
+        <option value="7">🗓️ ৭ দিন</option>
+        <option value="30">📆 ৩০ দিন</option>
       </select>
 
       <label class="filter-btn" style="cursor:pointer;">
@@ -184,6 +177,7 @@
 
   <div class="selected-countries-strip" id="selectedCountriesStrip"></div>
 
+  <!-- ক্যাটাগরি ট্যাব -->
   <div class="tabs">
     <div class="tab active" onclick="switchTab('releases', this)">🚨 রিলিজ</div>
     <div class="tab" onclick="switchTab('trending', this)">🔥 ট্রেন্ডিং</div>
@@ -196,9 +190,8 @@
 
   <div class="bulk-bar">
     <div class="status-msg" id="statusMsg">লোড হচ্ছে... ⏳</div>
-    <div class="bulk-btns" id="bulkBtnsWrap">
-      <button class="mini-btn" style="background:#16a34a;" onclick="bulkSend('admin')">📩 টপ ৩টি বটে</button>
-      <button class="mini-btn" style="background:#2563eb;" onclick="bulkSend('channel')">📢 টপ ৩টি চ্যানেলে</button>
+    <div id="bulkBtnsWrap">
+      <button class="mini-btn" onclick="bulkSendToChannel()">📢 টপ ৫টি চ্যানেলে পাঠান (৫ সে. পর পর)</button>
     </div>
   </div>
 
@@ -207,21 +200,23 @@
 
   <div class="toast-banner" id="toastBanner"></div>
 
+  <!-- পৃথিবীর সকল দেশের টিক চিহ্ন মডাল -->
   <div class="modal-bg" id="countryModal" onclick="if(event.target===this) closeCountryModal()">
     <div class="modal-box">
       <div class="modal-head">
         <h3>🌍 পৃথিবীর সকল দেশ (টিক চিহ্ন দিন)</h3>
         <button class="modal-close" onclick="closeCountryModal()">✕</button>
       </div>
-      <input type="text" class="country-search" id="countrySearchInput" placeholder="দেশের নাম লিখুন (যেমন: Bangladesh, India)..." oninput="renderCountryCheckboxes()">
+      <input type="text" class="country-search" id="countrySearchInput" placeholder="দেশের নাম লিখুন (Bangladesh, India, Korea)..." oninput="renderCountryCheckboxes()">
       <div class="country-list-scroll" id="countryListScroll"></div>
       <div class="modal-footer">
-        <button style="background:#27272a; color:#fff;" onclick="clearCountries()">সব মুছুন (সকল দেশ)</button>
+        <button style="background:#27272a; color:#fff;" onclick="clearCountries()">সব মুছুন (সব দেশ)</button>
         <button style="background:#e11d48; color:#fff;" onclick="applyCountrySelection()">✅ দেখুন</button>
       </div>
     </div>
   </div>
 
+  <!-- ট্রেইলার প্রিভিউ মডাল -->
   <div class="modal-bg" id="trailerModal" onclick="if(event.target===this) closeTrailerModal()">
     <div class="modal-box" style="max-width:460px;">
       <div class="modal-head">
@@ -235,14 +230,17 @@
   <script>
     const TMDB_KEY = '8265bd1679663a7ea12ac168da84d2e8';
     const SITE_URL = 'https://cinevibebd.pages.dev/';
+    const DEFAULT_ADMIN_URL = 'https://blogor6-prog.github.io/cinevibebd/admin.html';
 
     const LANG_BN = {
       bn: 'বাংলা (Bengali)', hi: 'হিন্দি (Hindi)', en: 'ইংরেজি (English)', ta: 'তামিল (Tamil)',
       te: 'তেলুগু (Telugu)', ml: 'মালয়ালম (Malayalam)', kn: 'কন্নড় (Kannada)', ko: 'কোরিয়ান (Korean)',
       ja: 'জাপানি (Japanese)', zh: 'চাইনিজ (Chinese)', es: 'স্প্যানিশ (Spanish)', fr: 'ফরাসি (French)',
       tr: 'তুর্কি (Turkish)', ur: 'উর্দু (Urdu)', ar: 'আরবি (Arabic)', pa: 'পাঞ্জাবি (Punjabi)',
-      mr: 'মারাঠি (Marathi)', ru: 'রুশ (Russian)', de: 'জার্মান (German)', it: 'ইতালীয় (Italian)'
+      mr: 'মারাঠি (Marathi)', ru: 'রুশ (Russian)', de: 'জার্মান (German)', it: 'ইতালীয় (Italian)',
+      th: 'থাই (Thai)', id: 'ইন্দোনেশীয় (Indonesian)', fa: 'ফার্সি (Persian)'
     };
+    const PRIORITY_LANGS = ['bn', 'hi', 'en', 'ta', 'te', 'ml', 'kn', 'ko', 'ja', 'ur', 'tr', 'zh', 'es', 'fr', 'ar', 'th', 'id'];
 
     const COUNTRY_BN = {
       BD: '🇧🇩 বাংলাদেশ (Bangladesh)', IN: '🇮🇳 ভারত (India)', US: '🇺🇸 আমেরিকা (USA)',
@@ -253,14 +251,14 @@
       SA: '🇸🇦 সৌদি আরব (Saudi Arabia)', TH: '🇹🇭 থাইল্যান্ড (Thailand)', ID: '🇮🇩 ইন্দোনেশিয়া (Indonesia)',
       MY: '🇲🇾 মালয়েশিয়া (Malaysia)', CA: '🇨🇦 কানাডা (Canada)', AU: '🇦🇺 অস্ট্রেলিয়া (Australia)'
     };
-
     const PRIORITY_COUNTRIES = ['BD', 'IN', 'US', 'KR', 'GB', 'JP', 'PK', 'TR', 'FR', 'CN', 'ES', 'DE', 'IT', 'TH', 'ID', 'AE', 'SA'];
+
     const GENRE_MAP = { 28:'Action',12:'Adventure',16:'Animation',35:'Comedy',80:'Crime',99:'Documentary',18:'Drama',10751:'Family',14:'Fantasy',36:'History',27:'Horror',10402:'Music',9648:'Mystery',10749:'Romance',878:'Sci-Fi',53:'Thriller',10752:'War',37:'Western',10759:'Action & Adventure',10765:'Sci-Fi & Fantasy' };
 
     let allCountriesList = [];
     let selectedCountries = JSON.parse(localStorage.getItem('cv_radar_countries') || '[]');
     let savedMovies = JSON.parse(localStorage.getItem('cv_radar_saved') || '[]');
-    let uploadedTitlesSet = new Set();
+    let uploadedMoviesList = []; // সাইটের movies.json এর সব মুভি আইডিসহ
     let currentTab = 'releases';
     let currentItems = [];
     let currentNews = [];
@@ -279,26 +277,29 @@
         tb.innerText = m;
         tb.style.display = 'block';
         clearTimeout(toastTimer);
-        if (!m.includes('⏳')) {
-          toastTimer = setTimeout(() => { tb.style.display = 'none'; }, 4500);
-        }
+        if (!m.includes('⏳')) toastTimer = setTimeout(() => { tb.style.display = 'none'; }, 4500);
       }
     }
 
     function toggleSettings() { document.getElementById('settingsPanel').classList.toggle('open'); }
     function loadConfig() {
       document.getElementById('botTokenInput').value = localStorage.getItem('cv_alert_token') || '';
-      document.getElementById('adminIdInput').value = localStorage.getItem('cv_alert_admin') || '7731713912';
       document.getElementById('channelIdInput').value = localStorage.getItem('cv_alert_channel') || '@supersp52';
-      document.getElementById('adminPanelUrlInput').value = localStorage.getItem('cv_alert_admin_url') || './admin.html';
+      document.getElementById('adminPanelUrlInput').value = localStorage.getItem('cv_alert_admin_url') || DEFAULT_ADMIN_URL;
     }
     function saveConfig() {
       localStorage.setItem('cv_alert_token', document.getElementById('botTokenInput').value.trim());
-      localStorage.setItem('cv_alert_admin', document.getElementById('adminIdInput').value.trim());
       localStorage.setItem('cv_alert_channel', document.getElementById('channelIdInput').value.trim());
-      localStorage.setItem('cv_alert_admin_url', document.getElementById('adminPanelUrlInput').value.trim() || './admin.html');
+      localStorage.setItem('cv_alert_admin_url', document.getElementById('adminPanelUrlInput').value.trim() || DEFAULT_ADMIN_URL);
       document.getElementById('settingsPanel').classList.remove('open');
       setStatus('✅ সেটিংস সেভ হয়েছে!', true);
+    }
+
+    function cleanTitleNorm(raw) {
+      return String(raw || '')
+        .replace(/\(\s*\d{4}\s*\)|\[\s*\d{4}\s*\]/g, '')
+        .replace(/\b(19\d{2}|20\d{2}|480p|720p|1080p|2160p|4k|hd|fhd|web-dl|webrip|hdrip|cam|dvdrip|bluray|hindi|bangla|bengali|tamil|telugu|english|dubbed|subbed|full\s*movie|dual\s*audio)\b/gi, '')
+        .toLowerCase().replace(/[^a-z0-9]/g, '');
     }
 
     async function loadUploadedMovies() {
@@ -306,17 +307,55 @@
         const res = await fetch(`./movies.json?t=${Date.now()}`, { cache: 'no-store' });
         if (!res.ok) return;
         const raw = await res.json();
-        uploadedTitlesSet = new Set((raw || []).map(m => String(m.title || '').toLowerCase().replace(/[^a-z0-9]/g, '')).filter(s => s.length >= 2));
+        if (!Array.isArray(raw)) return;
+        uploadedMoviesList = raw.map((m, idx) => ({
+          id: m.id || (idx + 1),
+          title: m.title || '',
+          norm: cleanTitleNorm(m.title || '')
+        })).filter(m => m.norm.length >= 2);
       } catch {}
     }
 
-    function isAlreadyOnSite(title) {
-      const clean = String(title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
-      if (clean.length < 2) return false;
-      for (const ex of uploadedTitlesSet) if (ex.includes(clean) || clean.includes(ex)) return true;
-      return false;
+    function findMovieOnSite(title) {
+      const clean = cleanTitleNorm(title);
+      if (clean.length < 2) return null;
+      return uploadedMoviesList.find(m => m.norm === clean || m.norm.includes(clean) || clean.includes(m.norm)) || null;
     }
 
+    /* পৃথিবীর সব ভাষা লোড */
+    async function loadAllLanguages() {
+      const sel = document.getElementById('langFilterSelect');
+      try {
+        const res = await fetch(`https://api.themoviedb.org/3/configuration/languages?api_key=${TMDB_KEY}`);
+        const list = await res.json();
+        if (Array.isArray(list)) {
+          const valid = list.filter(l => l.iso_639_1 && l.iso_639_1 !== 'xx' && l.english_name);
+          valid.sort((a, b) => {
+            const ia = PRIORITY_LANGS.indexOf(a.iso_639_1);
+            const ib = PRIORITY_LANGS.indexOf(b.iso_639_1);
+            if (ia !== -1 && ib !== -1) return ia - ib;
+            if (ia !== -1) return -1;
+            if (ib !== -1) return 1;
+            return a.english_name.localeCompare(b.english_name);
+          });
+          valid.forEach(l => {
+            const opt = document.createElement('option');
+            opt.value = l.iso_639_1;
+            opt.textContent = LANG_BN[l.iso_639_1] || l.english_name;
+            sel.appendChild(opt);
+          });
+          return;
+        }
+      } catch {}
+      PRIORITY_LANGS.forEach(code => {
+        const opt = document.createElement('option');
+        opt.value = code;
+        opt.textContent = LANG_BN[code] || code.toUpperCase();
+        sel.appendChild(opt);
+      });
+    }
+
+    /* পৃথিবীর সব দেশ লোড */
     async function loadAllCountries() {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/configuration/countries?api_key=${TMDB_KEY}`);
@@ -400,11 +439,11 @@
       if (selectedCountries.length === 0) {
         strip.style.display = 'none';
         btn.classList.remove('active');
-        btn.innerText = '🌍 দেশ বাছাই (সকল দেশ) ▾';
+        btn.innerText = '🌍 দেশ (সব দেশ) ▾';
       } else {
         strip.style.display = 'flex';
         btn.classList.add('active');
-        btn.innerText = `🌍 ${selectedCountries.length}টি দেশ বাছাইকৃত ▾`;
+        btn.innerText = `🌍 ${selectedCountries.length}টি দেশ ▾`;
         strip.innerHTML = selectedCountries.map(code => {
           const found = allCountriesList.find(c => c.iso_3166_1 === code);
           const name = COUNTRY_BN[code] || (found ? found.english_name : code);
@@ -446,7 +485,7 @@
       const loadBtn = document.getElementById('loadMoreBtn');
 
       if (currentTab === 'saved') {
-        bulkWrap.style.display = 'flex';
+        bulkWrap.style.display = 'block';
         loadBtn.style.display = 'none';
         currentItems = [...savedMovies];
         setStatus(`🔖 আপনার সেভ করা ${currentItems.length}টি মুভি`);
@@ -462,32 +501,35 @@
         return;
       }
 
-      bulkWrap.style.display = 'flex';
+      bulkWrap.style.display = 'block';
       setStatus('মুভি খোঁজা হচ্ছে... ⏳');
 
       const { today, tomorrow, fmt } = getBdDateStrings();
       const rangeVal = document.getElementById('rangeFilterSelect').value;
       const genreId = document.getElementById('genreFilterSelect').value;
+      const langCode = document.getElementById('langFilterSelect').value;
+
       const countryParam = selectedCountries.length > 0 ? `&with_origin_country=${selectedCountries.join('|')}` : '';
       const genreParam = genreId ? `&with_genres=${genreId}` : '';
+      const langParam = langCode ? `&with_original_language=${langCode}` : '';
 
       let url = '';
       if (currentTab === 'releases') {
         const pastStr = rangeVal === 'today' ? today : fmt(-Number(rangeVal));
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&primary_release_date.gte=${pastStr}&primary_release_date.lte=${today}&sort_by=popularity.desc${countryParam}${genreParam}&page=${page}`;
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&primary_release_date.gte=${pastStr}&primary_release_date.lte=${today}&sort_by=popularity.desc${countryParam}${langParam}${genreParam}&page=${page}`;
       } else if (currentTab === 'trending') {
-        if (selectedCountries.length === 0 && !genreId) {
+        if (selectedCountries.length === 0 && !genreId && !langCode) {
           url = `https://api.themoviedb.org/3/trending/all/day?api_key=${TMDB_KEY}&page=${page}`;
         } else {
-          url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&primary_release_date.gte=${fmt(-90)}&primary_release_date.lte=${today}&sort_by=popularity.desc${countryParam}${genreParam}&page=${page}`;
+          url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&primary_release_date.gte=${fmt(-90)}&primary_release_date.lte=${today}&sort_by=popularity.desc${countryParam}${langParam}${genreParam}&page=${page}`;
         }
       } else if (currentTab === 'upcoming') {
         const futureDays = rangeVal === '30' ? 30 : 14;
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&primary_release_date.gte=${tomorrow}&primary_release_date.lte=${fmt(futureDays)}&sort_by=popularity.desc${countryParam}${genreParam}&page=${page}`;
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&primary_release_date.gte=${tomorrow}&primary_release_date.lte=${fmt(futureDays)}&sort_by=popularity.desc${countryParam}${langParam}${genreParam}&page=${page}`;
       } else if (currentTab === 'series') {
-        url = `https://api.themoviedb.org/3/discover/tv?api_key=${TMDB_KEY}&sort_by=popularity.desc${countryParam}${genreParam}&page=${page}`;
+        url = `https://api.themoviedb.org/3/discover/tv?api_key=${TMDB_KEY}&sort_by=popularity.desc${countryParam}${langParam}${genreParam}&page=${page}`;
       } else if (currentTab === 'top_rated') {
-        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&sort_by=vote_average.desc&vote_count.gte=${selectedCountries.length > 0 ? 10 : 300}${countryParam}${genreParam}&page=${page}`;
+        url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_KEY}&sort_by=vote_average.desc&vote_count.gte=${(selectedCountries.length > 0 || langCode) ? 10 : 300}${countryParam}${langParam}${genreParam}&page=${page}`;
       }
 
       try {
@@ -507,7 +549,7 @@
         loadBtn.style.display = (data.total_pages && page < data.total_pages && currentItems.length > 0) ? 'block' : 'none';
         setStatus(`✅ মোট ${currentItems.length}টি মুভি পাওয়া গেছে (${today})`);
         renderCurrentTab();
-      } catch (e) {
+      } catch {
         setStatus('⚠️ ডাটা লোড করতে সমস্যা হয়েছে!');
       }
     }
@@ -516,7 +558,7 @@
       const q = document.getElementById('searchQueryInput').value.trim();
       if (!q) { reloadCurrentTab(); return; }
       isSearchMode = true;
-      document.getElementById('bulkBtnsWrap').style.display = 'flex';
+      document.getElementById('bulkBtnsWrap').style.display = 'block';
       document.getElementById('loadMoreBtn').style.display = 'none';
       setStatus(`"${q}" খোঁজা হচ্ছে... ⏳`);
       try {
@@ -601,8 +643,7 @@
         const info = {
           id: d.id || m.id, mediaType: type, title, rating, genres, releaseDate,
           countries: countryText, languages: languagesText,
-          overview: d.overview || '', cast, trailerUrl, poster,
-          youtubeKey: yt ? yt.key : ''
+          cast, trailerUrl, poster, youtubeKey: yt ? yt.key : ''
         };
         detailCache[key] = info;
         return info;
@@ -615,19 +656,22 @@
           releaseDate: m.release_date || m.first_air_date || '2026',
           countries: (m.origin_country || []).map(c => COUNTRY_BN[c] || c).join(', ') || 'International',
           languages: LANG_BN[m.original_language] || String(m.original_language || '').toUpperCase(),
-          overview: m.overview || '', cast: '', trailerUrl: '',
+          cast: '', trailerUrl: '',
           poster: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '',
           youtubeKey: ''
         };
       }
     }
 
-    function buildTelegramCaption(info, mode) {
-      let header = '🔥 <b>আজকে এটি আপলোড করতে পারেন (ট্রেন্ডিং)!</b>';
+    function buildChannelCaption(info, mode) {
+      let header = '🔥 <b>ট্রেন্ডিং মুভি আপডেট!</b>';
       if (mode === 'releases') header = '🚨 <b>নতুন রিলিজ আপডেট!</b>';
       else if (mode === 'upcoming') header = '📢 <b>আপকামিং মুভি আপডেট!</b>';
       else if (mode === 'series') header = '📺 <b>হিট ওয়েব সিরিজ আপডেট!</b>';
       else if (mode === 'top_rated') header = '⭐ <b>টপ রেটেড মুভি!</b>';
+
+      const matched = findMovieOnSite(info.title);
+      const movieSiteLink = matched ? `${SITE_URL}?id=${matched.id}` : SITE_URL;
 
       return (
         `${header}\n\n` +
@@ -637,11 +681,10 @@
         `📅 <b>রিলিজ ডেট:</b> ${esc(info.releaseDate)}\n` +
         `🌍 <b>দেশ:</b> ${esc(info.countries)}\n` +
         `🗣️ <b>ভাষাসমূহ:</b> ${esc(info.languages)}\n\n` +
-        `🌐 <b>আমাদের সাইট:</b> ${SITE_URL}`
+        `🔗 <b>দেখুন ও ডাউনলোড করুন:</b>\n${movieSiteLink}`
       );
     }
 
-    /* অটো retry_after হ্যান্ডলারসহ টেলিগ্রাম কল */
     async function sendTgWithAutoRetry(token, method, payload) {
       for (let attempt = 1; attempt <= 2; attempt++) {
         const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
@@ -652,7 +695,7 @@
         if (data.error_code === 429 && attempt === 1) {
           const waitSec = Math.min(Number(data.parameters?.retry_after || 5) + 1, 40);
           for (let s = waitSec; s > 0; s--) {
-            setStatus(`⏳ টেলিগ্রাম ব্যস্ত: ${s} সেকেন্ড পর অটো যাচ্ছে...`, true);
+            setStatus(`⏳ টেলিগ্রাম ব্যস্ত: ${s} সেকেন্ড পর অটো চ্যানেলে যাবে...`, true);
             await sleep(1000);
           }
           continue;
@@ -662,25 +705,22 @@
       return { ok: false, description: 'Rate limit timeout' };
     }
 
-    async function sendMovieTg(idx, targetType) {
+    async function sendToChannel(idx) {
       const token = document.getElementById('botTokenInput').value.trim();
       if (!token) {
         toggleSettings();
-        alert('প্রথমে উপরের সেটিংসে আপনার Telegram Bot Token বসিয়ে সেভ করুন!');
+        alert('প্রথমে সেটিংসে আপনার Bot Token বসিয়ে সেভ করুন!');
         return false;
       }
-      const chatId = targetType === 'channel'
-        ? document.getElementById('channelIdInput').value.trim().replace(/^https?:\/\/(t\.me|telegram\.me)\//i, '@')
-        : document.getElementById('adminIdInput').value.trim();
-
+      const chatId = document.getElementById('channelIdInput').value.trim().replace(/^https?:\/\/(t\.me|telegram\.me)\//i, '@');
       const m = currentItems[idx];
       if (!m) return false;
 
       setStatus(`"${m.title || m.name}"-এর তথ্য আনা হচ্ছে... ⏳`, true);
       const info = await getFullMovieDetails(m);
-      const caption = buildTelegramCaption(info, isSearchMode ? 'trending' : currentTab).slice(0, 1000);
+      const caption = buildChannelCaption(info, isSearchMode ? 'trending' : currentTab).slice(0, 1000);
 
-      setStatus(`টেলিগ্রামে পাঠানো হচ্ছে... ⏳`, true);
+      setStatus(`চ্যানেলে পাঠানো হচ্ছে... ⏳`, true);
       try {
         let data;
         if (info.poster) {
@@ -699,10 +739,10 @@
         }
 
         if (data.ok) {
-          setStatus(`✅ "${info.title}" সফলভাবে পাঠানো হয়েছে!`, true);
+          setStatus(`✅ "${info.title}" চ্যানেলে পোস্ট হয়েছে!`, true);
           return true;
         } else {
-          setStatus(`⚠️ এরর: ${data.description || 'পাঠানো যায়নি'}`, true);
+          setStatus(`⚠️ এরর: ${data.description || 'চ্যানেলে পাঠানো যায়নি'}`, true);
           return false;
         }
       } catch (e) {
@@ -711,17 +751,24 @@
       }
     }
 
-    async function bulkSend(targetType) {
-      const visible = getVisibleItems().slice(0, 3);
+    /* প্রতি ৫ সেকেন্ড পর পর টপ ৫টি চ্যানেলে পাঠাবে */
+    async function bulkSendToChannel() {
+      const visible = getVisibleItems().slice(0, 5);
       if (visible.length === 0) return;
       let okCount = 0;
-      for (const m of visible) {
+      for (let i = 0; i < visible.length; i++) {
+        const m = visible[i];
         const realIdx = currentItems.indexOf(m);
-        const ok = await sendMovieTg(realIdx, targetType);
+        const ok = await sendToChannel(realIdx);
         if (ok) okCount++;
-        await sleep(1500);
+        if (i < visible.length - 1) {
+          for (let s = 5; s > 0; s--) {
+            setStatus(`✅ ${okCount}টি গেছে | পরের মুভি ${s} সেকেন্ড পর চ্যানেলে যাবে... ⏳`, true);
+            await sleep(1000);
+          }
+        }
       }
-      setStatus(`✅ মোট ${okCount}টি মুভি সফলভাবে পাঠানো হয়েছে!`, true);
+      setStatus(`🎉 মোট ${okCount}টি মুভি সফলভাবে চ্যানেলে পাঠানো হয়েছে!`, true);
     }
 
     async function copyMovieText(idx) {
@@ -729,9 +776,9 @@
       if (!m) return;
       setStatus('পূর্ণ তথ্য কপি হচ্ছে... ⏳', true);
       const info = await getFullMovieDetails(m);
-      const plain = buildTelegramCaption(info, currentTab).replace(/<\/?b>/g, '');
+      const plain = buildChannelCaption(info, currentTab).replace(/<\/?b>/g, '');
       await navigator.clipboard.writeText(plain);
-      setStatus(`✅ "${info.title}"-এর পূর্ণ তথ্য কপি হয়েছে!`, true);
+      setStatus(`✅ "${info.title}"-এর লিংকসহ তথ্য কপি হয়েছে!`, true);
     }
 
     async function sendToAdminPanel(idx) {
@@ -758,7 +805,7 @@
       };
 
       localStorage.setItem('cine_pending_admin_movie', JSON.stringify(adminPayload));
-      const baseAdmin = (document.getElementById('adminPanelUrlInput').value || './admin.html').trim();
+      const baseAdmin = (document.getElementById('adminPanelUrlInput').value || DEFAULT_ADMIN_URL).trim();
       const sep = baseAdmin.includes('?') ? '&' : '?';
       const targetUrl = `${baseAdmin}${sep}title=${encodeURIComponent(adminPayload.title)}&rating=${encodeURIComponent(info.rating)}&image=${encodeURIComponent(info.poster)}&genre=${encodeURIComponent(info.genres)}&language=${encodeURIComponent(info.languages)}&releaseDate=${encodeURIComponent(info.releaseDate)}&cast=${encodeURIComponent(info.cast)}&trailer=${encodeURIComponent(info.trailerUrl)}&category=${encodeURIComponent(adminPayload.category)}&tmdbId=${encodeURIComponent(info.id)}`;
 
@@ -799,7 +846,7 @@
       if (!token) { toggleSettings(); alert('প্রথমে Bot Token সেভ করুন!'); return; }
       const chatId = document.getElementById('channelIdInput').value.trim().replace(/^https?:\/\/(t\.me|telegram\.me)\//i, '@');
       const msg = `📰 <b>সিনেমাপাড়ার খবর:</b>\n\n🔸 ${esc(n.title)}\n\n🎬 সব লেটেস্ট মুভি দেখতে ভিজিট করুন:\n🌐 ${SITE_URL}`;
-      setStatus('নিউজ পাঠানো হচ্ছে... ⏳', true);
+      setStatus('নিউজ চ্যানেলে পাঠানো হচ্ছে... ⏳', true);
       const data = await sendTgWithAutoRetry(token, 'sendMessage', {
         chat_id: chatId, text: msg, parse_mode: 'HTML', disable_web_page_preview: true
       });
@@ -813,7 +860,7 @@
       let msg = `📰 <b>আজকের বাংলা ও সিনেমাপাড়ার তাজা খবর</b>\n\n`;
       currentNews.slice(0, 5).forEach(n => { msg += `🔸 ${esc(n.title)}\n\n`; });
       msg += `🎬 সব লেটেস্ট মুভি দেখতে ভিজিট করুন:\n🌐 ${SITE_URL}`;
-      setStatus('নিউজ পাঠানো হচ্ছে... ⏳', true);
+      setStatus('নিউজ চ্যানেলে পাঠানো হচ্ছে... ⏳', true);
       const data = await sendTgWithAutoRetry(token, 'sendMessage', {
         chat_id: chatId, text: msg, parse_mode: 'HTML', disable_web_page_preview: true
       });
@@ -822,7 +869,7 @@
 
     function getVisibleItems() {
       const hideUploaded = document.getElementById('hideUploadedChk').checked;
-      return currentItems.filter(m => !hideUploaded || !isAlreadyOnSite(m.title || m.name));
+      return currentItems.filter(m => !hideUploaded || !findMovieOnSite(m.title || m.name));
     }
 
     function renderCurrentTab() {
@@ -831,7 +878,7 @@
       const items = getVisibleItems();
 
       if (items.length === 0) {
-        box.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:35px;">এই ফিল্টারে কোনো মুভি পাওয়া যায়নি। (উপরের সময়সীমা "৭ দিন" বা "৩০ দিন" দিয়ে দেখতে পারেন)</p>';
+        box.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:35px;">এই ফিল্টারে কোনো মুভি পাওয়া যায়নি। (সময়সীমা "৭ দিন" বা "৩০ দিন" দিয়ে দেখতে পারেন)</p>';
         return;
       }
 
@@ -843,11 +890,11 @@
         const rate = m.vote_average ? Number(m.vote_average).toFixed(1) : 'New';
         const lang = LANG_BN[m.original_language] || String(m.original_language || '').toUpperCase();
         const genres = (m.genre_ids || []).map(id => GENRE_MAP[id]).filter(Boolean).slice(0, 3).join(', ') || 'Movie';
-        const onSite = isAlreadyOnSite(name);
+        const matched = findMovieOnSite(name);
         const isSaved = savedMovies.some(s => s.id === m.id && s._mediaType === m._mediaType);
 
         return `
-          <div class="movie-card ${onSite ? 'on-site' : ''}">
+          <div class="movie-card ${matched ? 'on-site' : ''}">
             <div class="poster-col">
               <img src="${img}" alt="${esc(name)}" loading="lazy">
               <div class="play-trailer-chip" onclick="previewTrailer(${idx})">▶ ট্রেইলার</div>
@@ -858,15 +905,14 @@
                   <span class="badge b-yellow">⭐ ${rate}</span>
                   <span class="badge b-blue">📅 ${rel}</span>
                   ${m._mediaType === 'tv' ? '<span class="badge b-purple">SERIES</span>' : ''}
-                  ${onSite ? '<span class="badge b-green">✅ সাইটে আছে</span>' : '<span class="badge b-red">নতুন</span>'}
+                  ${matched ? '<span class="badge b-green">✅ সাইটে আছে</span>' : '<span class="badge b-red">নতুন</span>'}
                 </div>
                 <div class="item-title">${esc(name)}</div>
                 <div class="item-meta">🎭 ${esc(genres)}<br>🗣️ ${esc(lang)}</div>
               </div>
               <div class="btn-row">
                 <button class="act-btn btn-admin" onclick="sendToAdminPanel(${idx})">⚡ এডমিন প্যানেলে পাঠান</button>
-                <button class="act-btn btn-ch" onclick="sendMovieTg(${idx}, 'channel')">📢 চ্যানেলে</button>
-                <button class="act-btn btn-dm" onclick="sendMovieTg(${idx}, 'admin')">📩 বটে</button>
+                <button class="act-btn btn-ch" onclick="sendToChannel(${idx})">📢 চ্যানেলে পাঠান</button>
                 <button class="act-btn btn-cp" onclick="copyMovieText(${idx})">📋 কপি</button>
                 <button class="act-btn btn-save" onclick="toggleSaveMovie(${idx})">${isSaved ? '★ সেভড' : '☆ সেভ'}</button>
               </div>
@@ -878,7 +924,7 @@
 
     (async function init() {
       loadConfig();
-      await Promise.all([loadUploadedMovies(), loadAllCountries()]);
+      await Promise.all([loadUploadedMovies(), loadAllCountries(), loadAllLanguages()]);
       await reloadCurrentTab();
     })();
   </script>
