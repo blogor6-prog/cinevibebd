@@ -69,12 +69,12 @@
     .topbar-left { display: flex; align-items: center; gap: 10px; }
     .mobile-menu-btn { display: none; background: #1e2235; border: 1px solid var(--border); color: #fff; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 15px; }
     .brand-txt { font-size: 16px; font-weight: 800; background: linear-gradient(90deg, #fff, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .topbar-right { display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+    .topbar-right { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
     .admin-pill { background: rgba(139,92,246,0.18); border: 1px solid var(--border); padding: 4px 10px; border-radius: 999px; font-weight: 700; color: #c4b5fd; }
 
     .shell { display: none; padding-top: 54px; min-height: 100vh; }
     .sidebar {
-      position: fixed; top: 54px; left: 0; bottom: 0; width: 230px; background: var(--bg-panel);
+      position: fixed; top: 54px; left: 0; bottom: 0; width: 235px; background: var(--bg-panel);
       border-right: 1px solid var(--border); overflow-y: auto; z-index: 900; transition: transform 0.2s ease; padding: 12px 10px;
     }
     .menu-item {
@@ -86,8 +86,9 @@
     .menu-divider { height: 1px; background: var(--border-soft); margin: 10px 4px; }
     .pill-count { background: var(--red); color: #fff; font-size: 11px; font-weight: 800; padding: 1px 7px; border-radius: 999px; display: none; }
     .pill-count.purple { background: var(--purple); }
+    .pill-count.amber { background: var(--amber); color: #111; }
 
-    .main { margin-left: 230px; padding: 18px; }
+    .main { margin-left: 235px; padding: 18px; }
     .page-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
     .page-title { font-size: 21px; font-weight: 800; }
 
@@ -154,6 +155,14 @@
     .eye-btn.eye-red { background: var(--red); border-color: #f87171; animation: pulseRed 1.5s infinite; }
     @keyframes pulseRed { 0% { box-shadow: 0 0 0 0 rgba(239,68,68,0.5); } 70% { box-shadow: 0 0 0 7px rgba(239,68,68,0); } 100% { box-shadow: 0 0 0 0 rgba(239,68,68,0); } }
 
+    /* Radar Queue Cards */
+    .radar-item-card {
+      display: flex; gap: 14px; background: rgba(255,255,255,0.025); border: 1px solid rgba(245,158,11,0.35);
+      border-radius: 12px; padding: 12px; margin-bottom: 12px; align-items: flex-start; flex-wrap: wrap;
+    }
+    .radar-item-poster { width: 72px; height: 105px; object-fit: cover; border-radius: 8px; background: #090a0f; flex-shrink: 0; }
+    .radar-item-body { flex: 1; min-width: 220px; }
+
     /* Editor */
     .editor-grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: start; }
     .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -163,6 +172,13 @@
     .cat-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .cat-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(139,92,246,0.2); border: 1px solid var(--purple); color: #e9d5ff; padding: 3px 10px; border-radius: 999px; font-size: 12px; font-weight: 700; }
     .cat-chip span { color: #f87171; cursor: pointer; font-weight: 900; }
+
+    .lang-quick-strip { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 6px; }
+    .lang-chip-btn {
+      background: #1a1e2e; border: 1px solid var(--border-soft); color: #cbd5e1;
+      padding: 2px 8px; border-radius: 999px; font-size: 11px; font-weight: 700; cursor: pointer;
+    }
+    .lang-chip-btn.active { background: rgba(59,130,246,0.28); border-color: var(--blue); color: #93c5fd; }
 
     .builder-row { display: flex; gap: 6px; align-items: center; margin-bottom: 8px; flex-wrap: wrap; }
     .ep-card { border: 1px solid var(--border); border-radius: 10px; padding: 10px; margin-bottom: 10px; background: rgba(255,255,255,0.02); }
@@ -265,6 +281,7 @@
         <div class="brand-txt">🎬 CineVibeBD Pro</div>
       </div>
       <div class="topbar-right">
+        <button class="btn btn-sm btn-amber" id="topbarRadarBtn" style="display:none;" onclick="switchTab('radarQueue')">📥 র‍্যাডার (<span id="topbarRadarCount">0</span>)</button>
         <span class="admin-pill" id="activeAdminPill">👤 Admin</span>
         <a href="index.html" target="_blank" class="btn btn-sm btn-secondary" style="text-decoration:none;">🌐 সাইট</a>
         <button class="btn btn-sm btn-danger" onclick="logoutAdmin()">লগআউট</button>
@@ -273,6 +290,9 @@
 
     <aside class="sidebar" id="sidebar">
       <div class="menu-item active" data-tab="dashboard" onclick="switchTab('dashboard')"><span>📊 ড্যাশবোর্ড &amp; লাইভ</span></div>
+      <div class="menu-item" data-tab="radarQueue" onclick="switchTab('radarQueue')">
+        <span>📥 ইনকামিং মুভি (Radar)</span><span class="pill-count amber" id="sideRadarBadge">0</span>
+      </div>
       <div class="menu-item" data-tab="allMovies" onclick="switchTab('allMovies', 'All')"><span>🎬 সব মুভি (All)</span></div>
       <div class="menu-item" data-tab="addMovie" onclick="openAddNewMovie()"><span>➕ নতুন মুভি যোগ</span></div>
       <div class="menu-item" data-tab="expiredOnly" onclick="switchTab('allMovies', 'Expired')">
@@ -321,10 +341,19 @@
         <div class="page-header">
           <h2 class="page-title">📊 ড্যাশবোর্ড ও লাইভ অ্যানালিটিক্স</h2>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-amber" id="dashRadarQuickBtn" style="display:none;" onclick="switchTab('radarQueue')">📥 র‍্যাডার কিউ দেখুন (<span id="dashRadarCount">0</span>)</button>
             <button class="btn btn-secondary" onclick="refreshLiveAnalytics(true)">🔄 লাইভ ডাটা</button>
             <button class="btn btn-success" id="btnImportSheet" onclick="importFromGoogleSheet()">📥 Google Sheet ইমপোর্ট</button>
             <button class="btn" onclick="openAddNewMovie()">➕ নতুন মুভি</button>
           </div>
+        </div>
+
+        <div class="card" id="dashRadarBanner" style="display:none; border-color:rgba(245,158,11,0.6);">
+          <div class="card-head" style="background:rgba(245,158,11,0.12); color:#fde68a;">
+            <span>📥 র‍্যাডার / চ্যানেল হাব থেকে পাঠানো নতুন মুভি</span>
+            <button class="btn btn-sm btn-amber" onclick="switchTab('radarQueue')">সবগুলো ওপেন করুন ➔</button>
+          </div>
+          <div class="card-body" id="dashRadarPreviewList"></div>
         </div>
 
         <div class="stats-grid">
@@ -343,6 +372,10 @@
           <div class="stat-card" onclick="switchTab('allMovies', 'All')">
             <div class="stat-num" id="statTotalMovies">0</div>
             <div class="stat-label">🎬 মোট মুভি ও সিরিজ</div>
+          </div>
+          <div class="stat-card amber" onclick="switchTab('radarQueue')">
+            <div class="stat-num" id="statRadarCount" style="color:#fbbf24;">0</div>
+            <div class="stat-label">📥 ইনকামিং (Radar)</div>
           </div>
           <div class="stat-card red" onclick="switchTab('allMovies', 'Expired')">
             <div class="stat-num" id="statExpired" style="color:#f87171;">0</div>
@@ -371,6 +404,25 @@
             <button class="btn btn-sm btn-danger" onclick="switchTab('allMovies', 'Expired')">সব দেখুন ➔</button>
           </div>
           <div class="card-body" id="expiredSummaryList"></div>
+        </div>
+      </section>
+
+      <!-- RADAR INCOMING QUEUE -->
+      <section id="tabRadarQueue" style="display:none;">
+        <div class="page-header">
+          <h2 class="page-title">📥 ইনকামিং মুভি (চ্যানেল হাব / র‍্যাডার থেকে পাঠানো)</h2>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-success" onclick="publishAllRadarItems()">🚀 সবগুলো একসাথে পাবলিশ</button>
+            <button class="btn btn-danger" onclick="clearRadarQueue()">🧹 সব মুছুন</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span>এখান থেকে সরাসরি পাবলিশ করুন অথবা এডিট বাটনে চাপ দিয়ে ডাউনলোড লিংক/ভাষা/ব্যাজ ঠিক করে পাবলিশ করুন</span>
+          </div>
+          <div class="card-body" id="radarQueueListBox">
+            <p style="color:var(--muted);">র‍্যাডার থেকে এখনো কোনো মুভি পাঠানো হয়নি।</p>
+          </div>
         </div>
       </section>
 
@@ -441,7 +493,7 @@
           <div class="card-head">✨ TMDB অটো-ফিল (নাম লিখলেই সব তথ্য, স্ক্রিনশট ও ক্যাটাগরি অটো বসবে)</div>
           <div class="card-body">
             <div style="display:flex; gap:8px;">
-              <input type="text" id="tmdbSearchInput" class="wp-input" placeholder="মুভি বা সিরিজের নাম লিখুন...">
+              <input type="text" id="tmdbSearchInput" class="wp-input" placeholder="মুভি বা সিরিজের নাম লিখুন..." onkeydown="if(event.key==='Enter') searchTMDB()">
               <button class="btn" onclick="searchTMDB()">🔍 খুঁজুন</button>
             </div>
             <div class="tmdb-grid" id="tmdbResultsGrid" style="display:none;"></div>
@@ -459,8 +511,16 @@
                   <div class="dup-alert" id="duplicateAlertBox"></div>
                 </div>
 
-                <div class="three-col">
-                  <div class="form-group"><label>🗣️ Language</label><input type="text" id="fLanguage" class="wp-input"></div>
+                <div class="form-group">
+                  <label>🗣️ Language (একাধিক ভাষা হলে: Hindi - Tamil এভাবে বসবে)</label>
+                  <div style="display:flex; gap:6px; flex-wrap:wrap;">
+                    <input type="text" id="fLanguage" class="wp-input" style="flex:1; min-width:180px;" placeholder="যেমন: Hindi - Tamil" oninput="refreshLanguageQuickChips()">
+                    <button type="button" class="btn btn-sm btn-secondary" id="btnAutoLang" onclick="autoDetectLanguagesFromTitle()">🌐 অটো ভাষা খুঁজুন</button>
+                  </div>
+                  <div class="lang-quick-strip" id="langQuickStrip"></div>
+                </div>
+
+                <div class="two-col">
                   <div class="form-group"><label>📅 Release Date</label><input type="text" id="fReleaseDate" class="wp-input"></div>
                   <div class="form-group"><label>🎬 Genre</label><input type="text" id="fGenre" class="wp-input"></div>
                 </div>
@@ -519,7 +579,7 @@
             </div>
 
             <div class="card">
-              <div class="card-head"><span>📥 ডাউনলোড লিংক</span><button type="button" class="btn btn-sm btn-secondary" onclick="addDownloadRow()">+ লিংক</button></div>
+              <div class="card-head"><span>📥 ডাউনলোড লিংক ও কোয়ালিটি (480p, 720p, 1080p, 2K, 4K...)</span><button type="button" class="btn btn-sm btn-secondary" onclick="addDownloadRow()">+ লিংক</button></div>
               <div class="card-body" id="downloadLinksContainer"></div>
             </div>
 
@@ -545,8 +605,30 @@
                   <input type="date" id="fAddedDate" class="wp-input">
                 </div>
                 <div class="form-group">
-                  <label>কোয়ালিটি ব্যাজ</label>
-                  <input type="text" id="fBadge" class="wp-input" value="1080p">
+                  <label>🏷️ কোয়ালিটি / স্ট্যাটাস ব্যাজ</label>
+                  <select id="fBadgePreset" class="wp-select" style="margin-bottom:6px;" onchange="if(this.value) document.getElementById('fBadge').value=this.value">
+                    <option value="">— সব ব্যাজ থেকে বাছুন —</option>
+                    <option value="1080p">1080p</option>
+                    <option value="4K UHD">4K UHD</option>
+                    <option value="2K">2K</option>
+                    <option value="720p">720p</option>
+                    <option value="480p">480p</option>
+                    <option value="HD">HD</option>
+                    <option value="WEB-DL">WEB-DL</option>
+                    <option value="BluRay">BluRay</option>
+                    <option value="HDRip">HDRip</option>
+                    <option value="HDTC">HDTC</option>
+                    <option value="CAMRip">CAMRip</option>
+                    <option value="SERIES">SERIES</option>
+                    <option value="NEW">NEW</option>
+                    <option value="TRENDING">TRENDING</option>
+                    <option value="HOT">HOT</option>
+                    <option value="DUAL AUDIO">DUAL AUDIO</option>
+                    <option value="HINDI DUBBED">HINDI DUBBED</option>
+                    <option value="BANGLA DUBBED">BANGLA DUBBED</option>
+                    <option value="18+ ADULT">18+ ADULT</option>
+                  </select>
+                  <input type="text" id="fBadge" class="wp-input" value="1080p" placeholder="অথবা কাস্টম ব্যাজ লিখুন..." oninput="syncBadgePreset()">
                 </div>
                 <div class="form-group"><label>অ্যাড ১ (ঐচ্ছিক)</label><input type="text" id="fAd1" class="wp-input"></div>
                 <div class="form-group"><label>অ্যাড ২ (ঐচ্ছিক)</label><input type="text" id="fAd2" class="wp-input"></div>
@@ -572,7 +654,10 @@
       <section id="tabReports" style="display:none;">
         <div class="page-header">
           <h2 class="page-title">📩 ইউজার রিপোর্টসমূহ</h2>
-          <button class="btn btn-secondary" onclick="refreshLiveAnalytics(true)">🔄 রিপোর্ট রিফ্রেশ</button>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <button class="btn btn-amber" onclick="emailAllReportsNow()">📧 সব রিপোর্ট ইমেইলে পাঠান</button>
+            <button class="btn btn-secondary" onclick="refreshLiveAnalytics(true)">🔄 রিপোর্ট রিফ্রেশ</button>
+          </div>
         </div>
         <div class="card">
           <div class="card-body" id="reportsListBox"><p style="color:var(--muted);">রিপোর্ট লোড করতে GAS Web App URL সেট করুন।</p></div>
@@ -644,13 +729,23 @@
         <div class="page-header"><h2 class="page-title">⚙️ সেটিংস, টিম অ্যাডমিন ও ব্যাকআপ</h2></div>
 
         <div class="card">
-          <div class="card-head">🔗 Gmail ও Google Apps Script (২৪/৭ অটো-চেক, লাইভ ইউজার, ডাউনলোড ও রিপোর্ট)</div>
+          <div class="card-head">🔗 Gmail ও Google Apps Script (অটো-চেক, লাইভ ইউজার ও অটো রিপোর্ট ইমেইল)</div>
           <div class="card-body">
-            <div class="two-col">
+            <div class="three-col">
               <div class="form-group"><label>📧 Gmail এড্রেস</label><input type="email" id="cfgGmail" class="wp-input"></div>
               <div class="form-group"><label>🔗 Apps Script Web App URL</label><input type="url" id="cfgGasUrl" class="wp-input" placeholder="https://script.google.com/macros/s/.../exec"></div>
+              <div class="form-group">
+                <label>📩 রিপোর্ট আসলে অটো ইমেইল</label>
+                <select id="cfgAutoEmailReports" class="wp-select">
+                  <option value="true">✅ চালু (অটো ইমেইল যাবে)</option>
+                  <option value="false">⛔ বন্ধ</option>
+                </select>
+              </div>
             </div>
-            <button class="btn" onclick="saveCheckerSettings()">💾 সেটিংস সেভ করুন</button>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn" onclick="saveCheckerSettings()">💾 সেটিংস সেভ করুন</button>
+              <button class="btn btn-secondary" onclick="sendTestReportEmail()">🧪 টেস্ট ইমেইল পাঠান</button>
+            </div>
           </div>
         </div>
 
@@ -701,7 +796,21 @@
       "Romance","Sci-Fi & Fantasy","Science Fiction","Short Film","Sport",
       "Thriller","Turkish","Spanish","French","War","Western","Dual Audio","chelor F"
     ];
-    const LANG_NAME_MAP = { hi:"Hindi (हिंदी)",en:"English",bn:"Bengali (বাংলা)",ta:"Tamil (தமிழ்)",te:"Telugu (తెలుగు)",ml:"Malayalam (മലയാളം)",kn:"Kannada (ಕನ್ನಡ)",ko:"Korean (한국어)",ja:"Japanese (日本語)",zh:"Chinese (中文)",es:"Spanish (Español)",tr:"Turkish (Türkçe)",fr:"French (Français)",ur:"Urdu" };
+
+    const LANG_SHORT_MAP = {
+      hi: "Hindi", en: "English", bn: "Bangla", ta: "Tamil", te: "Telugu",
+      ml: "Malayalam", kn: "Kannada", ko: "Korean", ja: "Japanese", zh: "Chinese",
+      es: "Spanish", tr: "Turkish", fr: "French", ur: "Urdu", ar: "Arabic",
+      pa: "Punjabi", mr: "Marathi", ru: "Russian", de: "German", it: "Italian",
+      th: "Thai", id: "Indonesian", fa: "Persian"
+    };
+    const QUICK_LANG_OPTIONS = ["Hindi","Bangla","English","Tamil","Telugu","Malayalam","Kannada","Korean","Japanese","Chinese","Urdu","Turkish","Spanish","French","Dual Audio"];
+
+    const QUALITY_PRESETS = [
+      "480p", "720p", "1080p", "2K (1440p)", "4K (2160p)",
+      "720p HEVC", "1080p HEVC", "WEB-DL", "HDRip", "BluRay",
+      "HDTC", "CAMRip", "Dual Audio", "Fast Server"
+    ];
 
     const DEFAULT_ADS_CFG = {
       adsEnabled: true, unlockWaitSec: 5, preRollSec: 5,
@@ -716,7 +825,9 @@
     };
 
     let ghConfig = JSON.parse(localStorage.getItem("cine_gh_config") || "null");
-    let checkerCfg = JSON.parse(localStorage.getItem("cine_checker_cfg") || "null") || { gmail: DEFAULT_GMAIL, gasUrl: "" };
+    let checkerCfg = JSON.parse(localStorage.getItem("cine_checker_cfg") || "null") || { gmail: DEFAULT_GMAIL, gasUrl: "", autoEmailReports: true };
+    if (checkerCfg.autoEmailReports === undefined) checkerCfg.autoEmailReports = true;
+
     let currentAdmin = JSON.parse(localStorage.getItem("cine_current_admin") || "null") || { name: "Main Admin", role: "Super Admin" };
     let autoCheckEnabled = localStorage.getItem("cine_auto_check_on") !== "0";
     let nextAutoCheckAt = Number(localStorage.getItem("cine_next_autocheck_at") || (Date.now() + ONE_HOUR_MS));
@@ -725,13 +836,127 @@
     let defaultBranch = "main";
     let shaMap = { movies: null, trash: null, logs: null, ads: null, admins: null };
     let allMovies = [], trashMovies = [], activityLogs = [], adsConfig = { ...DEFAULT_ADS_CFG }, teamAdmins = [];
+    let radarQueue = JSON.parse(localStorage.getItem("cine_radar_queue") || "[]");
     let liveReports = [], liveStats = { activeUsers: 0, totalDownloads: 0, todayDownloads: 0, topMovies: [] };
 
-    let currentFilter = "All", editingIndex = null, selectedCategories = [], episodeCounter = 0;
+    let currentFilter = "All", editingIndex = null, editingRadarIndex = null, selectedCategories = [], episodeCounter = 0;
     let selectedRowIndices = new Set();
     let isScanningNow = false, scanCancelled = false, autoTickerId = null, liveRefreshId = null;
 
     document.getElementById("catSelectDropdown").innerHTML = ALL_WORLD_CATEGORIES.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
+
+    // র‍্যাডার / চ্যানেল হাব থেকে আসা মুভি সাথে সাথে ক্যাপচার করা
+    function formatLanguageHyphen(raw) {
+      if (!raw) return "";
+      const parts = String(raw)
+        .replace(/\(([^)]+)\)/g, (m, inner) => ` ${inner} `)
+        .split(/[,/\-|]+/)
+        .map(s => s.trim())
+        .filter(Boolean)
+        .map(token => {
+          const lower = token.toLowerCase();
+          if (LANG_SHORT_MAP[lower]) return LANG_SHORT_MAP[lower];
+          for (const [code, eng] of Object.entries(LANG_SHORT_MAP)) {
+            if (lower.includes(eng.toLowerCase())) return eng;
+          }
+          if (/বাংলা|bengali|bangla/i.test(token)) return "Bangla";
+          if (/হিন্দি|hindi/i.test(token)) return "Hindi";
+          if (/ইংরেজি|english/i.test(token)) return "English";
+          if (/তামিল|tamil/i.test(token)) return "Tamil";
+          if (/তেলুগু|telugu/i.test(token)) return "Telugu";
+          if (/মালয়ালম|malayalam/i.test(token)) return "Malayalam";
+          if (/কন্নড়|kannada/i.test(token)) return "Kannada";
+          if (/কোরিয়ান|korean/i.test(token)) return "Korean";
+          if (/জাপানি|japanese/i.test(token)) return "Japanese";
+          if (/চাইনিজ|chinese/i.test(token)) return "Chinese";
+          if (/উর্দু|urdu/i.test(token)) return "Urdu";
+          if (/তুর্কি|turkish/i.test(token)) return "Turkish";
+          if (/স্প্যানিশ|spanish/i.test(token)) return "Spanish";
+          if (/ফরাসি|french/i.test(token)) return "French";
+          if (/আরবি|arabic/i.test(token)) return "Arabic";
+          return token;
+        });
+      return [...new Set(parts)].join(" - ");
+    }
+
+    function addRadarItemToQueue(item) {
+      if (!item || !item.title) return false;
+      const cleanItem = {
+        radarId: item.tmdbId || item.id || Date.now(),
+        title: String(item.title).trim(),
+        category: item.category || "Trending",
+        rating: item.rating || "7.5",
+        image: item.image || "",
+        genre: item.genre || "",
+        language: formatLanguageHyphen(item.language || "") || "English",
+        country: item.country || "",
+        releaseDate: item.releaseDate || "",
+        cast: item.cast || "",
+        trailer: item.trailer || "",
+        overview: item.overview || "",
+        tmdbId: item.tmdbId || "",
+        badge: item.badge || (String(item.category || "").toLowerCase().includes("series") ? "SERIES" : "1080p"),
+        receivedAt: new Date().toLocaleString()
+      };
+      const existsIdx = radarQueue.findIndex(x =>
+        (cleanItem.tmdbId && String(x.tmdbId) === String(cleanItem.tmdbId)) ||
+        normTitleBase(x.title) === normTitleBase(cleanItem.title)
+      );
+      if (existsIdx !== -1) radarQueue[existsIdx] = { ...radarQueue[existsIdx], ...cleanItem };
+      else radarQueue.unshift(cleanItem);
+      localStorage.setItem("cine_radar_queue", JSON.stringify(radarQueue.slice(0, 60)));
+      return true;
+    }
+
+    function captureIncomingRadarMovies() {
+      let captured = false;
+      const params = new URLSearchParams(window.location.search);
+      const urlTitle = params.get("title");
+      if (urlTitle) {
+        addRadarItemToQueue({
+          title: urlTitle,
+          rating: params.get("rating") || "",
+          image: params.get("image") || "",
+          genre: params.get("genre") || "",
+          language: params.get("language") || "",
+          country: params.get("country") || "",
+          releaseDate: params.get("releaseDate") || "",
+          cast: params.get("cast") || "",
+          trailer: params.get("trailer") || "",
+          category: params.get("category") || "Trending",
+          badge: params.get("badge") || "",
+          overview: params.get("overview") || "",
+          tmdbId: params.get("tmdbId") || ""
+        });
+        captured = true;
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+
+      const pendingRaw = localStorage.getItem("cine_pending_admin_movie");
+      if (pendingRaw) {
+        try {
+          const pendingObj = JSON.parse(pendingRaw);
+          if (pendingObj && pendingObj.title) {
+            addRadarItemToQueue(pendingObj);
+            captured = true;
+          }
+        } catch (e) {}
+        localStorage.removeItem("cine_pending_admin_movie");
+      }
+
+      if (captured) sessionStorage.setItem("cine_just_sent_radar", "1");
+    }
+
+    captureIncomingRadarMovies();
+
+    window.addEventListener("storage", (e) => {
+      if (e.key === "cine_pending_admin_movie" && e.newValue) {
+        captureIncomingRadarMovies();
+        renderRadarQueue();
+        renderDashboardStats();
+        showToast("📥 র‍্যাডার থেকে নতুন মুভি এসেছে!");
+      }
+    });
 
     if (ghConfig && ghConfig.user && ghConfig.repo && ghConfig.token) {
       document.getElementById("ghUser").value = ghConfig.user;
@@ -845,6 +1070,12 @@
         refreshLiveAnalytics(false);
         if (liveRefreshId) clearInterval(liveRefreshId);
         liveRefreshId = setInterval(() => refreshLiveAnalytics(false), 30000);
+
+        if (sessionStorage.getItem("cine_just_sent_radar") === "1" && radarQueue.length > 0) {
+          sessionStorage.removeItem("cine_just_sent_radar");
+          switchTab("radarQueue");
+          showToast(`📥 "${radarQueue[0].title}" ইনকামিং কিউ-তে এসেছে! পাবলিশ বা এডিট করুন।`);
+        }
       } catch (e) { showToast("নেটওয়ার্ক সমস্যা!", true); }
     }
 
@@ -884,6 +1115,7 @@
 
     function renderAllViews() {
       renderDashboardStats();
+      renderRadarQueue();
       renderMoviesTable();
       renderTrash();
       renderLogs();
@@ -892,10 +1124,10 @@
     }
 
     function switchTab(tab, filterCat = null) {
-      ["tabDashboard","tabAllMovies","tabEditor","tabReports","tabAds","tabTrash","tabLogs","tabSettings"].forEach(id => {
+      ["tabDashboard","tabRadarQueue","tabAllMovies","tabEditor","tabReports","tabAds","tabTrash","tabLogs","tabSettings"].forEach(id => {
         document.getElementById(id).style.display = "none";
       });
-      const map = { dashboard:"tabDashboard", allMovies:"tabAllMovies", addMovie:"tabEditor", reports:"tabReports", ads:"tabAds", trash:"tabTrash", logs:"tabLogs", settings:"tabSettings" };
+      const map = { dashboard:"tabDashboard", radarQueue:"tabRadarQueue", allMovies:"tabAllMovies", addMovie:"tabEditor", reports:"tabReports", ads:"tabAds", trash:"tabTrash", logs:"tabLogs", settings:"tabSettings" };
       document.getElementById(map[tab]).style.display = "block";
 
       document.querySelectorAll(".menu-item").forEach(el => el.classList.remove("active"));
@@ -916,6 +1148,174 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
+    // Radar Queue Functions
+    function saveRadarQueueStorage() {
+      localStorage.setItem("cine_radar_queue", JSON.stringify(radarQueue));
+      renderRadarQueue();
+      renderDashboardStats();
+    }
+
+    function renderRadarQueue() {
+      const box = document.getElementById("radarQueueListBox");
+      if (!radarQueue.length) {
+        box.innerHTML = "<p style='color:var(--muted);'>র‍্যাডার / চ্যানেল হাব থেকে এখনো কোনো মুভি পাঠানো হয়নি।</p>";
+        return;
+      }
+      box.innerHTML = radarQueue.map((item, idx) => `
+        <div class="radar-item-card">
+          <img class="radar-item-poster" src="${escapeHtml(item.image)}" onerror="this.style.display='none'">
+          <div class="radar-item-body">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:8px; flex-wrap:wrap;">
+              <div>
+                <strong style="font-size:15px;">🎬 ${escapeHtml(item.title)}</strong>
+                <div style="margin-top:4px; display:flex; flex-wrap:wrap; gap:5px;">
+                  <span class="badge badge-warn">⭐ ${escapeHtml(item.rating || "7.5")}</span>
+                  <span class="badge badge-purple">${escapeHtml(item.badge || "1080p")}</span>
+                  <span class="badge">${escapeHtml(item.category || "Trending")}</span>
+                  <span class="badge badge-ok">🗣️ ${escapeHtml(item.language || "English")}</span>
+                </div>
+              </div>
+              <span style="font-size:11.5px; color:var(--muted);">🕒 ${escapeHtml(item.receivedAt || "")}</span>
+            </div>
+            <div style="font-size:12px; color:var(--muted); margin:6px 0 10px 0;">
+              🎭 ${escapeHtml(item.genre || "Drama")} · 📅 ${escapeHtml(item.releaseDate || "")}
+            </div>
+            <div style="display:flex; gap:7px; flex-wrap:wrap;">
+              <button class="btn btn-sm btn-success" onclick="publishRadarItem(${idx}, false)">🚀 সরাসরি পাবলিশ করুন</button>
+              <button class="btn btn-sm" onclick="editRadarItem(${idx})">✏️ এডিট করে পাবলিশ</button>
+              <button class="btn btn-sm btn-secondary" onclick="publishRadarItem(${idx}, true)">📝 ড্রাফট হিসেবে সেভ</button>
+              <button class="btn btn-sm btn-danger" onclick="removeRadarItem(${idx})">🗑️ বাদ দিন</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+    }
+
+    function editRadarItem(idx) {
+      const item = radarQueue[idx];
+      if (!item) return;
+      openAddNewMovie();
+      editingRadarIndex = idx;
+      document.getElementById("editorPageTitle").innerText = "📥 র‍্যাডার মুভি এডিট ও পাবলিশ";
+      document.getElementById("fTitle").value = item.title || "";
+      document.getElementById("fLanguage").value = formatLanguageHyphen(item.language || "");
+      refreshLanguageQuickChips();
+      document.getElementById("fReleaseDate").value = item.releaseDate || "";
+      document.getElementById("fGenre").value = item.genre || "";
+      document.getElementById("fRating").value = item.rating || "";
+      document.getElementById("fImage").value = item.image || "";
+      document.getElementById("fCast").value = item.cast || "";
+      document.getElementById("fTrailer").value = item.trailer || "";
+      document.getElementById("fBadge").value = item.badge || "1080p";
+      syncBadgePreset();
+
+      selectedCategories = [];
+      String(item.category || "").split(",").map(s => s.trim()).forEach(addCategoryName);
+      String(item.genre || "").split(",").map(s => s.trim()).forEach(addCategoryName);
+      updatePosterPreview();
+      checkDuplicateTitleLive();
+
+      if (item.tmdbId) {
+        const type = String(item.category || "").toLowerCase().includes("series") ? "tv" : "movie";
+        fetch(`https://api.themoviedb.org/3/${type}/${item.tmdbId}/images?api_key=${TMDB_API_KEY}&include_image_language=null`)
+          .then(r => r.json())
+          .then(im => {
+            const shots = (im.backdrops || []).filter(b => b.file_path).slice(0, 5).map(b => `https://image.tmdb.org/t/p/w500${b.file_path}`);
+            if (shots.length) {
+              document.getElementById("screenshotsContainer").innerHTML = "";
+              shots.forEach(addScreenshotRow);
+            }
+          }).catch(() => {});
+      }
+      showToast("✏️ তথ্য বসে গেছে! লিংক/কোয়ালিটি দিয়ে পাবলিশ করুন।");
+    }
+
+    async function publishRadarItem(idx, asDraft = false) {
+      const item = radarQueue[idx];
+      if (!item) return;
+      const cats = new Set();
+      String(item.category || "Trending").split(",").map(s => s.trim()).filter(Boolean).forEach(c => cats.add(c));
+      String(item.genre || "").split(",").map(s => s.trim()).filter(Boolean).forEach(c => cats.add(c));
+
+      const movieObj = {
+        id: Date.now() + idx,
+        title: item.title,
+        category: [...cats].join(", ") || "Trending",
+        rating: item.rating || "7.5",
+        sortOrder: null,
+        trendingOrder: null,
+        image: item.image || "",
+        ad1: "", ad2: "", links: [],
+        badge: item.badge || "1080p",
+        episodes: "",
+        cast: item.cast || "",
+        trailer: item.trailer || "",
+        bgVideo: "", watchUrl: "",
+        language: formatLanguageHyphen(item.language || "") || "English",
+        releaseDate: item.releaseDate || "",
+        genre: item.genre || "",
+        addedDate: getTodayIso(),
+        screenshots: [],
+        draft: !!asDraft,
+        expiredLinks: []
+      };
+
+      const updated = [movieObj, ...allMovies];
+      try {
+        await ghPutJson("movies.json", updated, "movies", `Radar ${asDraft ? "Draft" : "Publish"}: ${item.title}`);
+        allMovies = updated;
+        radarQueue.splice(idx, 1);
+        saveRadarQueueStorage();
+        await addActivityLog(asDraft ? "Radar -> Draft" : "Radar -> Publish", item.title);
+        renderAllViews();
+        showToast(asDraft ? `📝 "${item.title}" ড্রাফট হিসেবে সেভ হয়েছে!` : `🚀 "${item.title}" সরাসরি পাবলিশ হয়েছে!`);
+      } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
+    }
+
+    async function publishAllRadarItems() {
+      if (!radarQueue.length) return showToast("কোনো মুভি নেই!", true);
+      const added = radarQueue.map((item, idx) => ({
+        id: Date.now() + idx,
+        title: item.title,
+        category: item.category || "Trending",
+        rating: item.rating || "7.5",
+        sortOrder: null, trendingOrder: null,
+        image: item.image || "",
+        ad1: "", ad2: "", links: [],
+        badge: item.badge || "1080p",
+        episodes: "",
+        cast: item.cast || "",
+        trailer: item.trailer || "",
+        bgVideo: "", watchUrl: "",
+        language: formatLanguageHyphen(item.language || "") || "English",
+        releaseDate: item.releaseDate || "",
+        genre: item.genre || "",
+        addedDate: getTodayIso(),
+        screenshots: [], draft: false, expiredLinks: []
+      }));
+      const updated = [...added, ...allMovies];
+      try {
+        await ghPutJson("movies.json", updated, "movies", `Publish ${added.length} radar movies`);
+        allMovies = updated;
+        radarQueue = [];
+        saveRadarQueueStorage();
+        await addActivityLog("Radar Bulk Publish", `${added.length}টি মুভি`);
+        renderAllViews();
+        showToast(`🚀 ${added.length}টি মুভি পাবলিশ হয়েছে!`);
+      } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
+    }
+
+    function removeRadarItem(idx) {
+      radarQueue.splice(idx, 1);
+      saveRadarQueueStorage();
+      showToast("ইনকামিং তালিকা থেকে সরানো হয়েছে।");
+    }
+    function clearRadarQueue() {
+      radarQueue = [];
+      saveRadarQueueStorage();
+      showToast("🧹 ইনকামিং কিউ খালি করা হয়েছে।");
+    }
+
     // Dashboard & Live Analytics
     function hasExpired(m) { return Array.isArray(m.expiredLinks) && m.expiredLinks.length > 0; }
     function isAdultRow(m) { return ((m.badge || "") + " " + (m.category || "")).toLowerCase().match(/18\+|adult/); }
@@ -926,12 +1326,40 @@
       document.getElementById("statTotalMovies").innerText = allMovies.length;
       document.getElementById("statExpired").innerText = expired.length;
       document.getElementById("statReports").innerText = liveReports.length;
+      document.getElementById("statRadarCount").innerText = radarQueue.length;
 
-      const setPill = (id, n) => { const el = document.getElementById(id); el.innerText = n; el.style.display = n > 0 ? "inline-block" : "none"; };
+      const setPill = (id, n) => { const el = document.getElementById(id); if (!el) return; el.innerText = n; el.style.display = n > 0 ? "inline-block" : "none"; };
       setPill("sideExpiredBadge", expired.length);
       setPill("sideDraftBadge", drafts.length);
       setPill("sideTrashBadge", trashMovies.length);
       setPill("sideReportBadge", liveReports.length);
+      setPill("sideRadarBadge", radarQueue.length);
+
+      const topBtn = document.getElementById("topbarRadarBtn");
+      const dashBtn = document.getElementById("dashRadarQuickBtn");
+      const dashBanner = document.getElementById("dashRadarBanner");
+      if (radarQueue.length > 0) {
+        topBtn.style.display = "inline-flex";
+        dashBtn.style.display = "inline-flex";
+        dashBanner.style.display = "block";
+        document.getElementById("topbarRadarCount").innerText = radarQueue.length;
+        document.getElementById("dashRadarCount").innerText = radarQueue.length;
+        document.getElementById("dashRadarPreviewList").innerHTML = radarQueue.slice(0, 4).map((item, idx) => `
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border-soft); gap:8px; flex-wrap:wrap;">
+            <div>
+              <strong>🎬 ${escapeHtml(item.title)}</strong>
+              <span class="badge badge-ok" style="margin-left:6px;">${escapeHtml(item.language || "")}</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-sm btn-success" onclick="publishRadarItem(${idx}, false)">🚀 পাবলিশ</button>
+              <button class="btn btn-sm" onclick="editRadarItem(${idx})">✏️ এডিট</button>
+            </div>
+          </div>`).join("");
+      } else {
+        topBtn.style.display = "none";
+        dashBtn.style.display = "none";
+        dashBanner.style.display = "none";
+      }
 
       const expCard = document.getElementById("expiredSummaryCard");
       if (expired.length > 0) {
@@ -972,11 +1400,74 @@
           if (hint) hint.innerText = "🟢 লাইভ সংযুক্ত";
           renderReports();
           renderDashboardStats();
+          await checkAndAutoEmailNewReports();
           if (manual) showToast("✅ লাইভ ডাটা আপডেট হয়েছে!");
         }
       } catch (e) {
         if (hint) hint.innerText = "কানেকশন এরর";
       }
+    }
+
+    // রিপোর্ট অটো ইমেইল সিস্টেম
+    function getReportUniqueKey(r, idx = 0) {
+      return String(r.id || `${r.title || ""}_${r.time || ""}_${r.reason || idx}`);
+    }
+
+    async function checkAndAutoEmailNewReports() {
+      if (!liveReports.length || checkerCfg.autoEmailReports === false || !checkerCfg.gmail || !checkerCfg.gasUrl) return;
+      const emailedIds = new Set(JSON.parse(localStorage.getItem("cine_emailed_reports") || "[]"));
+      const freshReports = liveReports.filter((r, i) => !emailedIds.has(getReportUniqueKey(r, i)));
+      if (!freshReports.length) return;
+
+      const sent = await dispatchReportEmailViaGas(freshReports, true);
+      if (sent) {
+        freshReports.forEach((r, i) => emailedIds.add(getReportUniqueKey(r, i)));
+        localStorage.setItem("cine_emailed_reports", JSON.stringify([...emailedIds].slice(-300)));
+        showToast(`📧 ${freshReports.length}টি নতুন রিপোর্ট আপনার ইমেইলে পাঠানো হয়েছে!`);
+      }
+    }
+
+    async function dispatchReportEmailViaGas(reportsArr, silent = false) {
+      if (!checkerCfg.gmail) { if (!silent) showToast("সেটিংসে Gmail এড্রেস দিন!", true); return false; }
+      if (!checkerCfg.gasUrl) {
+        if (!silent) openMailtoReportFallback(reportsArr);
+        return false;
+      }
+      try {
+        const res = await fetch(checkerCfg.gasUrl.trim(), {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({
+            action: "sendReportEmail",
+            email: checkerCfg.gmail.trim(),
+            subject: `CineVibeBD Alert: ${reportsArr.length}টি নতুন মুভি রিপোর্ট`,
+            reports: reportsArr
+          })
+        });
+        const data = await res.json().catch(() => ({}));
+        if (data && data.ok) {
+          if (!silent) showToast(`✅ ${checkerCfg.gmail}-এ ইমেইল পাঠানো হয়েছে!`);
+          return true;
+        }
+      } catch (e) {}
+      if (!silent) openMailtoReportFallback(reportsArr);
+      return false;
+    }
+
+    function openMailtoReportFallback(reportsArr) {
+      const subject = encodeURIComponent(`CineVibeBD Report Alert (${reportsArr.length})`);
+      const body = encodeURIComponent(reportsArr.map((r, i) => `${i+1}. Movie: ${r.title}\nReason: ${r.reason || "Broken Link"}\nNote: ${r.note || "-"}\nTime: ${r.time || "-"}`).join("\n\n"));
+      window.open(`mailto:${checkerCfg.gmail || DEFAULT_GMAIL}?subject=${subject}&body=${body}`, "_blank");
+      showToast("📧 আপনার Gmail অ্যাপে রিপোর্ট ওপেন হয়েছে!");
+    }
+
+    async function emailAllReportsNow() {
+      if (!liveReports.length) return showToast("কোনো রিপোর্ট নেই!", true);
+      await dispatchReportEmailViaGas(liveReports, false);
+    }
+
+    async function sendTestReportEmail() {
+      await dispatchReportEmailViaGas([{ title: "Test Movie Alert", reason: "Broken Link Test", note: "Admin panel email test", time: new Date().toLocaleString() }], false);
     }
 
     function renderReports() {
@@ -988,7 +1479,8 @@
             <strong>🎬 ${escapeHtml(r.title)}</strong> <span class="badge badge-expired">${escapeHtml(r.reason || "Broken Link")}</span>
             <div style="font-size:12px; color:var(--muted); margin-top:3px;">সময়: ${escapeHtml(r.time || "")} ${r.note ? "· নোট: " + escapeHtml(r.note) : ""}</div>
           </div>
-          <div style="display:flex; gap:6px;">
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="btn btn-sm btn-amber" onclick="dispatchReportEmailViaGas([liveReports[${i}]], false)">📧 ইমেইল</button>
             <button class="btn btn-sm btn-secondary" onclick="findAndEditMovie('${escapeHtml(r.title)}')">✏️ এডিট</button>
             <button class="btn btn-sm btn-success" onclick="resolveUserReport('${escapeHtml(r.id || i)}')">✅ Resolve</button>
           </div>
@@ -1043,7 +1535,7 @@
           <tr class="${exp ? 'row-expired' : ''}">
             <td><input type="checkbox" ${selectedRowIndices.has(idx) ? "checked" : ""} onchange="toggleRowSelect(${idx}, this.checked)"></td>
             <td><img class="thumb-img" src="${escapeHtml(m.image)}" onerror="this.style.display='none'"></td>
-            <td><strong>${escapeHtml(m.title)}</strong><br><span style="font-size:11.5px; color:var(--muted);">⭐ ${escapeHtml(m.rating||"Auto")} · ${escapeHtml(m.badge||"HD")}</span></td>
+            <td><strong>${escapeHtml(m.title)}</strong><br><span style="font-size:11.5px; color:var(--muted);">⭐ ${escapeHtml(m.rating||"Auto")} · ${escapeHtml(m.badge||"HD")} ${m.language ? "· " + escapeHtml(m.language) : ""}</span></td>
             <td><span class="badge">${escapeHtml(m.category)}</span></td>
             <td>${m.sortOrder ? `#${m.sortOrder}` : "—"} ${m.trendingOrder ? `🔥#${m.trendingOrder}` : ""}</td>
             <td><div style="display:flex; gap:6px; align-items:center;">${status}<button class="eye-btn ${exp?'eye-red':''}" onclick="openEyeModal(${idx})">👁️</button></div></td>
@@ -1101,7 +1593,7 @@
       await runSmartScanOnIndices(indices, true);
     }
 
-    // SMART LINK CHECKER (Fixes .r2.dev / .mkv false red & skips nothing)
+    // SMART LINK CHECKER
     function extractMovieLinks(m) {
       const items = [];
       const add = (label, raw) => {
@@ -1131,7 +1623,7 @@
       if (!allItems.length) return [];
       const results = [];
       if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
-        const chunkSize = 12; // ছোট ব্যাচ যাতে কখনোই টাইমআউট বা স্কিপ না হয়
+        const chunkSize = 12;
         for (let i = 0; i < allItems.length; i += chunkSize) {
           if (scanCancelled) break;
           const chunk = allItems.slice(i, i + chunkSize);
@@ -1188,7 +1680,6 @@
       try {
         let r = await fetch(u, { method: "HEAD", signal: ctrl.signal });
         clearTimeout(tid);
-        // .r2.dev / .mkv অনেক সময় HEAD-এ 405 বা ভিন্ন স্ট্যাটাস দিলে Range GET দিয়ে যাচাই
         if (r.status === 405 || r.status === 404 || r.status === 410) {
           const ctrl2 = new AbortController();
           const tid2 = setTimeout(() => ctrl2.abort(), 7000);
@@ -1315,9 +1806,9 @@
       document.getElementById("eyeModalBackdrop").style.display = "flex";
     }
 
-    // Duplicate Warning & In-Editor Quick Link Tester
+    // Duplicate Warning & Quick Language Helper
     function normTitleBase(t) {
-      return String(t || "").toLowerCase().replace(/\(\s*\d{4}\s*\)|\[\s*\d{4}\s*\]/g, "").replace(/\b(480p|720p|1080p|4k|hd|hindi|bangla|dubbed|full movie)\b/gi, "").replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
+      return String(t || "").toLowerCase().replace(/\(\s*\d{4}\s*\)|\[\s*\d{4}\s*\]/g, "").replace(/\b(480p|720p|1080p|2k|4k|hd|hindi|bangla|dubbed|full movie)\b/gi, "").replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
     }
     function checkDuplicateTitleLive() {
       const box = document.getElementById("duplicateAlertBox");
@@ -1328,6 +1819,66 @@
         box.style.display = "block";
         box.innerHTML = `⚠️ <b>সতর্কতা (Duplicate):</b> "${escapeHtml(allMovies[hitIdx].title)}" মুভিটি আগে থেকেই তালিকায় আছে! <button type="button" class="btn btn-sm btn-secondary" style="margin-left:8px;" onclick="openEditMovie(${hitIdx})">✏️ ওটি এডিট করুন</button>`;
       } else box.style.display = "none";
+    }
+
+    function refreshLanguageQuickChips() {
+      const curList = (document.getElementById("fLanguage").value || "")
+        .split(/[-,|/]+/)
+        .map(s => s.trim().toLowerCase())
+        .filter(Boolean);
+      document.getElementById("langQuickStrip").innerHTML = QUICK_LANG_OPTIONS.map(lang => {
+        const isOn = curList.includes(lang.toLowerCase());
+        return `<span class="lang-chip-btn ${isOn ? 'active' : ''}" onclick="toggleQuickLanguage('${escapeHtml(lang)}')">${isOn ? '✓ ' : '+ '}${escapeHtml(lang)}</span>`;
+      }).join("");
+    }
+
+    function toggleQuickLanguage(lang) {
+      const input = document.getElementById("fLanguage");
+      let list = (input.value || "").split(/[-,|/]+/).map(s => s.trim()).filter(Boolean);
+      const idx = list.findIndex(x => x.toLowerCase() === lang.toLowerCase());
+      if (idx !== -1) list.splice(idx, 1);
+      else list.push(lang);
+      input.value = list.join(" - ");
+      refreshLanguageQuickChips();
+    }
+
+    async function autoDetectLanguagesFromTitle() {
+      const rawTitle = document.getElementById("fTitle").value.trim();
+      if (!rawTitle) return showToast("আগে মুভির নাম লিখুন!", true);
+      const q = rawTitle.replace(/\(\s*\d{4}\s*\)|\[\s*\d{4}\s*\]/g, "").trim();
+      const btn = document.getElementById("btnAutoLang");
+      btn.disabled = true; btn.innerText = "খুঁজছে...";
+      try {
+        const sr = await (await fetch(`https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&query=${encodeURIComponent(q)}`)).json();
+        const hit = (sr.results || []).find(r => r.media_type === "movie" || r.media_type === "tv");
+        if (!hit) { showToast("TMDB-তে এই নামের মুভি পাওয়া যায়নি।", true); btn.disabled = false; btn.innerText = "🌐 অটো ভাষা খুঁজুন"; return; }
+        const d = await (await fetch(`https://api.themoviedb.org/3/${hit.media_type}/${hit.id}?api_key=${TMDB_API_KEY}`)).json();
+        const langs = extractCleanLanguages(d);
+        if (langs) {
+          document.getElementById("fLanguage").value = langs;
+          refreshLanguageQuickChips();
+          showToast(`🗣️ পাওয়া গেছে: ${langs}`);
+        } else showToast("অতিরিক্ত ভাষা পাওয়া যায়নি।");
+      } catch (e) { showToast("ভাষা খোঁজা যায়নি!", true); }
+      btn.disabled = false; btn.innerText = "🌐 অটো ভাষা খুঁজুন";
+    }
+
+    function extractCleanLanguages(d) {
+      const set = new Set();
+      if (d.original_language) set.add(LANG_SHORT_MAP[d.original_language] || d.original_language.toUpperCase());
+      (d.spoken_languages || []).forEach(l => {
+        if (l.iso_639_1 && l.iso_639_1 !== "xx") {
+          set.add(LANG_SHORT_MAP[l.iso_639_1] || l.english_name || l.name);
+        }
+      });
+      return [...set].filter(Boolean).join(" - ");
+    }
+
+    function syncBadgePreset() {
+      const val = document.getElementById("fBadge").value.trim();
+      const sel = document.getElementById("fBadgePreset");
+      const matched = Array.from(sel.options).find(o => o.value.toLowerCase() === val.toLowerCase());
+      sel.value = matched ? matched.value : "";
     }
 
     function testSingleInputUrl(inputIdOrEl) {
@@ -1347,6 +1898,12 @@
     }
     function closeTestModal() { document.getElementById("testModalBody").innerHTML = ""; closeModal("testModalBackdrop"); }
 
+    // Quality Preset Helper
+    function buildQualitySelectHtml(selectedVal = "", targetClass = ".dl-label") {
+      const opts = QUALITY_PRESETS.map(q => `<option value="${escapeHtml(q)}" ${q.toLowerCase() === String(selectedVal || "").trim().toLowerCase() ? "selected" : ""}>${escapeHtml(q)}</option>`).join("");
+      return `<select class="wp-select" style="width:125px;" onchange="if(this.value) this.parentElement.querySelector('${targetClass}').value=this.value"><option value="">কোয়ালিটি বাছুন</option>${opts}</select>`;
+    }
+
     // Editor Actions
     function renderCategoryChips() { document.getElementById("selectedCatChips").innerHTML = selectedCategories.map((c, i) => `<div class="cat-chip">${escapeHtml(c)} <span onclick="selectedCategories.splice(${i},1);renderCategoryChips();">✕</span></div>`).join(""); }
     function addCategoryName(c) { c = String(c||"").trim(); if (c && c.toLowerCase()!=="all" && !selectedCategories.some(x=>x.toLowerCase()===c.toLowerCase())) { selectedCategories.push(c); renderCategoryChips(); } }
@@ -1360,7 +1917,7 @@
     }
     function addDownloadRow(url = "", label = "") {
       const r = document.createElement("div"); r.className = "builder-row dl-row";
-      r.innerHTML = `<input type="text" class="wp-input dl-url" style="flex:2; min-width:150px;" placeholder="ডাউনলোড লিংক" value="${escapeHtml(url)}"><input type="text" class="wp-input dl-label" style="flex:1; min-width:100px;" placeholder="কোয়ালিটি (720p)" value="${escapeHtml(label)}"><button type="button" class="btn btn-sm btn-secondary" onclick="testSingleInputUrl(this.parentElement.querySelector('.dl-url'))">▶ Test</button><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
+      r.innerHTML = `<input type="text" class="wp-input dl-url" style="flex:2; min-width:150px;" placeholder="ডাউনলোড লিংক" value="${escapeHtml(url)}">${buildQualitySelectHtml(label, ".dl-label")}<input type="text" class="wp-input dl-label" style="flex:1; min-width:90px;" placeholder="কোয়ালিটি (720p)" value="${escapeHtml(label)}"><button type="button" class="btn btn-sm btn-secondary" onclick="testSingleInputUrl(this.parentElement.querySelector('.dl-url'))">▶ Test</button><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
       document.getElementById("downloadLinksContainer").appendChild(r);
     }
     function addEpisodeBlock(epName = "", qualities = []) {
@@ -1372,7 +1929,7 @@
     }
     function addQualityToEp(epId, url = "", label = "") {
       const r = document.createElement("div"); r.className = "builder-row ep-q-row";
-      r.innerHTML = `<input type="text" class="wp-input ep-q-url" style="flex:2; min-width:140px;" placeholder="ভিডিও লিংক" value="${escapeHtml(url)}"><input type="text" class="wp-input ep-q-label" style="flex:1; min-width:85px;" placeholder="720p" value="${escapeHtml(label)}"><button type="button" class="btn btn-sm btn-secondary" onclick="testSingleInputUrl(this.parentElement.querySelector('.ep-q-url'))">▶</button><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
+      r.innerHTML = `<input type="text" class="wp-input ep-q-url" style="flex:2; min-width:140px;" placeholder="ভিডিও লিংক" value="${escapeHtml(url)}">${buildQualitySelectHtml(label, ".ep-q-label")}<input type="text" class="wp-input ep-q-label" style="flex:1; min-width:80px;" placeholder="720p" value="${escapeHtml(label)}"><button type="button" class="btn btn-sm btn-secondary" onclick="testSingleInputUrl(this.parentElement.querySelector('.ep-q-url'))">▶</button><button type="button" class="btn btn-sm btn-danger" onclick="this.parentElement.remove()">✕</button>`;
       document.querySelector(`#${epId} .ep-q-list`).appendChild(r);
     }
     function updatePosterPreview() {
@@ -1382,13 +1939,16 @@
 
     function openAddNewMovie() {
       editingIndex = null;
+      editingRadarIndex = null;
       document.getElementById("btnCheckCurrentMovie").style.display = "none";
       document.getElementById("editorPageTitle").innerText = "➕ নতুন মুভি যোগ করুন";
       document.getElementById("duplicateAlertBox").style.display = "none";
       ["fTitle","fLanguage","fReleaseDate","fGenre","fRating","fSortOrder","fTrendingOrder","fImage","fAd1","fAd2","fCast","fTrailer","fBgVideo","fWatchUrl","tmdbSearchInput","customCatInput"].forEach(id => document.getElementById(id).value = "");
-      document.getElementById("fBadge").value = "1080p"; document.getElementById("fDraft").value = "false";
+      document.getElementById("fBadge").value = "1080p"; syncBadgePreset();
+      document.getElementById("fDraft").value = "false";
       document.getElementById("fAddedDate").value = getTodayIso();
       selectedCategories = []; renderCategoryChips();
+      refreshLanguageQuickChips();
       document.getElementById("screenshotsContainer").innerHTML = ""; addScreenshotRow("");
       document.getElementById("downloadLinksContainer").innerHTML = ""; addDownloadRow("", "720p");
       document.getElementById("episodesBuilderContainer").innerHTML = "";
@@ -1399,10 +1959,12 @@
     function openEditMovie(idx) {
       const m = allMovies[idx]; if (!m) return;
       editingIndex = idx;
+      editingRadarIndex = null;
       document.getElementById("btnCheckCurrentMovie").style.display = "inline-flex";
       document.getElementById("editorPageTitle").innerText = "✏️ মুভি এডিট করুন";
       document.getElementById("fTitle").value = m.title || "";
       document.getElementById("fLanguage").value = m.language || "";
+      refreshLanguageQuickChips();
       document.getElementById("fReleaseDate").value = m.releaseDate || "";
       document.getElementById("fGenre").value = m.genre || "";
       document.getElementById("fRating").value = m.rating || "";
@@ -1412,6 +1974,7 @@
       document.getElementById("fAd1").value = m.ad1 || "";
       document.getElementById("fAd2").value = m.ad2 || "";
       document.getElementById("fBadge").value = m.badge || "1080p";
+      syncBadgePreset();
       document.getElementById("fCast").value = m.cast || "";
       document.getElementById("fTrailer").value = m.trailer || "";
       document.getElementById("fBgVideo").value = m.bgVideo || "";
@@ -1462,7 +2025,8 @@
         episodes: eps.join(" || "), cast: document.getElementById("fCast").value.trim(),
         trailer: document.getElementById("fTrailer").value.trim(), bgVideo: document.getElementById("fBgVideo").value.trim(),
         watchUrl: document.getElementById("fWatchUrl").value.trim(),
-        language: document.getElementById("fLanguage").value.trim(), releaseDate: document.getElementById("fReleaseDate").value.trim(),
+        language: formatLanguageHyphen(document.getElementById("fLanguage").value.trim()),
+        releaseDate: document.getElementById("fReleaseDate").value.trim(),
         genre: document.getElementById("fGenre").value.trim(), addedDate: document.getElementById("fAddedDate").value.trim() || getTodayIso(),
         screenshots: shots, draft: document.getElementById("fDraft").value === "true",
         expiredLinks: editingIndex !== null ? (allMovies[editingIndex].expiredLinks || []) : []
@@ -1476,6 +2040,11 @@
       try {
         await ghPutJson("movies.json", updated, "movies", `${isEdit ? "Edit" : "Add"}: ${title}`);
         allMovies = updated;
+        if (editingRadarIndex !== null && radarQueue[editingRadarIndex]) {
+          radarQueue.splice(editingRadarIndex, 1);
+          editingRadarIndex = null;
+          localStorage.setItem("cine_radar_queue", JSON.stringify(radarQueue));
+        }
         await addActivityLog(isEdit ? "Edit Movie" : "Add Movie", title, movieObj.draft ? "Saved as Draft" : "Published");
         renderAllViews(); showToast("✅ সফলভাবে সেভ হয়েছে!");
         switchTab("allMovies", "All");
@@ -1583,12 +2152,17 @@
     function renderSettingsView() {
       document.getElementById("cfgGmail").value = checkerCfg.gmail || DEFAULT_GMAIL;
       document.getElementById("cfgGasUrl").value = checkerCfg.gasUrl || "";
+      document.getElementById("cfgAutoEmailReports").value = checkerCfg.autoEmailReports !== false ? "true" : "false";
       document.getElementById("adminsListBox").innerHTML = teamAdmins.length
         ? teamAdmins.map((a, i) => `<div style="display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--border-soft); font-size:13px;"><span>👤 <b>${escapeHtml(a.name)}</b> (${escapeHtml(a.role)})</span><button class="btn btn-sm btn-danger" onclick="removeTeamAdmin(${i})">✕</button></div>`).join("")
         : "<p style='color:var(--muted); font-size:12.5px;'>কোনো অতিরিক্ত অ্যাডমিন যোগ করা হয়নি।</p>";
     }
     function saveCheckerSettings() {
-      checkerCfg = { gmail: document.getElementById("cfgGmail").value.trim() || DEFAULT_GMAIL, gasUrl: document.getElementById("cfgGasUrl").value.trim() };
+      checkerCfg = {
+        gmail: document.getElementById("cfgGmail").value.trim() || DEFAULT_GMAIL,
+        gasUrl: document.getElementById("cfgGasUrl").value.trim(),
+        autoEmailReports: document.getElementById("cfgAutoEmailReports").value === "true"
+      };
       localStorage.setItem("cine_checker_cfg", JSON.stringify(checkerCfg));
       showToast("✅ সেটিংস সেভ হয়েছে!");
       refreshLiveAnalytics(true);
@@ -1642,7 +2216,7 @@
           const c = rows[i]?.c; if (!c) continue;
           const title = cell(c, 0); if (!title || title.toLowerCase()==="title" || existing.has(title.toLowerCase())) continue;
           const links = []; [{v:cell(c,6),d:"480p"},{v:cell(c,7),d:"720p"},{v:cell(c,8),d:"1080p"},{v:cell(c,9),d:"Fast"}].forEach(it => { if(it.v) it.v.split(/,|\n/).forEach(p=>{ const cl=p.trim(); if(cl){ const sp=cl.split("|"); links.push({link:sp[0].trim(), label:sp[1]?sp.slice(1).join("|").trim():it.d}); } }); });
-          newOnes.push({ id:Date.now()+i, title, category:cell(c,1)||"All", rating:cell(c,2), image:cell(c,3), ad1:cell(c,4), ad2:cell(c,5), links, badge:cell(c,10)||"1080p", episodes:cell(c,12), cast:cell(c,13), trailer:cell(c,14), watchUrl:cell(c,15), language:cell(c,16), releaseDate:cell(c,17), genre:cell(c,18), addedDate:getTodayIso(), screenshots:[], expiredLinks:[] });
+          newOnes.push({ id:Date.now()+i, title, category:cell(c,1)||"All", rating:cell(c,2), image:cell(c,3), ad1:cell(c,4), ad2:cell(c,5), links, badge:cell(c,10)||"1080p", episodes:cell(c,12), cast:cell(c,13), trailer:cell(c,14), watchUrl:cell(c,15), language:formatLanguageHyphen(cell(c,16)), releaseDate:cell(c,17), genre:cell(c,18), addedDate:getTodayIso(), screenshots:[], expiredLinks:[] });
         }
         const merged = [...newOnes.reverse(), ...allMovies];
         await ghPutJson("movies.json", merged, "movies", "Import Google Sheet");
@@ -1674,11 +2248,13 @@
         const rel = d.release_date || d.first_air_date || "", y = rel ? rel.split("-")[0] : "", genres = (d.genres||[]).map(g=>g.name), lang = d.original_language || "";
         document.getElementById("fTitle").value = y ? `${d.title||d.name} (${y})` : (d.title||d.name||"");
         document.getElementById("fRating").value = d.vote_average ? d.vote_average.toFixed(1) : "7.5";
-        document.getElementById("fLanguage").value = LANG_NAME_MAP[lang] || lang.toUpperCase() || "English";
+        document.getElementById("fLanguage").value = extractCleanLanguages(d) || "English";
+        refreshLanguageQuickChips();
         document.getElementById("fReleaseDate").value = rel;
         document.getElementById("fGenre").value = genres.join(", ");
         if (d.poster_path) { document.getElementById("fImage").value = `https://image.tmdb.org/t/p/w500${d.poster_path}`; updatePosterPreview(); }
         selectedCategories = []; if (type==="tv") { addCategoryName("Series"); document.getElementById("fBadge").value = "SERIES"; } else document.getElementById("fBadge").value = "1080p";
+        syncBadgePreset();
         if (lang==="bn") addCategoryName("Bangla"); else if (lang==="hi") { addCategoryName("Bollywood"); addCategoryName("Hindi"); } else if (lang==="en") addCategoryName("Hollywood"); else if (["ta","te","ml","kn"].includes(lang)) addCategoryName("South Indian"); else if (lang==="ko") addCategoryName("Korean");
         genres.forEach(addCategoryName);
         document.getElementById("fCast").value = (c.cast||[]).slice(0,6).map(a=>a.name).join(", ");
@@ -1692,4 +2268,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
