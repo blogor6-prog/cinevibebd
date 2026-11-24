@@ -20,7 +20,7 @@
       --muted: #a1a1aa;
     }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Hind Siliguri', sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background: var(--bg); color: #fff; padding: 12px 12px 75px; min-height: 100vh; }
+    body { background: var(--bg); color: #fff; padding: 12px 12px 80px; min-height: 100vh; }
 
     .header { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 12px; position: sticky; top: 0; background: rgba(5,5,7,0.95); backdrop-filter: blur(10px); padding: 8px 0; z-index: 100; border-bottom: 1px solid var(--border); }
     .brand { display: flex; align-items: center; gap: 8px; }
@@ -88,11 +88,17 @@
     .btn-save { background: rgba(250,204,21,0.15); border: 1px solid rgba(250,204,21,0.4); color: #facc15; }
 
     .load-more-btn { width: 100%; margin-top: 12px; padding: 11px; border-radius: 999px; background: var(--card); border: 1px solid var(--border); color: #fff; font-size: 13px; font-weight: 800; cursor: pointer; }
-
     .news-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 12px; }
     .news-card h3 { font-size: 13.5px; color: #fff; line-height: 1.45; margin-bottom: 8px; }
 
-    /* দেশ ও ট্রেলার মডাল */
+    /* ফ্লোটিং টোস্ট নোটিফিকেশন */
+    .toast-banner {
+      display: none; position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      background: rgba(15, 16, 24, 0.96); border: 1px solid rgba(56, 189, 248, 0.65);
+      color: #fff; padding: 10px 16px; border-radius: 999px; font-size: 12px; font-weight: 800;
+      z-index: 9999; max-width: 92vw; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.85);
+    }
+
     .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.88); backdrop-filter: blur(8px); z-index: 9000; justify-content: center; align-items: center; padding: 14px; }
     .modal-box { width: 100%; max-width: 420px; max-height: 85vh; background: #12131a; border: 1px solid rgba(255,255,255,0.15); border-radius: 16px; padding: 14px; display: flex; flex-direction: column; gap: 10px; }
     .modal-head { display: flex; justify-content: space-between; align-items: center; }
@@ -119,7 +125,6 @@
     </div>
   </div>
 
-  <!-- সেটিংস (টোকেন, চ্যানেল, এডমিন প্যানেল লিংক) -->
   <div class="settings-panel" id="settingsPanel">
     <label>🤖 Telegram Bot Token (শুধু আপনার ফোনে সেভ থাকবে):</label>
     <input type="text" id="botTokenInput" placeholder="যেমন: 9241231506:AAH...">
@@ -133,12 +138,11 @@
         <input type="text" id="channelIdInput" value="@supersp52">
       </div>
     </div>
-    <label>⚡ আপনার Admin Panel URL (যেখানে মুভি পাঠাতে চান):</label>
-    <input type="text" id="adminPanelUrlInput" value="./admin.html" placeholder="https://cinevibebd.pages.dev/admin.html">
+    <label>⚡ আপনার Admin Panel URL (আপনার আসল এডমিন প্যানেলের লিংক দিন):</label>
+    <input type="text" id="adminPanelUrlInput" value="./admin.html" placeholder="যেমন: https://cinevibebd.pages.dev/admin.html">
     <button class="save-btn" onclick="saveConfig()">💾 সব সেটিংস সেভ করুন</button>
   </div>
 
-  <!-- সার্চ ও ফিল্টার -->
   <div class="search-filter-bar">
     <div class="search-row">
       <input type="text" id="searchQueryInput" placeholder="যেকোনো মুভি বা সিরিজের নাম লিখে খুঁজুন..." onkeydown="if(event.key==='Enter') doLiveSearch()">
@@ -180,7 +184,6 @@
 
   <div class="selected-countries-strip" id="selectedCountriesStrip"></div>
 
-  <!-- ক্যাটাগরি ট্যাব -->
   <div class="tabs">
     <div class="tab active" onclick="switchTab('releases', this)">🚨 রিলিজ</div>
     <div class="tab" onclick="switchTab('trending', this)">🔥 ট্রেন্ডিং</div>
@@ -202,7 +205,8 @@
   <div class="card-list" id="contentList"></div>
   <button class="load-more-btn" id="loadMoreBtn" style="display:none;" onclick="loadMorePage()">➕ আরও মুভি দেখুন</button>
 
-  <!-- পৃথিবীর সকল দেশের টিক চিহ্ন মডাল -->
+  <div class="toast-banner" id="toastBanner"></div>
+
   <div class="modal-bg" id="countryModal" onclick="if(event.target===this) closeCountryModal()">
     <div class="modal-box">
       <div class="modal-head">
@@ -218,7 +222,6 @@
     </div>
   </div>
 
-  <!-- ট্রেইলার প্রিভিউ মডাল -->
   <div class="modal-bg" id="trailerModal" onclick="if(event.target===this) closeTrailerModal()">
     <div class="modal-box" style="max-width:460px;">
       <div class="modal-head">
@@ -263,11 +266,24 @@
     let currentNews = [];
     let currentPage = 1;
     let isSearchMode = false;
+    let toastTimer = null;
     const detailCache = {};
 
     const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const sleep = (ms) => new Promise(r => setTimeout(r, ms));
-    function setStatus(m) { document.getElementById('statusMsg').innerText = m; }
+
+    function setStatus(m, showToast = false) {
+      document.getElementById('statusMsg').innerText = m;
+      if (showToast) {
+        const tb = document.getElementById('toastBanner');
+        tb.innerText = m;
+        tb.style.display = 'block';
+        clearTimeout(toastTimer);
+        if (!m.includes('⏳')) {
+          toastTimer = setTimeout(() => { tb.style.display = 'none'; }, 4500);
+        }
+      }
+    }
 
     function toggleSettings() { document.getElementById('settingsPanel').classList.toggle('open'); }
     function loadConfig() {
@@ -282,7 +298,7 @@
       localStorage.setItem('cv_alert_channel', document.getElementById('channelIdInput').value.trim());
       localStorage.setItem('cv_alert_admin_url', document.getElementById('adminPanelUrlInput').value.trim() || './admin.html');
       document.getElementById('settingsPanel').classList.remove('open');
-      setStatus('✅ সেটিংস সেভ হয়েছে!');
+      setStatus('✅ সেটিংস সেভ হয়েছে!', true);
     }
 
     async function loadUploadedMovies() {
@@ -301,7 +317,6 @@
       return false;
     }
 
-    /* পৃথিবীর সকল দেশের লিস্ট লোড */
     async function loadAllCountries() {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/configuration/countries?api_key=${TMDB_KEY}`);
@@ -351,11 +366,8 @@
     }
 
     function toggleCountryCode(code, chk) {
-      if (chk.checked) {
-        if (!selectedCountries.includes(code)) selectedCountries.push(code);
-      } else {
-        selectedCountries = selectedCountries.filter(c => c !== code);
-      }
+      if (chk.checked) { if (!selectedCountries.includes(code)) selectedCountries.push(code); }
+      else { selectedCountries = selectedCountries.filter(c => c !== code); }
       chk.closest('.country-check-item').classList.toggle('checked', chk.checked);
     }
 
@@ -523,10 +535,7 @@
       const box = document.getElementById('contentList');
       box.innerHTML = '';
       try {
-        const queries = [
-          'বাংলা সিনেমা OR ঢালিউড মুভি রিলিজ',
-          'বলিউড OR সাউথ ইন্ডিয়ান নতুন মুভি'
-        ];
+        const queries = ['বাংলা সিনেমা OR ঢালিউড মুভি রিলিজ', 'বলিউড OR সাউথ ইন্ডিয়ান নতুন মুভি'];
         let allNews = [];
         for (const q of queries) {
           const rss = 'https://news.google.com/rss/search?q=' + encodeURIComponent(q) + '&hl=bn&gl=BD&ceid=BD:bn';
@@ -570,14 +579,12 @@
           (m.genre_ids || []).map(id => GENRE_MAP[id]).filter(Boolean).join(', ') || 'Drama';
         const releaseDate = d.release_date || d.first_air_date || m.release_date || m.first_air_date || '2026';
 
-        // দেশসমূহ
         let countries = (d.production_countries || []).map(c => COUNTRY_BN[c.iso_3166_1] || c.name);
         if (countries.length === 0 && Array.isArray(d.origin_country)) {
           countries = d.origin_country.map(code => COUNTRY_BN[code] || code);
         }
         const countryText = countries.join(', ') || 'International';
 
-        // যে যে ভাষায় রিলিজ হয়েছে
         const langSet = new Set();
         if (d.original_language) langSet.add(LANG_BN[d.original_language] || d.original_language.toUpperCase());
         (d.spoken_languages || []).forEach(l => {
@@ -592,29 +599,23 @@
         const poster = (d.poster_path || m.poster_path) ? `https://image.tmdb.org/t/p/w500${d.poster_path || m.poster_path}` : '';
 
         const info = {
-          id: d.id || m.id,
-          mediaType: type,
-          title, rating, genres, releaseDate,
-          countries: countryText,
-          languages: languagesText,
-          overview: d.overview || '',
-          cast, trailerUrl, poster,
+          id: d.id || m.id, mediaType: type, title, rating, genres, releaseDate,
+          countries: countryText, languages: languagesText,
+          overview: d.overview || '', cast, trailerUrl, poster,
           youtubeKey: yt ? yt.key : ''
         };
         detailCache[key] = info;
         return info;
       } catch {
         return {
-          id: m.id,
-          mediaType: type,
+          id: m.id, mediaType: type,
           title: m.title || m.name || 'Untitled',
           rating: m.vote_average ? Number(m.vote_average).toFixed(1) : 'New',
           genres: (m.genre_ids || []).map(id => GENRE_MAP[id]).filter(Boolean).join(', ') || 'Drama',
           releaseDate: m.release_date || m.first_air_date || '2026',
           countries: (m.origin_country || []).map(c => COUNTRY_BN[c] || c).join(', ') || 'International',
           languages: LANG_BN[m.original_language] || String(m.original_language || '').toUpperCase(),
-          overview: m.overview || '',
-          cast: '', trailerUrl: '',
+          overview: m.overview || '', cast: '', trailerUrl: '',
           poster: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '',
           youtubeKey: ''
         };
@@ -640,6 +641,27 @@
       );
     }
 
+    /* অটো retry_after হ্যান্ডলারসহ টেলিগ্রাম কল */
+    async function sendTgWithAutoRetry(token, method, payload) {
+      for (let attempt = 1; attempt <= 2; attempt++) {
+        const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+        if (data.ok) return data;
+        if (data.error_code === 429 && attempt === 1) {
+          const waitSec = Math.min(Number(data.parameters?.retry_after || 5) + 1, 40);
+          for (let s = waitSec; s > 0; s--) {
+            setStatus(`⏳ টেলিগ্রাম ব্যস্ত: ${s} সেকেন্ড পর অটো যাচ্ছে...`, true);
+            await sleep(1000);
+          }
+          continue;
+        }
+        return data;
+      }
+      return { ok: false, description: 'Rate limit timeout' };
+    }
+
     async function sendMovieTg(idx, targetType) {
       const token = document.getElementById('botTokenInput').value.trim();
       if (!token) {
@@ -654,30 +676,37 @@
       const m = currentItems[idx];
       if (!m) return false;
 
-      setStatus(`"${m.title || m.name}"-এর পূর্ণ তথ্য আনা হচ্ছে... ⏳`);
+      setStatus(`"${m.title || m.name}"-এর তথ্য আনা হচ্ছে... ⏳`, true);
       const info = await getFullMovieDetails(m);
       const caption = buildTelegramCaption(info, isSearchMode ? 'trending' : currentTab).slice(0, 1000);
 
-      setStatus(`টেলিগ্রামে পাঠানো হচ্ছে... ⏳`);
+      setStatus(`টেলিগ্রামে পাঠানো হচ্ছে... ⏳`, true);
       try {
-        const method = info.poster ? 'sendPhoto' : 'sendMessage';
-        const body = info.poster
-          ? { chat_id: chatId, photo: info.poster, caption, parse_mode: 'HTML' }
-          : { chat_id: chatId, text: caption, parse_mode: 'HTML' };
+        let data;
+        if (info.poster) {
+          data = await sendTgWithAutoRetry(token, 'sendPhoto', {
+            chat_id: chatId, photo: info.poster, caption, parse_mode: 'HTML'
+          });
+          if (!data.ok && data.error_code !== 429 && data.error_code !== 401 && data.error_code !== 403) {
+            data = await sendTgWithAutoRetry(token, 'sendMessage', {
+              chat_id: chatId, text: caption, parse_mode: 'HTML'
+            });
+          }
+        } else {
+          data = await sendTgWithAutoRetry(token, 'sendMessage', {
+            chat_id: chatId, text: caption, parse_mode: 'HTML'
+          });
+        }
 
-        const res = await fetch(`https://api.telegram.org/bot${token}/${method}`, {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body)
-        });
-        const data = await res.json();
         if (data.ok) {
-          setStatus(`✅ "${info.title}" সফলভাবে পাঠানো হয়েছে!`);
+          setStatus(`✅ "${info.title}" সফলভাবে পাঠানো হয়েছে!`, true);
           return true;
         } else {
-          setStatus(`⚠️ এরর: ${data.description || 'পাঠানো যায়নি'}`);
+          setStatus(`⚠️ এরর: ${data.description || 'পাঠানো যায়নি'}`, true);
           return false;
         }
       } catch (e) {
-        setStatus(`⚠️ নেটওয়ার্ক এরর: ${e.message}`);
+        setStatus(`⚠️ নেটওয়ার্ক এরর: ${e.message}`, true);
         return false;
       }
     }
@@ -690,26 +719,25 @@
         const realIdx = currentItems.indexOf(m);
         const ok = await sendMovieTg(realIdx, targetType);
         if (ok) okCount++;
-        await sleep(1200);
+        await sleep(1500);
       }
-      setStatus(`✅ মোট ${okCount}টি মুভি সফলভাবে পাঠানো হয়েছে!`);
+      setStatus(`✅ মোট ${okCount}টি মুভি সফলভাবে পাঠানো হয়েছে!`, true);
     }
 
     async function copyMovieText(idx) {
       const m = currentItems[idx];
       if (!m) return;
-      setStatus('পূর্ণ তথ্য কপি হচ্ছে... ⏳');
+      setStatus('পূর্ণ তথ্য কপি হচ্ছে... ⏳', true);
       const info = await getFullMovieDetails(m);
       const plain = buildTelegramCaption(info, currentTab).replace(/<\/?b>/g, '');
       await navigator.clipboard.writeText(plain);
-      setStatus(`✅ "${info.title}"-এর পূর্ণ তথ্য কপি হয়েছে!`);
+      setStatus(`✅ "${info.title}"-এর পূর্ণ তথ্য কপি হয়েছে!`, true);
     }
 
-    /* ⚡ এডমিন প্যানেলে পাঠানোর ফাংশন */
     async function sendToAdminPanel(idx) {
       const m = currentItems[idx];
       if (!m) return;
-      setStatus('এডমিন প্যানেলের জন্য ডাটা তৈরি হচ্ছে... ⏳');
+      setStatus('এডমিন প্যানেলের জন্য ডাটা তৈরি হচ্ছে... ⏳', true);
       const info = await getFullMovieDetails(m);
 
       const adminPayload = {
@@ -729,14 +757,12 @@
         sentAt: Date.now()
       };
 
-      // একই ডোমেইনের Admin Panel-এ অটো ধরার জন্য localStorage-এ সেভ + URL প্যারামিটার
       localStorage.setItem('cine_pending_admin_movie', JSON.stringify(adminPayload));
-
       const baseAdmin = (document.getElementById('adminPanelUrlInput').value || './admin.html').trim();
       const sep = baseAdmin.includes('?') ? '&' : '?';
       const targetUrl = `${baseAdmin}${sep}title=${encodeURIComponent(adminPayload.title)}&rating=${encodeURIComponent(info.rating)}&image=${encodeURIComponent(info.poster)}&genre=${encodeURIComponent(info.genres)}&language=${encodeURIComponent(info.languages)}&releaseDate=${encodeURIComponent(info.releaseDate)}&cast=${encodeURIComponent(info.cast)}&trailer=${encodeURIComponent(info.trailerUrl)}&category=${encodeURIComponent(adminPayload.category)}&tmdbId=${encodeURIComponent(info.id)}`;
 
-      setStatus(`⚡ "${info.title}" এডমিন প্যানেলে পাঠানো হয়েছে!`);
+      setStatus(`⚡ "${info.title}" এডমিন প্যানেলে পাঠানো হয়েছে!`, true);
       window.open(targetUrl, '_blank');
     }
 
@@ -753,9 +779,9 @@
     async function previewTrailer(idx) {
       const m = currentItems[idx];
       if (!m) return;
-      setStatus('ট্রেইলার খোঁজা হচ্ছে... ⏳');
+      setStatus('ট্রেইলার খোঁজা হচ্ছে... ⏳', true);
       const info = await getFullMovieDetails(m);
-      if (!info.youtubeKey) { setStatus('⚠️ এই মুভির YouTube ট্রেইলার পাওয়া যায়নি।'); return; }
+      if (!info.youtubeKey) { setStatus('⚠️ এই মুভির YouTube ট্রেইলার পাওয়া যায়নি।', true); return; }
       document.getElementById('trailerModalTitle').innerText = `🎬 ${info.title}`;
       document.getElementById('trailerFrameWrap').innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/${info.youtubeKey}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
       document.getElementById('trailerModal').style.display = 'flex';
@@ -773,12 +799,11 @@
       if (!token) { toggleSettings(); alert('প্রথমে Bot Token সেভ করুন!'); return; }
       const chatId = document.getElementById('channelIdInput').value.trim().replace(/^https?:\/\/(t\.me|telegram\.me)\//i, '@');
       const msg = `📰 <b>সিনেমাপাড়ার খবর:</b>\n\n🔸 ${esc(n.title)}\n\n🎬 সব লেটেস্ট মুভি দেখতে ভিজিট করুন:\n🌐 ${SITE_URL}`;
-      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: msg, parse_mode: 'HTML', disable_web_page_preview: true })
+      setStatus('নিউজ পাঠানো হচ্ছে... ⏳', true);
+      const data = await sendTgWithAutoRetry(token, 'sendMessage', {
+        chat_id: chatId, text: msg, parse_mode: 'HTML', disable_web_page_preview: true
       });
-      const data = await res.json();
-      setStatus(data.ok ? '✅ নিউজ চ্যানেলে পাঠানো হয়েছে!' : `⚠️ এরর: ${data.description}`);
+      setStatus(data.ok ? '✅ নিউজ চ্যানেলে পাঠানো হয়েছে!' : `⚠️ এরর: ${data.description}`, true);
     }
 
     async function sendNewsToChannel() {
@@ -788,12 +813,11 @@
       let msg = `📰 <b>আজকের বাংলা ও সিনেমাপাড়ার তাজা খবর</b>\n\n`;
       currentNews.slice(0, 5).forEach(n => { msg += `🔸 ${esc(n.title)}\n\n`; });
       msg += `🎬 সব লেটেস্ট মুভি দেখতে ভিজিট করুন:\n🌐 ${SITE_URL}`;
-      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatId, text: msg, parse_mode: 'HTML', disable_web_page_preview: true })
+      setStatus('নিউজ পাঠানো হচ্ছে... ⏳', true);
+      const data = await sendTgWithAutoRetry(token, 'sendMessage', {
+        chat_id: chatId, text: msg, parse_mode: 'HTML', disable_web_page_preview: true
       });
-      const data = await res.json();
-      setStatus(data.ok ? '✅ টপ ৫টি নিউজ চ্যানেলে পাঠানো হয়েছে!' : `⚠️ এরর: ${data.description}`);
+      setStatus(data.ok ? '✅ টপ ৫টি নিউজ চ্যানেলে পাঠানো হয়েছে!' : `⚠️ এরর: ${data.description}`, true);
     }
 
     function getVisibleItems() {
@@ -859,4 +883,4 @@
     })();
   </script>
 </body>
-  </html>
+</html>
