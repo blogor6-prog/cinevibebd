@@ -875,16 +875,20 @@
     "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
     "links": [
       {
-        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87121/O.M%3A+Operation+Mole+%282026%29+V2+HQ-HDTC+%5BHindi-Tamil-Telug.mkv?hash=AgADTy",
-        "label": "720p - 984.11 MB"
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/O.M-Operation.Mole.2026.480p.V2-HDTC.Hindi-Tamil-Telugu.LiNE.x264-Fmxbd.com.mkv",
+        "label": "480p - 749MB"
       },
       {
-        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87123/O.M%3A+Operation+Mole+%282026%29+V2+HQ-HDTC+%5BHindi-Tamil-Telug.mkv?hash=AgADJi",
-        "label": "720p - 1.47 GB"
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/O.M-Operation.Mole.2026.720p.V2-HDTC.Hindi-Tamil-Telugu.LiNE.x264-Fmxbd.com.mkv",
+        "label": "720p - 1.85GB"
       },
       {
-        "link": "https://radical-benita-imovies-32fb5cce.koyeb.app/87128/O.M%3A+Operation+Mole+%282026%29+V2+HQ-HDTC+%5BHindi-Tamil-Telug.mkv?hash=AgADNy",
-        "label": "1080p - 3.54 GB"
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/O.M-Operation.Mole.2026.1080p.V2-HDTC.Hindi-Tamil-Telugu.LiNE.x264-Fmxbd.com.mkv",
+        "label": "1080p - 4.08GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/O.M-Operation.Mole.2026.HQ-Rip.1080p.V2-HDTC.Hindi-Tamil-Telugu.LiNE.x264-Fmxbd.com.mkv",
+        "label": "1080p - 13.09GB"
       }
     ],
     "badge": "WEB-DL",
@@ -904,8 +908,8 @@
       "https://image.tmdb.org/t/p/w500/ed1qErOLkckFoH9ton7S02X5zA4.jpg",
       "https://image.tmdb.org/t/p/w500/r0CliRoVddOLJ5zVT2Zd8ldbLuu.jpg"
     ],
-    "expiredLinks": [],
-    "lastLinkCheck": "2026-11-24T06:46:48.185Z"
+    "draft": false,
+    "expiredLinks": []
   },
   {
     "id": 1795337033279,
