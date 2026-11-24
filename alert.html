@@ -105,7 +105,7 @@
     .country-check-item.checked { border-color: #e11d48; background: rgba(225,29,72,0.14); }
     .country-check-item input { width: 18px; height: 18px; accent-color: #e11d48; cursor: pointer; }
     .modal-footer { display: flex; gap: 8px; }
-    .modal-footer button { flex: 1; padding: 10px; border: none; border-radius: 999px; font-weight: 800; font-size: 12.5px; cursor: pointer; }
+    .modal-footer button, .modal-footer a { flex: 1; padding: 10px; border: none; border-radius: 999px; font-weight: 800; font-size: 12.5px; cursor: pointer; text-align: center; text-decoration: none; }
   </style>
 </head>
 <body>
@@ -227,6 +227,21 @@
     </div>
   </div>
 
+  <!-- এডমিন প্যানেল পপ-আপ ফলব্যাক মডাল (মোবাইলে ব্লক হলে কাজে লাগবে) -->
+  <div class="modal-bg" id="adminLinkModal" onclick="if(event.target===this) closeAdminLinkModal()">
+    <div class="modal-box">
+      <div class="modal-head">
+        <h3>⚡ এডমিন প্যানেল রেডি</h3>
+        <button class="modal-close" onclick="closeAdminLinkModal()">✕</button>
+      </div>
+      <p id="adminLinkMovieName" style="font-size:13px; color:#e4e4e7; line-height:1.5;"></p>
+      <div class="modal-footer">
+        <a id="adminDirectAnchor" href="#" target="_blank" onclick="closeAdminLinkModal()" style="background:linear-gradient(135deg, #f97316, #e11d48); color:#fff;">⚡ এডমিন প্যানেল খুলুন</a>
+        <button style="background:#27272a; color:#fff;" onclick="openAdminSameTab()">এই ট্যাবেই খুলুন</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     const TMDB_KEY = '8265bd1679663a7ea12ac168da84d2e8';
     const SITE_URL = 'https://cinevibebd.pages.dev/';
@@ -258,13 +273,14 @@
     let allCountriesList = [];
     let selectedCountries = JSON.parse(localStorage.getItem('cv_radar_countries') || '[]');
     let savedMovies = JSON.parse(localStorage.getItem('cv_radar_saved') || '[]');
-    let uploadedMoviesList = []; // সাইটের movies.json এর সব মুভি আইডিসহ
+    let uploadedMoviesList = [];
     let currentTab = 'releases';
     let currentItems = [];
     let currentNews = [];
     let currentPage = 1;
     let isSearchMode = false;
     let toastTimer = null;
+    let lastAdminTargetUrl = '';
     const detailCache = {};
 
     const esc = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -322,7 +338,6 @@
       return uploadedMoviesList.find(m => m.norm === clean || m.norm.includes(clean) || clean.includes(m.norm)) || null;
     }
 
-    /* পৃথিবীর সব ভাষা লোড */
     async function loadAllLanguages() {
       const sel = document.getElementById('langFilterSelect');
       try {
@@ -355,7 +370,6 @@
       });
     }
 
-    /* পৃথিবীর সব দেশ লোড */
     async function loadAllCountries() {
       try {
         const res = await fetch(`https://api.themoviedb.org/3/configuration/countries?api_key=${TMDB_KEY}`);
@@ -643,6 +657,7 @@
         const info = {
           id: d.id || m.id, mediaType: type, title, rating, genres, releaseDate,
           countries: countryText, languages: languagesText,
+          overview: d.overview || m.overview || '',
           cast, trailerUrl, poster, youtubeKey: yt ? yt.key : ''
         };
         detailCache[key] = info;
@@ -656,6 +671,7 @@
           releaseDate: m.release_date || m.first_air_date || '2026',
           countries: (m.origin_country || []).map(c => COUNTRY_BN[c] || c).join(', ') || 'International',
           languages: LANG_BN[m.original_language] || String(m.original_language || '').toUpperCase(),
+          overview: m.overview || '',
           cast: '', trailerUrl: '',
           poster: m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '',
           youtubeKey: ''
@@ -781,36 +797,83 @@
       setStatus(`✅ "${info.title}"-এর লিংকসহ তথ্য কপি হয়েছে!`, true);
     }
 
+    function openAdminFallbackModal(movieTitle, url) {
+      lastAdminTargetUrl = url;
+      document.getElementById('adminLinkMovieName').innerText = `"${movieTitle}" এর তথ্য প্রস্তুত! নিচের বাটনে চাপ দিয়ে এডমিন প্যানেল খুলুন:`;
+      document.getElementById('adminDirectAnchor').href = url;
+      document.getElementById('adminLinkModal').style.display = 'flex';
+    }
+    function closeAdminLinkModal() {
+      document.getElementById('adminLinkModal').style.display = 'none';
+    }
+    function openAdminSameTab() {
+      if (lastAdminTargetUrl) window.location.href = lastAdminTargetUrl;
+    }
+
     async function sendToAdminPanel(idx) {
       const m = currentItems[idx];
       if (!m) return;
+
+      // মোবাইল পপ-আপ ব্লক এড়াতে ক্লিকের সাথে সাথেই উইন্ডো প্রি-ওপেন
+      const popup = window.open('about:blank', '_blank');
       setStatus('এডমিন প্যানেলের জন্য ডাটা তৈরি হচ্ছে... ⏳', true);
-      const info = await getFullMovieDetails(m);
 
-      const adminPayload = {
-        title: `${info.title} (${(info.releaseDate || '').split('-')[0] || '2026'})`,
-        rawTitle: info.title,
-        category: info.mediaType === 'tv' ? 'Series' : (info.languages.includes('বাংলা') ? 'Bangla' : 'Trending'),
-        rating: info.rating,
-        image: info.poster,
-        genre: info.genres,
-        language: info.languages,
-        country: info.countries,
-        releaseDate: info.releaseDate,
-        cast: info.cast,
-        trailer: info.trailerUrl,
-        tmdbId: info.id,
-        badge: info.mediaType === 'tv' ? 'SERIES' : '1080p',
-        sentAt: Date.now()
-      };
+      try {
+        const info = await getFullMovieDetails(m);
+        const year = (info.releaseDate || '').split('-')[0] || '2026';
+        const badge = info.mediaType === 'tv' ? 'SERIES' : '1080p';
+        const category = info.mediaType === 'tv' ? 'Series' : (info.languages.includes('বাংলা') ? 'Bangla' : 'Trending');
 
-      localStorage.setItem('cine_pending_admin_movie', JSON.stringify(adminPayload));
-      const baseAdmin = (document.getElementById('adminPanelUrlInput').value || DEFAULT_ADMIN_URL).trim();
-      const sep = baseAdmin.includes('?') ? '&' : '?';
-      const targetUrl = `${baseAdmin}${sep}title=${encodeURIComponent(adminPayload.title)}&rating=${encodeURIComponent(info.rating)}&image=${encodeURIComponent(info.poster)}&genre=${encodeURIComponent(info.genres)}&language=${encodeURIComponent(info.languages)}&releaseDate=${encodeURIComponent(info.releaseDate)}&cast=${encodeURIComponent(info.cast)}&trailer=${encodeURIComponent(info.trailerUrl)}&category=${encodeURIComponent(adminPayload.category)}&tmdbId=${encodeURIComponent(info.id)}`;
+        const adminPayload = {
+          title: `${info.title} (${year})`,
+          rawTitle: info.title,
+          category,
+          rating: info.rating,
+          image: info.poster,
+          genre: info.genres,
+          language: info.languages,
+          country: info.countries,
+          releaseDate: info.releaseDate,
+          cast: info.cast,
+          trailer: info.trailerUrl,
+          overview: info.overview || '',
+          tmdbId: info.id,
+          badge,
+          sentAt: Date.now()
+        };
 
-      setStatus(`⚡ "${info.title}" এডমিন প্যানেলে পাঠানো হয়েছে!`, true);
-      window.open(targetUrl, '_blank');
+        localStorage.setItem('cine_pending_admin_movie', JSON.stringify(adminPayload));
+        const baseAdmin = (document.getElementById('adminPanelUrlInput').value || DEFAULT_ADMIN_URL).trim();
+        const sep = baseAdmin.includes('?') ? '&' : '?';
+
+        const params = new URLSearchParams({
+          title: adminPayload.title,
+          rating: info.rating,
+          image: info.poster,
+          genre: info.genres,
+          language: info.languages,
+          country: info.countries,
+          releaseDate: info.releaseDate,
+          cast: info.cast,
+          trailer: info.trailerUrl,
+          category,
+          badge,
+          tmdbId: String(info.id)
+        });
+        if (info.overview) params.set('overview', info.overview.slice(0, 350));
+
+        const targetUrl = `${baseAdmin}${sep}${params.toString()}`;
+        setStatus(`⚡ "${info.title}" এডমিন প্যানেলে পাঠানো হয়েছে!`, true);
+
+        if (popup && !popup.closed) {
+          popup.location.href = targetUrl;
+        } else {
+          openAdminFallbackModal(adminPayload.title, targetUrl);
+        }
+      } catch (e) {
+        if (popup && !popup.closed) popup.close();
+        setStatus('⚠️ এডমিন প্যানেলে পাঠাতে সমস্যা হয়েছে!', true);
+      }
     }
 
     function toggleSaveMovie(idx) {
