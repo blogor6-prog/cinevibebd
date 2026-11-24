@@ -42,6 +42,7 @@
       width: 100%; padding: 9px 11px; border: 1px solid var(--border-soft); border-radius: 8px;
       font-size: 13px; background: var(--bg-input); color: var(--text); outline: none; transition: border-color 0.2s;
     }
+    .wp-textarea { min-height: 95px; font-family: monospace; font-size: 12px; resize: vertical; }
     .wp-input:focus, .wp-select:focus, .wp-textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 2px rgba(139,92,246,0.2); }
     .input-expired { border-color: var(--red) !important; background: rgba(239,68,68,0.08) !important; }
 
@@ -57,6 +58,7 @@
     .btn-danger { background: linear-gradient(135deg, #ef4444, #b91c1c); }
     .btn-success { background: linear-gradient(135deg, #22c55e, #15803d); }
     .btn-amber { background: linear-gradient(135deg, #f59e0b, #d97706); color: #111; }
+    .btn-tg { background: linear-gradient(135deg, #0284c7, #2563eb); color: #fff; }
     .btn-sm { padding: 5px 10px; font-size: 12px; border-radius: 6px; }
 
     /* Layout */
@@ -64,17 +66,17 @@
       position: fixed; top: 0; left: 0; width: 100%; height: 54px;
       background: rgba(17, 19, 28, 0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between;
-      padding: 0 16px; z-index: 1000;
+      padding: 0 12px; z-index: 1000; gap: 6px;
     }
-    .topbar-left { display: flex; align-items: center; gap: 10px; }
+    .topbar-left { display: flex; align-items: center; gap: 8px; min-width: 0; }
     .mobile-menu-btn { display: none; background: #1e2235; border: 1px solid var(--border); color: #fff; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: 15px; }
-    .brand-txt { font-size: 16px; font-weight: 800; background: linear-gradient(90deg, #fff, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .topbar-right { display: flex; align-items: center; gap: 8px; font-size: 12.5px; }
-    .admin-pill { background: rgba(139,92,246,0.18); border: 1px solid var(--border); padding: 4px 10px; border-radius: 999px; font-weight: 700; color: #c4b5fd; }
+    .brand-txt { font-size: 15px; font-weight: 800; background: linear-gradient(90deg, #fff, #a78bfa, #60a5fa); -webkit-background-clip: text; -webkit-text-fill-color: transparent; white-space: nowrap; }
+    .topbar-right { display: flex; align-items: center; gap: 6px; font-size: 12px; flex-wrap: nowrap; }
+    .admin-pill { background: rgba(139,92,246,0.18); border: 1px solid var(--border); padding: 4px 9px; border-radius: 999px; font-weight: 700; color: #c4b5fd; white-space: nowrap; }
 
     .shell { display: none; padding-top: 54px; min-height: 100vh; }
     .sidebar {
-      position: fixed; top: 54px; left: 0; bottom: 0; width: 235px; background: var(--bg-panel);
+      position: fixed; top: 54px; left: 0; bottom: 0; width: 238px; background: var(--bg-panel);
       border-right: 1px solid var(--border); overflow-y: auto; z-index: 900; transition: transform 0.2s ease; padding: 12px 10px;
     }
     .menu-item {
@@ -88,7 +90,7 @@
     .pill-count.purple { background: var(--purple); }
     .pill-count.amber { background: var(--amber); color: #111; }
 
-    .main { margin-left: 235px; padding: 18px; }
+    .main { margin-left: 238px; padding: 18px; }
     .page-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
     .page-title { font-size: 21px; font-weight: 800; }
 
@@ -136,7 +138,7 @@
     }
 
     .table-wrap { width: 100%; overflow-x: auto; background: var(--bg-card); border: 1px solid var(--border-soft); border-radius: 12px; }
-    table.tbl { width: 100%; border-collapse: collapse; min-width: 780px; font-size: 13px; }
+    table.tbl { width: 100%; border-collapse: collapse; min-width: 820px; font-size: 13px; }
     table.tbl th, table.tbl td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border-soft); vertical-align: middle; }
     table.tbl th { background: rgba(255,255,255,0.03); color: #cbd5e1; font-weight: 700; }
     table.tbl tr:hover { background: rgba(139,92,246,0.06); }
@@ -162,6 +164,12 @@
     }
     .radar-item-poster { width: 72px; height: 105px; object-fit: cover; border-radius: 8px; background: #090a0f; flex-shrink: 0; }
     .radar-item-body { flex: 1; min-width: 220px; }
+
+    /* CinePatch Cards */
+    .patch-card {
+      background: rgba(255,255,255,0.025); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 10px;
+    }
+    .patch-card.disabled { opacity: 0.6; border-color: var(--border-soft); }
 
     /* Editor */
     .editor-grid { display: grid; grid-template-columns: 1fr 300px; gap: 16px; align-items: start; }
@@ -208,6 +216,7 @@
       .sidebar.open { transform: translateX(0); }
       .main { margin-left: 0; padding: 12px; }
       .two-col, .three-col { grid-template-columns: 1fr; }
+      .admin-pill { display: none; }
     }
   </style>
 </head>
@@ -243,7 +252,7 @@
       <div class="login-logo">
         <div class="login-badge">🎬</div>
         <h1 class="brand-txt" style="font-size:24px;">CineVibeBD Pro Admin</h1>
-        <p style="font-size:12.5px; color:var(--muted);">Dark Dashboard · Smart Checker · Multi-Admin</p>
+        <p style="font-size:12.5px; color:var(--muted);">Dark Dashboard · Smart Checker · CinePatch Engine</p>
       </div>
       <div class="login-card">
         <div id="loginRadarNotice" style="display:none; background:rgba(245,158,11,0.16); border:1px solid #f59e0b; color:#fde68a; padding:9px 11px; border-radius:8px; font-size:12.5px; margin-bottom:12px; font-weight:700;"></div>
@@ -282,6 +291,7 @@
         <div class="brand-txt">🎬 CineVibeBD Pro</div>
       </div>
       <div class="topbar-right">
+        <button class="btn btn-sm btn-secondary" id="btnGlobalRefresh" onclick="refreshEverythingNow()">🔄 রিফ্রেশ</button>
         <button class="btn btn-sm btn-amber" id="topbarRadarBtn" style="display:none;" onclick="switchTab('radarQueue')">📥 র‍্যাডার (<span id="topbarRadarCount">0</span>)</button>
         <span class="admin-pill" id="activeAdminPill">👤 Admin</span>
         <a href="index.html" target="_blank" class="btn btn-sm btn-secondary" style="text-decoration:none;">🌐 সাইট</a>
@@ -306,12 +316,15 @@
       <div class="menu-item" data-tab="reports" onclick="switchTab('reports')">
         <span>📩 ইউজার রিপোর্ট</span><span class="pill-count" id="sideReportBadge">0</span>
       </div>
+      <div class="menu-item" data-tab="cinePatch" onclick="switchTab('cinePatch')">
+        <span>🧩 CinePatch Engine</span><span class="pill-count purple" id="sidePatchBadge">0</span>
+      </div>
       <div class="menu-item" data-tab="ads" onclick="switchTab('ads')"><span>📢 বিজ্ঞাপন পরিচালনা</span></div>
       <div class="menu-item" data-tab="trash" onclick="switchTab('trash')">
         <span>🗑️ ট্র্যাশ (পুনরুদ্ধার)</span><span class="pill-count purple" id="sideTrashBadge">0</span>
       </div>
       <div class="menu-item" data-tab="logs" onclick="switchTab('logs')"><span>📜 কাজের হিসাব (Log)</span></div>
-      <div class="menu-item" data-tab="settings" onclick="switchTab('settings')"><span>⚙️ সেটিংস, টিম &amp; ব্যাকআপ</span></div>
+      <div class="menu-item" data-tab="settings" onclick="switchTab('settings')"><span>⚙️ সেটিংস, টেলিগ্রাম &amp; টিম</span></div>
     </aside>
 
     <main class="main">
@@ -343,7 +356,7 @@
           <h2 class="page-title">📊 ড্যাশবোর্ড ও লাইভ অ্যানালিটিক্স</h2>
           <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="btn btn-amber" id="dashRadarQuickBtn" style="display:none;" onclick="switchTab('radarQueue')">📥 র‍্যাডার কিউ দেখুন (<span id="dashRadarCount">0</span>)</button>
-            <button class="btn btn-secondary" onclick="refreshLiveAnalytics(true)">🔄 লাইভ ডাটা</button>
+            <button class="btn btn-secondary" onclick="refreshEverythingNow()">🔄 সম্পূর্ণ রিফ্রেশ</button>
             <button class="btn btn-success" id="btnImportSheet" onclick="importFromGoogleSheet()">📥 Google Sheet ইমপোর্ট</button>
             <button class="btn" onclick="openAddNewMovie()">➕ নতুন মুভি</button>
           </div>
@@ -391,7 +404,7 @@
         <div class="two-col">
           <div class="card">
             <div class="card-head"><span>🔥 সবচেয়ে বেশি ডাউনলোড হওয়া মুভি</span><span style="font-size:11.5px; color:var(--muted);" id="gasStatusHint"></span></div>
-            <div class="card-body" id="topDownloadedBox"><p style="color:var(--muted); font-size:13px;">GAS Web App URL সেট করলে লাইভ ডাউনলোড ডাটা দেখাবে।</p></div>
+            <div class="card-body" id="topDownloadedBox"><p style="color:var(--muted); font-size:13px;">ডাটা লোড হচ্ছে...</p></div>
           </div>
           <div class="card">
             <div class="card-head"><span>🆕 সর্বশেষ যুক্ত ৫টি মুভি</span><button class="btn btn-sm btn-secondary" onclick="switchTab('allMovies', 'All')">সব ➔</button></div>
@@ -472,7 +485,7 @@
                 <th>ক্যাটাগরি</th>
                 <th>সিরিয়াল</th>
                 <th>লিংক ও 👁️</th>
-                <th>অ্যাকশন</th>
+                <th>অ্যাকশন (টেলিগ্রামসহ)</th>
               </tr>
             </thead>
             <tbody id="moviesTableBody"></tbody>
@@ -592,7 +605,7 @@
 
           <div>
             <div class="card">
-              <div class="card-head">🚀 Publish &amp; Status</div>
+              <div class="card-head">🚀 Publish &amp; Telegram</div>
               <div class="card-body">
                 <div class="form-group">
                   <label>পোস্ট স্ট্যাটাস</label>
@@ -633,7 +646,12 @@
                 </div>
                 <div class="form-group"><label>অ্যাড ১ (ঐচ্ছিক)</label><input type="text" id="fAd1" class="wp-input"></div>
                 <div class="form-group"><label>অ্যাড ২ (ঐচ্ছিক)</label><input type="text" id="fAd2" class="wp-input"></div>
-                <button class="btn" style="width:100%; padding:11px;" id="btnSaveMovie" onclick="saveMovieToGitHub()">💾 পাবলিশ / সেভ করুন</button>
+                <label style="display:flex; align-items:center; gap:7px; font-size:12.5px; color:#93c5fd; font-weight:700; margin-bottom:10px; cursor:pointer;">
+                  <input type="checkbox" id="chkAutoPostTelegram" style="width:16px; height:16px; accent-color:#0284c7;">
+                  📢 পাবলিশের সাথে টেলিগ্রামে পোস্ট করুন
+                </label>
+                <button class="btn" style="width:100%; padding:11px; margin-bottom:8px;" id="btnSaveMovie" onclick="saveMovieToGitHub()">💾 পাবলিশ / সেভ করুন</button>
+                <button type="button" class="btn btn-tg" style="width:100%; padding:9px;" onclick="postEditorMovieToTelegram()">📢 শুধু টেলিগ্রাম চ্যানেলে পোস্ট</button>
               </div>
             </div>
 
@@ -661,7 +679,59 @@
           </div>
         </div>
         <div class="card">
-          <div class="card-body" id="reportsListBox"><p style="color:var(--muted);">রিপোর্ট লোড করতে GAS Web App URL সেট করুন।</p></div>
+          <div class="card-body" id="reportsListBox"><p style="color:var(--muted);">রিপোর্ট লোড হচ্ছে...</p></div>
+        </div>
+      </section>
+
+      <!-- CINEPATCH ENGINE (অটো সাইট কোড আপডেট সিস্টেম) -->
+      <section id="tabCinePatch" style="display:none;">
+        <div class="page-header">
+          <h2 class="page-title">🧩 CinePatch Engine (সাইটে অটো কোড যোগ করুন)</h2>
+          <button class="btn btn-secondary" onclick="loadAllGitHubData()">🔄 রিফ্রেশ</button>
+        </div>
+        <div class="card">
+          <div class="card-head">
+            <span>এখানে যেকোনো CSS, HTML বা JavaScript আপডেট কোড দিয়ে সেভ করলেই সেটি অটোমেটিক আপনার মূল সাইটে (`index.html`) যুক্ত হয়ে কাজ করবে (আগের কোনো ফিচার বা অ্যাড নষ্ট হবে না)।</span>
+          </div>
+          <div class="card-body">
+            <div class="two-col">
+              <div class="form-group">
+                <label>আপডেটের নাম *</label>
+                <input type="text" id="patchName" class="wp-input" placeholder="যেমন: কাস্টম নোটিশ ব্যানার / নতুন স্টাইল">
+              </div>
+              <div class="form-group">
+                <label>স্ট্যাটাস ও HTML টার্গেট (ঐচ্ছিক)</label>
+                <div style="display:flex; gap:6px;">
+                  <select id="patchEnabled" class="wp-select" style="width:140px;">
+                    <option value="true">✅ চালু (ON)</option>
+                    <option value="false">⛔ বন্ধ (OFF)</option>
+                  </select>
+                  <input type="text" id="patchTarget" class="wp-input" placeholder="Target CSS selector (ফাঁকা রাখলে body)">
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>🎨 CSS কোড (ঐচ্ছিক)</label>
+              <textarea id="patchCss" class="wp-textarea" placeholder="যেমন: .hero-title { color: #facc15 !important; }"></textarea>
+            </div>
+            <div class="form-group">
+              <label>🧱 HTML কোড (ঐচ্ছিক)</label>
+              <textarea id="patchHtml" class="wp-textarea" placeholder="যেমন: <div style='text-align:center;padding:8px;'>স্বাগতম!</div>"></textarea>
+            </div>
+            <div class="form-group">
+              <label>⚡ JavaScript কোড (ঐচ্ছিক)</label>
+              <textarea id="patchJs" class="wp-textarea" placeholder="যেমন: console.log('CinePatch Active!');"></textarea>
+            </div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <button class="btn" id="btnSavePatch" onclick="saveCinePatch()">💾 CinePatch সেভ ও সাইটে যোগ করুন</button>
+              <button class="btn btn-secondary" onclick="resetPatchEditor()">🧹 ফর্ম খালি করুন</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><span>📦 যুক্ত করা সব CinePatch আপডেট (cinepatch.json)</span></div>
+          <div class="card-body" id="patchesListBox"><p style="color:var(--muted);">এখনো কোনো আপডেট কোড যোগ করা হয়নি।</p></div>
         </div>
       </section>
 
@@ -725,16 +795,28 @@
         <div class="card"><div class="card-body" id="logsListBox">কোনো লগ নেই।</div></div>
       </section>
 
-      <!-- SETTINGS, MULTI-ADMIN & BACKUP -->
+      <!-- SETTINGS, TELEGRAM, MULTI-ADMIN & BACKUP -->
       <section id="tabSettings" style="display:none;">
-        <div class="page-header"><h2 class="page-title">⚙️ সেটিংস, টিম অ্যাডমিন ও ব্যাকআপ</h2></div>
+        <div class="page-header"><h2 class="page-title">⚙️ সেটিংস, টেলিগ্রাম, টিম ও ব্যাকআপ</h2></div>
 
         <div class="card">
-          <div class="card-head">🔗 Gmail ও Google Apps Script (অটো-চেক, লাইভ ইউজার ও অটো রিপোর্ট ইমেইল)</div>
+          <div class="card-head">📢 টেলিগ্রাম চ্যানেল অটো-পোস্ট সেটিংস</div>
+          <div class="card-body">
+            <div class="three-col">
+              <div class="form-group"><label>🤖 Telegram Bot Token</label><input type="text" id="cfgTgToken" class="wp-input" placeholder="যেমন: 9241231506:AAH..."></div>
+              <div class="form-group"><label>📢 টেলিগ্রাম চ্যানেল (@username)</label><input type="text" id="cfgTgChannel" class="wp-input" value="@supersp52"></div>
+              <div class="form-group"><label>🌐 মূল সাইটের লিংক</label><input type="url" id="cfgSiteUrl" class="wp-input" value="https://cinevibebd.pages.dev/"></div>
+            </div>
+            <button class="btn btn-tg" onclick="saveTelegramSettings()">💾 টেলিগ্রাম সেটিংস সেভ করুন</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head">🔗 Gmail ও লাইভ API (রিপোর্ট, লাইভ ইউজার ও অটো ইমেইল)</div>
           <div class="card-body">
             <div class="three-col">
               <div class="form-group"><label>📧 Gmail এড্রেস</label><input type="email" id="cfgGmail" class="wp-input"></div>
-              <div class="form-group"><label>🔗 Apps Script Web App URL</label><input type="url" id="cfgGasUrl" class="wp-input" placeholder="https://script.google.com/macros/s/.../exec"></div>
+              <div class="form-group"><label>🔗 Live Worker / API URL</label><input type="url" id="cfgGasUrl" class="wp-input" placeholder="https://cinevibebd-api.blogor6.workers.dev"></div>
               <div class="form-group">
                 <label>📩 রিপোর্ট আসলে অটো ইমেইল</label>
                 <select id="cfgAutoEmailReports" class="wp-select">
@@ -785,6 +867,8 @@
     const TMDB_API_KEY = "8265bd1679663a7ea12ac168da84d2e8";
     const SUPER_ADMIN_PASS = "suaib5249";
     const DEFAULT_GMAIL = "blogor6@gmail.com";
+    const DEFAULT_LIVE_API = "https://cinevibebd-api.blogor6.workers.dev";
+    const DEFAULT_SITE_URL = "https://cinevibebd.pages.dev/";
     const ONE_HOUR_MS = 60 * 60 * 1000;
 
     const ALL_WORLD_CATEGORIES = [
@@ -826,8 +910,15 @@
     };
 
     let ghConfig = JSON.parse(localStorage.getItem("cine_gh_config") || "null");
-    let checkerCfg = JSON.parse(localStorage.getItem("cine_checker_cfg") || "null") || { gmail: DEFAULT_GMAIL, gasUrl: "", autoEmailReports: true };
+    let checkerCfg = JSON.parse(localStorage.getItem("cine_checker_cfg") || "null") || { gmail: DEFAULT_GMAIL, gasUrl: DEFAULT_LIVE_API, autoEmailReports: true };
+    if (!checkerCfg.gasUrl) checkerCfg.gasUrl = DEFAULT_LIVE_API;
     if (checkerCfg.autoEmailReports === undefined) checkerCfg.autoEmailReports = true;
+
+    let tgCfg = JSON.parse(localStorage.getItem("cine_tg_cfg") || "null") || {
+      token: localStorage.getItem("cv_alert_token") || "",
+      channel: localStorage.getItem("cv_alert_channel") || "@supersp52",
+      siteUrl: DEFAULT_SITE_URL
+    };
 
     let currentAdmin = JSON.parse(localStorage.getItem("cine_current_admin") || "null") || { name: "Main Admin", role: "Super Admin" };
     let autoCheckEnabled = localStorage.getItem("cine_auto_check_on") !== "0";
@@ -835,12 +926,12 @@
     let lastScanAt = localStorage.getItem("cine_last_scan_at") || "";
 
     let defaultBranch = "main";
-    let shaMap = { movies: null, trash: null, logs: null, ads: null, admins: null };
-    let allMovies = [], trashMovies = [], activityLogs = [], adsConfig = { ...DEFAULT_ADS_CFG }, teamAdmins = [];
+    let shaMap = { movies: null, trash: null, logs: null, ads: null, admins: null, patches: null };
+    let allMovies = [], trashMovies = [], activityLogs = [], adsConfig = { ...DEFAULT_ADS_CFG }, teamAdmins = [], cinePatches = [];
     let radarQueue = JSON.parse(localStorage.getItem("cine_radar_queue") || "[]");
     let liveReports = [], liveStats = { activeUsers: 0, totalDownloads: 0, todayDownloads: 0, topMovies: [] };
 
-    let currentFilter = "All", editingIndex = null, editingRadarIndex = null, selectedCategories = [], episodeCounter = 0;
+    let currentFilter = "All", editingIndex = null, editingRadarIndex = null, editingPatchIndex = null, selectedCategories = [], episodeCounter = 0;
     let selectedRowIndices = new Set();
     let isScanningNow = false, scanCancelled = false, autoTickerId = null, liveRefreshId = null;
     let justCapturedRadarFromUrl = false;
@@ -1123,21 +1214,35 @@
 
     async function loadAllGitHubData(silent = false) {
       if (!silent) showToast("🔄 ডাটা লোড হচ্ছে...");
-      const [m, t, l, a, adm] = await Promise.all([
+      const [m, t, l, a, adm, p] = await Promise.all([
         ghGetJson("movies.json", []),
         ghGetJson("trash.json", []),
         ghGetJson("admin_logs.json", []),
         ghGetJson("ads.json", DEFAULT_ADS_CFG),
-        ghGetJson("admins.json", [])
+        ghGetJson("admins.json", []),
+        ghGetJson("cinepatch.json", [])
       ]);
       allMovies = Array.isArray(m.data) ? m.data : []; shaMap.movies = m.sha;
       trashMovies = Array.isArray(t.data) ? t.data : []; shaMap.trash = t.sha;
       activityLogs = Array.isArray(l.data) ? l.data : []; shaMap.logs = l.sha;
       adsConfig = { ...DEFAULT_ADS_CFG, ...(a.data || {}) }; shaMap.ads = a.sha;
       teamAdmins = Array.isArray(adm.data) ? adm.data : []; shaMap.admins = adm.sha;
+      cinePatches = Array.isArray(p.data) ? p.data : []; shaMap.patches = p.sha;
 
       renderAllViews();
       if (!silent) showToast("✅ সব ডাটা আপডেট হয়েছে!");
+    }
+
+    async function refreshEverythingNow() {
+      const btn = document.getElementById("btnGlobalRefresh");
+      if (btn) { btn.disabled = true; btn.innerText = "⏳..."; }
+      try {
+        await Promise.all([loadAllGitHubData(true), refreshLiveAnalytics(false)]);
+        showToast("✅ সম্পূর্ণ প্যানেল ও লাইভ ডাটা রিফ্রেশ হয়েছে!");
+      } catch (e) {
+        showToast("রিফ্রেশ করতে সমস্যা হয়েছে!", true);
+      }
+      if (btn) { btn.disabled = false; btn.innerText = "🔄 রিফ্রেশ"; }
     }
 
     function logoutAdmin() {
@@ -1159,6 +1264,7 @@
       renderDashboardStats();
       renderRadarQueue();
       renderMoviesTable();
+      renderCinePatchesList();
       renderTrash();
       renderLogs();
       renderAdsForm();
@@ -1166,10 +1272,10 @@
     }
 
     function switchTab(tab, filterCat = null) {
-      ["tabDashboard","tabRadarQueue","tabAllMovies","tabEditor","tabReports","tabAds","tabTrash","tabLogs","tabSettings"].forEach(id => {
+      ["tabDashboard","tabRadarQueue","tabAllMovies","tabEditor","tabReports","tabCinePatch","tabAds","tabTrash","tabLogs","tabSettings"].forEach(id => {
         document.getElementById(id).style.display = "none";
       });
-      const map = { dashboard:"tabDashboard", radarQueue:"tabRadarQueue", allMovies:"tabAllMovies", addMovie:"tabEditor", reports:"tabReports", ads:"tabAds", trash:"tabTrash", logs:"tabLogs", settings:"tabSettings" };
+      const map = { dashboard:"tabDashboard", radarQueue:"tabRadarQueue", allMovies:"tabAllMovies", addMovie:"tabEditor", reports:"tabReports", cinePatch:"tabCinePatch", ads:"tabAds", trash:"tabTrash", logs:"tabLogs", settings:"tabSettings" };
       document.getElementById(map[tab]).style.display = "block";
 
       document.querySelectorAll(".menu-item").forEach(el => el.classList.remove("active"));
@@ -1188,6 +1294,201 @@
       }
       document.getElementById("sidebar").classList.remove("open");
       window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // Telegram Channel Auto Poster
+    function saveTelegramSettings() {
+      tgCfg = {
+        token: document.getElementById("cfgTgToken").value.trim(),
+        channel: document.getElementById("cfgTgChannel").value.trim() || "@supersp52",
+        siteUrl: document.getElementById("cfgSiteUrl").value.trim() || DEFAULT_SITE_URL
+      };
+      localStorage.setItem("cine_tg_cfg", JSON.stringify(tgCfg));
+      localStorage.setItem("cv_alert_token", tgCfg.token);
+      localStorage.setItem("cv_alert_channel", tgCfg.channel);
+      showToast("✅ টেলিগ্রাম চ্যানেল সেটিংস সেভ হয়েছে!");
+    }
+
+    async function postMovieObjToTelegram(m) {
+      if (!m) return false;
+      if (!tgCfg.token) {
+        showToast("আগে সেটিংস থেকে Telegram Bot Token সেভ করুন!", true);
+        switchTab("settings");
+        return false;
+      }
+      const chatId = (tgCfg.channel || "@supersp52").trim().replace(/^https?:\/\/(t\.me|telegram\.me)\//i, "@");
+      const baseSite = (tgCfg.siteUrl || DEFAULT_SITE_URL).replace(/\/+$/, "");
+      const movieUrl = m.id ? `${baseSite}/?id=${m.id}` : `${baseSite}/`;
+      const esc = (s) => String(s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+      const isSeries = String(m.category || "").toLowerCase().includes("series") || String(m.badge || "").toUpperCase() === "SERIES";
+      const header = isSeries ? "📺 <b>নতুন ওয়েব সিরিজ আপলোড হয়েছে!</b>" : "🎬 <b>নতুন মুভি আপলোড হয়েছে!</b>";
+      const caption = (
+        `${header}\n\n` +
+        `🎥 <b>নাম:</b> ${esc(m.title)}\n` +
+        `⭐ <b>রেটিং:</b> ${esc(m.rating || "7.5")}/10\n` +
+        `🏷️ <b>কোয়ালিটি:</b> ${esc(m.badge || "1080p")}\n` +
+        `🎭 <b>জেনার:</b> ${esc(m.genre || m.category || "Drama")}\n` +
+        `🗣️ <b>ভাষা:</b> ${esc(m.language || "Hindi - Bangla")}\n` +
+        `📅 <b>রিলিজ:</b> ${esc(m.releaseDate || "2026")}\n\n` +
+        `🔗 <b>সরাসরি দেখুন ও ডাউনলোড করুন:</b>\n${movieUrl}`
+      ).slice(0, 1000);
+
+      showToast(`📢 "${m.title}" টেলিগ্রামে পোস্ট হচ্ছে...`);
+      try {
+        let data;
+        if (m.image && /^https?:\/\//i.test(m.image)) {
+          data = await (await fetch(`https://api.telegram.org/bot${tgCfg.token}/sendPhoto`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: chatId, photo: m.image, caption, parse_mode: "HTML" })
+          })).json();
+          if (!data.ok) {
+            data = await (await fetch(`https://api.telegram.org/bot${tgCfg.token}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ chat_id: chatId, text: caption, parse_mode: "HTML" })
+            })).json();
+          }
+        } else {
+          data = await (await fetch(`https://api.telegram.org/bot${tgCfg.token}/sendMessage`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ chat_id: chatId, text: caption, parse_mode: "HTML" })
+          })).json();
+        }
+        if (data.ok) {
+          await addActivityLog("Telegram Post", m.title, chatId);
+          showToast(`✅ "${m.title}" টেলিগ্রাম চ্যানেলে পোস্ট হয়েছে!`);
+          return true;
+        }
+        showToast(`⚠️ টেলিগ্রাম এরর: ${data.description || "পোস্ট ব্যর্থ"}`, true);
+        return false;
+      } catch (e) {
+        showToast(`⚠️ নেটওয়ার্ক এরর: ${e.message}`, true);
+        return false;
+      }
+    }
+
+    async function postEditorMovieToTelegram() {
+      const title = document.getElementById("fTitle").value.trim();
+      if (!title) return showToast("আগে মুভির নাম দিন!", true);
+      const id = editingIndex !== null ? allMovies[editingIndex].id : "";
+      await postMovieObjToTelegram({
+        id,
+        title,
+        rating: document.getElementById("fRating").value.trim(),
+        badge: document.getElementById("fBadge").value.trim() || "1080p",
+        genre: document.getElementById("fGenre").value.trim(),
+        category: selectedCategories.join(", ") || "Trending",
+        language: formatLanguageHyphen(document.getElementById("fLanguage").value.trim()),
+        releaseDate: document.getElementById("fReleaseDate").value.trim(),
+        image: document.getElementById("fImage").value.trim()
+      });
+    }
+
+    // CinePatch Engine
+    function resetPatchEditor() {
+      editingPatchIndex = null;
+      document.getElementById("patchName").value = "";
+      document.getElementById("patchEnabled").value = "true";
+      document.getElementById("patchTarget").value = "";
+      document.getElementById("patchCss").value = "";
+      document.getElementById("patchHtml").value = "";
+      document.getElementById("patchJs").value = "";
+      document.getElementById("btnSavePatch").innerText = "💾 CinePatch সেভ ও সাইটে যোগ করুন";
+    }
+
+    function editCinePatch(idx) {
+      const p = cinePatches[idx]; if (!p) return;
+      editingPatchIndex = idx;
+      document.getElementById("patchName").value = p.name || "";
+      document.getElementById("patchEnabled").value = p.enabled !== false ? "true" : "false";
+      document.getElementById("patchTarget").value = p.targetSelector || "";
+      document.getElementById("patchCss").value = p.css || "";
+      document.getElementById("patchHtml").value = p.html || "";
+      document.getElementById("patchJs").value = p.js || "";
+      document.getElementById("btnSavePatch").innerText = "💾 আপডেট সেভ করুন";
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    async function saveCinePatch() {
+      const name = document.getElementById("patchName").value.trim();
+      if (!name) return showToast("আপডেটের নাম দিন!", true);
+      const css = document.getElementById("patchCss").value.trim();
+      const html = document.getElementById("patchHtml").value.trim();
+      const js = document.getElementById("patchJs").value.trim();
+      if (!css && !html && !js) return showToast("CSS, HTML বা JS অন্তত একটি কোড দিন!", true);
+
+      const patchObj = {
+        id: editingPatchIndex !== null ? cinePatches[editingPatchIndex].id : Date.now(),
+        name,
+        enabled: document.getElementById("patchEnabled").value === "true",
+        targetSelector: document.getElementById("patchTarget").value.trim(),
+        css, html, js,
+        updatedAt: new Date().toLocaleString()
+      };
+
+      const updated = [...cinePatches];
+      if (editingPatchIndex !== null) updated[editingPatchIndex] = patchObj;
+      else updated.unshift(patchObj);
+
+      const btn = document.getElementById("btnSavePatch"); btn.disabled = true; btn.innerText = "⏳ সেভ হচ্ছে...";
+      try {
+        await ghPutJson("cinepatch.json", updated, "patches", `CinePatch: ${name}`);
+        cinePatches = updated;
+        await addActivityLog("CinePatch Engine", name, patchObj.enabled ? "Active" : "Disabled");
+        resetPatchEditor();
+        renderAllViews();
+        showToast("✅ CinePatch সেভ হয়েছে! সাইটে অটো যুক্ত হয়ে গেছে।");
+      } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
+      btn.disabled = false; btn.innerText = "💾 CinePatch সেভ ও সাইটে যোগ করুন";
+    }
+
+    async function toggleCinePatchStatus(idx) {
+      const updated = [...cinePatches];
+      updated[idx] = { ...updated[idx], enabled: updated[idx].enabled === false };
+      await ghPutJson("cinepatch.json", updated, "patches", `Toggle CinePatch: ${updated[idx].name}`);
+      cinePatches = updated;
+      renderAllViews();
+      showToast(updated[idx].enabled ? "✅ চালু করা হয়েছে" : "⛔ বন্ধ করা হয়েছে");
+    }
+
+    async function deleteCinePatch(idx) {
+      const name = cinePatches[idx]?.name || "";
+      const updated = cinePatches.filter((_, i) => i !== idx);
+      await ghPutJson("cinepatch.json", updated, "patches", `Delete CinePatch: ${name}`);
+      cinePatches = updated;
+      await addActivityLog("Delete CinePatch", name);
+      renderAllViews();
+      showToast("🗑️ CinePatch মুছে ফেলা হয়েছে।");
+    }
+
+    function renderCinePatchesList() {
+      const box = document.getElementById("patchesListBox");
+      if (!cinePatches.length) {
+        box.innerHTML = "<p style='color:var(--muted);'>এখনো কোনো আপডেট কোড যোগ করা হয়নি।</p>";
+        return;
+      }
+      box.innerHTML = cinePatches.map((p, idx) => `
+        <div class="patch-card ${p.enabled === false ? 'disabled' : ''}">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <strong>🧩 ${escapeHtml(p.name)}</strong>
+              <span class="badge ${p.enabled !== false ? 'badge-ok' : 'badge-draft'}" style="margin-left:6px;">${p.enabled !== false ? '✅ Active' : '⛔ OFF'}</span>
+              ${p.css ? '<span class="badge badge-purple" style="margin-left:4px;">CSS</span>' : ''}
+              ${p.html ? '<span class="badge badge-warn" style="margin-left:4px;">HTML</span>' : ''}
+              ${p.js ? '<span class="badge" style="margin-left:4px;">JS</span>' : ''}
+              <div style="font-size:11.5px; color:var(--muted); margin-top:3px;">আপডেট: ${escapeHtml(p.updatedAt || "")}</div>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn btn-sm btn-secondary" onclick="toggleCinePatchStatus(${idx})">${p.enabled !== false ? '⏸️ বন্ধ' : '▶️ চালু'}</button>
+              <button class="btn btn-sm" onclick="editCinePatch(${idx})">✏️ এডিট</button>
+              <button class="btn btn-sm btn-danger" onclick="deleteCinePatch(${idx})">🗑️</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
     }
 
     // Radar Queue Functions
@@ -1284,8 +1585,7 @@
         title: item.title,
         category: [...cats].join(", ") || "Trending",
         rating: item.rating || "7.5",
-        sortOrder: null,
-        trendingOrder: null,
+        sortOrder: null, trendingOrder: null,
         image: item.image || "",
         ad1: "", ad2: "", links: [],
         badge: item.badge || "1080p",
@@ -1297,9 +1597,7 @@
         releaseDate: item.releaseDate || "",
         genre: item.genre || "",
         addedDate: getTodayIso(),
-        screenshots: [],
-        draft: !!asDraft,
-        expiredLinks: []
+        screenshots: [], draft: !!asDraft, expiredLinks: []
       };
 
       const updated = [movieObj, ...allMovies];
@@ -1365,6 +1663,7 @@
     function renderDashboardStats() {
       const expired = allMovies.map((m, i) => ({ m, i })).filter(x => hasExpired(x.m));
       const drafts = allMovies.filter(m => m.draft);
+      const activePatches = cinePatches.filter(p => p.enabled !== false).length;
       document.getElementById("statTotalMovies").innerText = allMovies.length;
       document.getElementById("statExpired").innerText = expired.length;
       document.getElementById("statReports").innerText = liveReports.length;
@@ -1376,6 +1675,7 @@
       setPill("sideTrashBadge", trashMovies.length);
       setPill("sideReportBadge", liveReports.length);
       setPill("sideRadarBadge", radarQueue.length);
+      setPill("sidePatchBadge", activePatches);
 
       const topBtn = document.getElementById("topbarRadarBtn");
       const dashBtn = document.getElementById("dashRadarQuickBtn");
@@ -1416,18 +1716,22 @@
       document.getElementById("recentFiveList").innerHTML = allMovies.slice(0, 5).map((m, i) => `
         <div style="display:flex; justify-content:space-between; align-items:center; padding:7px 0; border-bottom:1px solid var(--border-soft);">
           <div><strong>${m.draft ? "📝 [Draft] " : ""}${escapeHtml(m.title)}</strong><div style="font-size:11.5px; color:var(--muted);">${escapeHtml(m.category)}</div></div>
-          <button class="btn btn-sm btn-secondary" onclick="openEditMovie(${i})">✏️</button>
+          <div style="display:flex; gap:5px;">
+            <button class="btn btn-sm btn-tg" onclick="postMovieObjToTelegram(allMovies[${i}])" title="টেলিগ্রামে পোস্ট">📢</button>
+            <button class="btn btn-sm btn-secondary" onclick="openEditMovie(${i})">✏️</button>
+          </div>
         </div>`).join("") || "<p style='color:var(--muted);'>কোনো মুভি নেই।</p>";
     }
 
     async function refreshLiveAnalytics(manual = false) {
       const hint = document.getElementById("gasStatusHint");
-      if (!checkerCfg.gasUrl) {
-        if (hint) hint.innerText = "GAS URL যুক্ত নেই";
+      const apiUrl = (checkerCfg.gasUrl || DEFAULT_LIVE_API).trim();
+      if (!apiUrl) {
+        if (hint) hint.innerText = "API URL যুক্ত নেই";
         return;
       }
       try {
-        const res = await fetch(`${checkerCfg.gasUrl.trim()}?action=getAdminDashboard&t=${Date.now()}`);
+        const res = await fetch(`${apiUrl}?action=getAdminDashboard&t=${Date.now()}`);
         const data = await res.json();
         if (data && data.ok) {
           liveStats = data.stats || liveStats;
@@ -1450,18 +1754,18 @@
       }
     }
 
-    // রিপোর্ট অটো ইমেইল সিস্টেম
+    // রিপোর্ট অটো ইমেইল (FormSubmit সরাসরি — Code.gs ছাড়াই)
     function getReportUniqueKey(r, idx = 0) {
       return String(r.id || `${r.title || ""}_${r.time || ""}_${r.reason || idx}`);
     }
 
     async function checkAndAutoEmailNewReports() {
-      if (!liveReports.length || checkerCfg.autoEmailReports === false || !checkerCfg.gmail || !checkerCfg.gasUrl) return;
+      if (!liveReports.length || checkerCfg.autoEmailReports === false || !checkerCfg.gmail) return;
       const emailedIds = new Set(JSON.parse(localStorage.getItem("cine_emailed_reports") || "[]"));
       const freshReports = liveReports.filter((r, i) => !emailedIds.has(getReportUniqueKey(r, i)));
       if (!freshReports.length) return;
 
-      const sent = await dispatchReportEmailViaGas(freshReports, true);
+      const sent = await dispatchReportEmail(freshReports, true);
       if (sent) {
         freshReports.forEach((r, i) => emailedIds.add(getReportUniqueKey(r, i)));
         localStorage.setItem("cine_emailed_reports", JSON.stringify([...emailedIds].slice(-300)));
@@ -1469,29 +1773,31 @@
       }
     }
 
-    async function dispatchReportEmailViaGas(reportsArr, silent = false) {
-      if (!checkerCfg.gmail) { if (!silent) showToast("সেটিংসে Gmail এড্রেস দিন!", true); return false; }
-      if (!checkerCfg.gasUrl) {
-        if (!silent) openMailtoReportFallback(reportsArr);
-        return false;
-      }
+    async function dispatchReportEmail(reportsArr, silent = false) {
+      const targetEmail = (checkerCfg.gmail || DEFAULT_GMAIL).trim();
+      if (!targetEmail) { if (!silent) showToast("সেটিংসে Gmail এড্রেস দিন!", true); return false; }
+
       try {
-        const res = await fetch(checkerCfg.gasUrl.trim(), {
+        const summary = reportsArr.map((r, i) => `${i+1}. ${r.title} (${r.reason || "Broken Link"}) ${r.note ? "- " + r.note : ""} [${r.time || ""}]`).join("\n");
+        const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(targetEmail)}`, {
           method: "POST",
-          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          headers: { "Content-Type": "application/json", "Accept": "application/json" },
           body: JSON.stringify({
-            action: "sendReportEmail",
-            email: checkerCfg.gmail.trim(),
-            subject: `CineVibeBD Alert: ${reportsArr.length}টি নতুন মুভি রিপোর্ট`,
-            reports: reportsArr
+            _subject: `CineVibeBD Report Alert (${reportsArr.length})`,
+            _captcha: "false",
+            _template: "table",
+            Total_Reports: String(reportsArr.length),
+            Report_Details: summary,
+            Sent_From: "CineVibeBD Admin Panel"
           })
         });
         const data = await res.json().catch(() => ({}));
-        if (data && data.ok) {
-          if (!silent) showToast(`✅ ${checkerCfg.gmail}-এ ইমেইল পাঠানো হয়েছে!`);
+        if (res.ok && data.success !== "false") {
+          if (!silent) showToast(`✅ ${targetEmail}-এ ইমেইল পাঠানো হয়েছে!`);
           return true;
         }
       } catch (e) {}
+
       if (!silent) openMailtoReportFallback(reportsArr);
       return false;
     }
@@ -1505,11 +1811,11 @@
 
     async function emailAllReportsNow() {
       if (!liveReports.length) return showToast("কোনো রিপোর্ট নেই!", true);
-      await dispatchReportEmailViaGas(liveReports, false);
+      await dispatchReportEmail(liveReports, false);
     }
 
     async function sendTestReportEmail() {
-      await dispatchReportEmailViaGas([{ title: "Test Movie Alert", reason: "Broken Link Test", note: "Admin panel email test", time: new Date().toLocaleString() }], false);
+      await dispatchReportEmail([{ title: "Test Movie Alert", reason: "Broken Link Test", note: "Admin panel email test", time: new Date().toLocaleString() }], false);
     }
 
     function renderReports() {
@@ -1522,7 +1828,7 @@
             <div style="font-size:12px; color:var(--muted); margin-top:3px;">সময়: ${escapeHtml(r.time || "")} ${r.note ? "· নোট: " + escapeHtml(r.note) : ""}</div>
           </div>
           <div style="display:flex; gap:6px; flex-wrap:wrap;">
-            <button class="btn btn-sm btn-amber" onclick="dispatchReportEmailViaGas([liveReports[${i}]], false)">📧 ইমেইল</button>
+            <button class="btn btn-sm btn-amber" onclick="dispatchReportEmail([liveReports[${i}]], false)">📧 ইমেইল</button>
             <button class="btn btn-sm btn-secondary" onclick="findAndEditMovie('${escapeHtml(r.title)}')">✏️ এডিট</button>
             <button class="btn btn-sm btn-success" onclick="resolveUserReport('${escapeHtml(r.id || i)}')">✅ Resolve</button>
           </div>
@@ -1533,9 +1839,10 @@
       if (idx !== -1) openEditMovie(idx); else showToast("মুভিটি তালিকায় পাওয়া যায়নি!", true);
     }
     async function resolveUserReport(repId) {
-      if (!checkerCfg.gasUrl) return;
+      const apiUrl = (checkerCfg.gasUrl || DEFAULT_LIVE_API).trim();
+      if (!apiUrl) return;
       try {
-        await fetch(checkerCfg.gasUrl.trim(), {
+        await fetch(apiUrl, {
           method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
           body: JSON.stringify({ action: "resolveReport", id: repId })
         });
@@ -1583,9 +1890,10 @@
             <td><div style="display:flex; gap:6px; align-items:center;">${status}<button class="eye-btn ${exp?'eye-red':''}" onclick="openEyeModal(${idx})">👁️</button></div></td>
             <td>
               <div style="display:flex; gap:5px;">
-                <button class="btn btn-sm btn-amber" onclick="checkSingleMovieAndSave(${idx})">🔍</button>
-                <button class="btn btn-sm btn-secondary" onclick="openEditMovie(${idx})">✏️</button>
-                <button class="btn btn-sm btn-danger" onclick="moveMovieToTrash(${idx})">🗑️</button>
+                <button class="btn btn-sm btn-tg" onclick="postMovieObjToTelegram(allMovies[${idx}])" title="টেলিগ্রাম চ্যানেলে পোস্ট">📢</button>
+                <button class="btn btn-sm btn-amber" onclick="checkSingleMovieAndSave(${idx})" title="লিংক চেক">🔍</button>
+                <button class="btn btn-sm btn-secondary" onclick="openEditMovie(${idx})" title="এডিট">✏️</button>
+                <button class="btn btn-sm btn-danger" onclick="moveMovieToTrash(${idx})" title="ট্র্যাশ">🗑️</button>
               </div>
             </td>
           </tr>`;
@@ -1663,33 +1971,6 @@
 
     async function checkUrlsSmartPool(allItems, onProgress) {
       if (!allItems.length) return [];
-      const results = [];
-      if (checkerCfg.gasUrl && /^https?:\/\//i.test(checkerCfg.gasUrl.trim())) {
-        const chunkSize = 12;
-        for (let i = 0; i < allItems.length; i += chunkSize) {
-          if (scanCancelled) break;
-          const chunk = allItems.slice(i, i + chunkSize);
-          try {
-            const ctrl = new AbortController();
-            const tid = setTimeout(() => ctrl.abort(), 25000);
-            const res = await fetch(checkerCfg.gasUrl.trim(), {
-              method: "POST", headers: { "Content-Type": "text/plain;charset=utf-8" },
-              body: JSON.stringify({ action: "checkUrls", urls: chunk }), signal: ctrl.signal
-            });
-            clearTimeout(tid);
-            const data = await res.json();
-            if (data && data.ok && Array.isArray(data.results)) {
-              results.push(...data.results);
-              if (onProgress) onProgress(Math.min(i + chunk.length, allItems.length), allItems.length);
-              continue;
-            }
-          } catch (e) {}
-          const fb = await checkBrowserPool(chunk, 8);
-          results.push(...fb);
-          if (onProgress) onProgress(Math.min(i + chunk.length, allItems.length), allItems.length);
-        }
-        return results;
-      }
       return await checkBrowserPool(allItems, 10, onProgress);
     }
 
@@ -1989,6 +2270,7 @@
       document.getElementById("fBadge").value = "1080p"; syncBadgePreset();
       document.getElementById("fDraft").value = "false";
       document.getElementById("fAddedDate").value = getTodayIso();
+      document.getElementById("chkAutoPostTelegram").checked = false;
       selectedCategories = []; renderCategoryChips();
       refreshLanguageQuickChips();
       document.getElementById("screenshotsContainer").innerHTML = ""; addScreenshotRow("");
@@ -2023,6 +2305,7 @@
       document.getElementById("fWatchUrl").value = m.watchUrl || "";
       document.getElementById("fDraft").value = m.draft ? "true" : "false";
       document.getElementById("fAddedDate").value = m.addedDate || getTodayIso();
+      document.getElementById("chkAutoPostTelegram").checked = false;
 
       selectedCategories = (m.category || "").split(",").map(s => s.trim()).filter(s => s && s.toLowerCase() !== "all");
       renderCategoryChips();
@@ -2075,6 +2358,7 @@
       };
 
       const isEdit = editingIndex !== null;
+      const shouldPostTg = document.getElementById("chkAutoPostTelegram").checked && !movieObj.draft;
       const updated = [...allMovies];
       if (isEdit) updated[editingIndex] = movieObj; else updated.unshift(movieObj);
 
@@ -2088,7 +2372,9 @@
           localStorage.setItem("cine_radar_queue", JSON.stringify(radarQueue));
         }
         await addActivityLog(isEdit ? "Edit Movie" : "Add Movie", title, movieObj.draft ? "Saved as Draft" : "Published");
-        renderAllViews(); showToast("✅ সফলভাবে সেভ হয়েছে!");
+        renderAllViews();
+        showToast("✅ সফলভাবে সেভ হয়েছে!");
+        if (shouldPostTg) await postMovieObjToTelegram(movieObj);
         switchTab("allMovies", "All");
       } catch (e) { showToast("সেভ ব্যর্থ: " + e.message, true); }
       btn.disabled = false; btn.innerText = "💾 পাবলিশ / সেভ করুন";
@@ -2190,10 +2476,13 @@
       showToast("✅ ads.json সেভ হয়েছে!");
     }
 
-    // Settings, Multi-Admin & Backup
+    // Settings, Telegram, Multi-Admin & Backup
     function renderSettingsView() {
+      document.getElementById("cfgTgToken").value = tgCfg.token || "";
+      document.getElementById("cfgTgChannel").value = tgCfg.channel || "@supersp52";
+      document.getElementById("cfgSiteUrl").value = tgCfg.siteUrl || DEFAULT_SITE_URL;
       document.getElementById("cfgGmail").value = checkerCfg.gmail || DEFAULT_GMAIL;
-      document.getElementById("cfgGasUrl").value = checkerCfg.gasUrl || "";
+      document.getElementById("cfgGasUrl").value = checkerCfg.gasUrl || DEFAULT_LIVE_API;
       document.getElementById("cfgAutoEmailReports").value = checkerCfg.autoEmailReports !== false ? "true" : "false";
       document.getElementById("adminsListBox").innerHTML = teamAdmins.length
         ? teamAdmins.map((a, i) => `<div style="display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--border-soft); font-size:13px;"><span>👤 <b>${escapeHtml(a.name)}</b> (${escapeHtml(a.role)})</span><button class="btn btn-sm btn-danger" onclick="removeTeamAdmin(${i})">✕</button></div>`).join("")
@@ -2202,7 +2491,7 @@
     function saveCheckerSettings() {
       checkerCfg = {
         gmail: document.getElementById("cfgGmail").value.trim() || DEFAULT_GMAIL,
-        gasUrl: document.getElementById("cfgGasUrl").value.trim(),
+        gasUrl: document.getElementById("cfgGasUrl").value.trim() || DEFAULT_LIVE_API,
         autoEmailReports: document.getElementById("cfgAutoEmailReports").value === "true"
       };
       localStorage.setItem("cine_checker_cfg", JSON.stringify(checkerCfg));
@@ -2226,7 +2515,7 @@
     }
 
     function downloadFullBackup() {
-      const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), movies: allMovies, trash: trashMovies, ads: adsConfig, logs: activityLogs }, null, 2)], { type: "application/json" });
+      const blob = new Blob([JSON.stringify({ exportedAt: new Date().toISOString(), movies: allMovies, trash: trashMovies, ads: adsConfig, patches: cinePatches, logs: activityLogs }, null, 2)], { type: "application/json" });
       const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `cinevibebd-backup-${getTodayIso()}.json`; a.click();
       showToast("⬇️ ব্যাকআপ ডাউনলোড হয়েছে!");
     }
@@ -2310,4 +2599,4 @@
     }
   </script>
 </body>
-</html>
+  </html>
