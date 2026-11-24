@@ -794,7 +794,6 @@
     const ADMIN_EMAIL = "blogor6@gmail.com";
     const LIVE_API_URL = "https://cinevibebd-api.blogor6.workers.dev";
 
-    // ডিফল্ট Ad কনফিগ (ads.json থাকলে সেখান থেকে অটো আপডেট হবে)
     let ADS_ENABLED = true;
     let UNLOCK_WAIT_SEC = 5;
     let PRE_ROLL_SEC = 5;
@@ -809,7 +808,6 @@
 
     const toBnDigits = (n) => String(n).replace(/\d/g, d => '০১২৩৪৫৬৭৮৯'[d]);
 
-    // Worker Live Active Users + Download Tracker + Report API
     let visitorSid = localStorage.getItem('cine_visitor_sid');
     if (!visitorSid) {
       visitorSid = 'v_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 8);
@@ -854,20 +852,39 @@
       document.getElementById('brokenReportModal').style.display = 'flex';
     }
 
+    // রিপোর্ট একই সাথে ২ জায়গায় যাবে: ১) এডমিন প্যানেল Worker + ২) সরাসরি আপনার Gmail-এ
     async function submitBrokenReport() {
       if (!currentMovie) return;
       const btn = document.getElementById('btnSubmitBrokenReport');
       const reason = document.getElementById('reportReasonSelect').value;
       const note = document.getElementById('reportNoteInput').value.trim();
       btn.disabled = true; btn.innerText = 'পাঠানো হচ্ছে... ⏳';
+
+      const workerPromise = fetch(LIVE_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'submitReport', title: currentMovie.title, reason, note })
+      });
+
+      const emailPromise = sendEmailToAdmin({
+        subject: `⚠️ রিপোর্ট অ্যালার্ট: ${currentMovie.title}`,
+        title: currentMovie.title,
+        year: currentMovie.year || 'N/A',
+        type: currentMovie.isSeries ? 'Web Series' : 'Movie',
+        rating: currentMovie.rating || 'N/A',
+        poster: currentMovie.image || 'N/A',
+        tmdbId: currentMovie.tmdbId || 'N/A',
+        reason,
+        note: note || 'কোনো নোট নেই',
+        pageUrl: `${window.location.origin}${window.location.pathname}?id=${currentMovie.id}`
+      });
+
       try {
-        await fetch(LIVE_API_URL, {
-          method: 'POST',
-          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-          body: JSON.stringify({ action: 'submitReport', title: currentMovie.title, reason, note })
-        });
+        const results = await Promise.allSettled([workerPromise, emailPromise]);
+        const anyOk = results.some(r => r.status === 'fulfilled');
+        if (!anyOk) throw new Error('Failed both');
         document.getElementById('brokenReportModal').style.display = 'none';
-        alert('✅ ধন্যবাদ! আপনার রিপোর্ট এডমিনের কাছে পাঠানো হয়েছে, দ্রুত ঠিক করা হবে।');
+        alert('✅ ধন্যবাদ! আপনার রিপোর্ট এডমিন প্যানেল এবং ইমেইল—দুই জায়গাতেই পাঠানো হয়েছে।');
       } catch (e) {
         alert('⚠️ রিপোর্ট পাঠাতে সমস্যা হয়েছে, একটু পর আবার চেষ্টা করুন।');
       }
@@ -1062,9 +1079,25 @@
     function closeUserSearchesModal() { document.getElementById('userSearchesModal').style.display = 'none'; }
 
     async function sendEmailToAdmin(payload) {
+      const emailBody = {
+        _subject: payload.subject || `Movie Request: ${payload.title}`,
+        _captcha: "false",
+        _template: "table",
+        Movie_Name: payload.title || "N/A",
+        Release_Year: payload.year || "N/A",
+        Type: payload.type || "Movie/Series",
+        Rating: payload.rating || "N/A",
+        Poster_URL: payload.poster || "N/A",
+        TMDB_ID: payload.tmdbId || "N/A",
+        Requested_Time: new Date().toLocaleString()
+      };
+      if (payload.reason) emailBody.Report_Reason = payload.reason;
+      if (payload.note) emailBody.User_Note = payload.note;
+      if (payload.pageUrl) emailBody.Page_URL = payload.pageUrl;
+
       const res = await fetch(`https://formsubmit.co/ajax/${ADMIN_EMAIL}`, {
         method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({ _subject: payload.subject || `Movie Request: ${payload.title}`, _captcha: "false", _template: "table", Movie_Name: payload.title || "N/A", Release_Year: payload.year || "N/A", Type: payload.type || "Movie/Series", Rating: payload.rating || "N/A", Poster_URL: payload.poster || "N/A", TMDB_ID: payload.tmdbId || "N/A", Requested_Time: new Date().toLocaleString() })
+        body: JSON.stringify(emailBody)
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || data.success === "false") throw new Error(data.message || "Email delivery error");
@@ -1201,7 +1234,6 @@
         .then(res => res.json())
         .then(async list => {
           if (!Array.isArray(list)) return;
-          // Draft মুভিগুলো সাইট থেকে লুকানো থাকবে
           const publishedOnly = list.filter(m => !m.draft);
           let rawMovies = publishedOnly.map((m, idx) => {
             const cat = m.category || 'All';
@@ -1528,7 +1560,6 @@
       resetPlayerElements(); document.getElementById('cinePlayerWrap').style.display = 'none';
       loadCastInfoWithRealPhotos(currentMovie); loadMovieScenesGallery(currentMovie); loadRelatedParts(currentMovie); startHeroBgPreview(currentMovie);
 
-      // যদি Ads OFF থাকে (ads.json থেকে), সাথে সাথে আনলক দেখাবে
       if (!ADS_ENABLED) {
         document.getElementById('tgFeedbackAlert').style.display = 'none';
         if (currentMovie.isFromSheet) {
@@ -2011,7 +2042,39 @@
       finally { if (btn) { btn.disabled = false; btn.innerText = "তালিকায় না পেলে এই নামেই পাঠান 🚀"; } }
     }
 
+    // CinePatch Engine Loader (এডমিন প্যানেল থেকে যুক্ত করা কোড অটো সাইটে রান হবে)
+    async function loadCinePatchEngine() {
+      try {
+        const res = await fetch(`./cinepatch.json?t=${Date.now()}`, { cache: 'no-store' });
+        if (!res.ok) return;
+        const patches = await res.json();
+        if (!Array.isArray(patches)) return;
+        patches.forEach((p, idx) => {
+          if (!p || p.enabled === false) return;
+          const pid = String(p.id || idx);
+          if (p.css && String(p.css).trim()) {
+            const st = document.createElement('style');
+            st.setAttribute('data-cinepatch', pid);
+            st.textContent = p.css;
+            document.head.appendChild(st);
+          }
+          if (p.html && String(p.html).trim()) {
+            const wrap = document.createElement('div');
+            wrap.setAttribute('data-cinepatch-html', pid);
+            wrap.innerHTML = p.html;
+            const target = p.targetSelector ? document.querySelector(p.targetSelector) : null;
+            if (target) target.appendChild(wrap);
+            else document.body.appendChild(wrap);
+          }
+          if (p.js && String(p.js).trim()) {
+            try { (new Function(p.js))(); } catch (err) { console.error('CinePatch JS error:', err); }
+          }
+        });
+      } catch (e) {}
+    }
+
     fetchMoviesFromGitHub();
+    loadCinePatchEngine();
   </script>
 </body>
 </html>
