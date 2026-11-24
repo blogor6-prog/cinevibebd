@@ -127,7 +127,7 @@
     <label>📢 আপনার টেলিগ্রাম চ্যানেল (@username):</label>
     <input type="text" id="channelIdInput" value="@supersp52">
     <label>⚡ আপনার Admin Panel URL:</label>
-    <input type="text" id="adminPanelUrlInput" value="https://cinevibebd.pages.dev/admin">
+    <input type="text" id="adminPanelUrlInput" value="https://blogor6-prog.github.io/cinevibebd/admin.html">
     <button class="save-btn" onclick="saveConfig()">💾 সেটিংস সেভ করুন</button>
   </div>
 
@@ -245,11 +245,7 @@
   <script>
     const TMDB_KEY = '8265bd1679663a7ea12ac168da84d2e8';
     const SITE_URL = 'https://cinevibebd.pages.dev/';
-    const DEFAULT_ADMIN_URL = location.hostname.includes('pages.dev')
-      ? 'https://cinevibebd.pages.dev/admin'
-      : (location.protocol.startsWith('http') && !location.hostname.includes('localhost')
-          ? new URL('admin.html', location.href).href
-          : 'https://cinevibebd.pages.dev/admin');
+    const DEFAULT_ADMIN_URL = 'https://blogor6-prog.github.io/cinevibebd/admin.html';
 
     const LANG_BN = {
       bn: 'বাংলা (Bengali)', hi: 'হিন্দি (Hindi)', en: 'ইংরেজি (English)', ta: 'তামিল (Tamil)',
@@ -306,7 +302,7 @@
       document.getElementById('botTokenInput').value = localStorage.getItem('cv_alert_token') || '';
       document.getElementById('channelIdInput').value = localStorage.getItem('cv_alert_channel') || '@supersp52';
       let savedAdminUrl = localStorage.getItem('cv_alert_admin_url') || '';
-      if (!savedAdminUrl || savedAdminUrl === 'https://blogor6-prog.github.io/cinevibebd/admin.html') {
+      if (!savedAdminUrl || savedAdminUrl.includes('cinevibebd.pages.dev/admin')) {
         savedAdminUrl = DEFAULT_ADMIN_URL;
         localStorage.setItem('cv_alert_admin_url', savedAdminUrl);
       }
