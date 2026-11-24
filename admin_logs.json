@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795533759449,
+    "time": "24/11/2026, 21:22:39",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Katukutu Buro (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795530537046,
     "time": "24/11/2026, 20:28:57",
     "admin": "Main Admin",
