@@ -127,7 +127,7 @@
     <label>📢 আপনার টেলিগ্রাম চ্যানেল (@username):</label>
     <input type="text" id="channelIdInput" value="@supersp52">
     <label>⚡ আপনার Admin Panel URL:</label>
-    <input type="text" id="adminPanelUrlInput" value="https://blogor6-prog.github.io/cinevibebd/admin.html">
+    <input type="text" id="adminPanelUrlInput" value="https://cinevibebd.pages.dev/admin">
     <button class="save-btn" onclick="saveConfig()">💾 সেটিংস সেভ করুন</button>
   </div>
 
@@ -227,7 +227,7 @@
     </div>
   </div>
 
-  <!-- এডমিন প্যানেল পপ-আপ ফলব্যাক মডাল (মোবাইলে ব্লক হলে কাজে লাগবে) -->
+  <!-- এডমিন প্যানেল ফলব্যাক মডাল -->
   <div class="modal-bg" id="adminLinkModal" onclick="if(event.target===this) closeAdminLinkModal()">
     <div class="modal-box">
       <div class="modal-head">
@@ -245,7 +245,11 @@
   <script>
     const TMDB_KEY = '8265bd1679663a7ea12ac168da84d2e8';
     const SITE_URL = 'https://cinevibebd.pages.dev/';
-    const DEFAULT_ADMIN_URL = 'https://blogor6-prog.github.io/cinevibebd/admin.html';
+    const DEFAULT_ADMIN_URL = location.hostname.includes('pages.dev')
+      ? 'https://cinevibebd.pages.dev/admin'
+      : (location.protocol.startsWith('http') && !location.hostname.includes('localhost')
+          ? new URL('admin.html', location.href).href
+          : 'https://cinevibebd.pages.dev/admin');
 
     const LANG_BN = {
       bn: 'বাংলা (Bengali)', hi: 'হিন্দি (Hindi)', en: 'ইংরেজি (English)', ta: 'তামিল (Tamil)',
@@ -301,7 +305,12 @@
     function loadConfig() {
       document.getElementById('botTokenInput').value = localStorage.getItem('cv_alert_token') || '';
       document.getElementById('channelIdInput').value = localStorage.getItem('cv_alert_channel') || '@supersp52';
-      document.getElementById('adminPanelUrlInput').value = localStorage.getItem('cv_alert_admin_url') || DEFAULT_ADMIN_URL;
+      let savedAdminUrl = localStorage.getItem('cv_alert_admin_url') || '';
+      if (!savedAdminUrl || savedAdminUrl === 'https://blogor6-prog.github.io/cinevibebd/admin.html') {
+        savedAdminUrl = DEFAULT_ADMIN_URL;
+        localStorage.setItem('cv_alert_admin_url', savedAdminUrl);
+      }
+      document.getElementById('adminPanelUrlInput').value = savedAdminUrl;
     }
     function saveConfig() {
       localStorage.setItem('cv_alert_token', document.getElementById('botTokenInput').value.trim());
@@ -767,7 +776,6 @@
       }
     }
 
-    /* প্রতি ৫ সেকেন্ড পর পর টপ ৫টি চ্যানেলে পাঠাবে */
     async function bulkSendToChannel() {
       const visible = getVisibleItems().slice(0, 5);
       if (visible.length === 0) return;
@@ -810,69 +818,69 @@
       if (lastAdminTargetUrl) window.location.href = lastAdminTargetUrl;
     }
 
-    async function sendToAdminPanel(idx) {
+    function sendToAdminPanel(idx) {
       const m = currentItems[idx];
       if (!m) return;
 
-      // মোবাইল পপ-আপ ব্লক এড়াতে ক্লিকের সাথে সাথেই উইন্ডো প্রি-ওপেন
-      const popup = window.open('about:blank', '_blank');
-      setStatus('এডমিন প্যানেলের জন্য ডাটা তৈরি হচ্ছে... ⏳', true);
+      const rawTitle = m.title || m.name || 'Untitled';
+      const releaseDate = m.release_date || m.first_air_date || '2026';
+      const year = releaseDate.split('-')[0] || '2026';
+      const mediaType = m._mediaType || (m.first_air_date ? 'tv' : 'movie');
+      const rating = m.vote_average ? Number(m.vote_average).toFixed(1) : '7.5';
+      const poster = m.poster_path ? `https://image.tmdb.org/t/p/w500${m.poster_path}` : '';
+      const genres = (m.genre_ids || []).map(id => GENRE_MAP[id]).filter(Boolean).join(', ') || 'Drama';
+      const langCode = m.original_language || 'en';
+      const langName = LANG_BN[langCode] || langCode.toUpperCase();
+      const category = mediaType === 'tv' ? 'Series' : (langCode === 'bn' ? 'Bangla' : 'Trending');
+      const badge = mediaType === 'tv' ? 'SERIES' : '1080p';
+
+      const cached = detailCache[`${mediaType}_${m.id}`];
+
+      const adminPayload = {
+        title: `${cached ? cached.title : rawTitle} (${year})`,
+        rawTitle: cached ? cached.title : rawTitle,
+        category,
+        mediaType,
+        rating: cached ? cached.rating : rating,
+        image: cached ? cached.poster : poster,
+        genre: cached ? cached.genres : genres,
+        language: cached ? cached.languages : langName,
+        releaseDate: cached ? cached.releaseDate : releaseDate,
+        cast: cached ? cached.cast : '',
+        trailer: cached ? cached.trailerUrl : '',
+        tmdbId: m.id,
+        badge,
+        sentAt: Date.now()
+      };
 
       try {
-        const info = await getFullMovieDetails(m);
-        const year = (info.releaseDate || '').split('-')[0] || '2026';
-        const badge = info.mediaType === 'tv' ? 'SERIES' : '1080p';
-        const category = info.mediaType === 'tv' ? 'Series' : (info.languages.includes('বাংলা') ? 'Bangla' : 'Trending');
-
-        const adminPayload = {
-          title: `${info.title} (${year})`,
-          rawTitle: info.title,
-          category,
-          rating: info.rating,
-          image: info.poster,
-          genre: info.genres,
-          language: info.languages,
-          country: info.countries,
-          releaseDate: info.releaseDate,
-          cast: info.cast,
-          trailer: info.trailerUrl,
-          overview: info.overview || '',
-          tmdbId: info.id,
-          badge,
-          sentAt: Date.now()
-        };
-
         localStorage.setItem('cine_pending_admin_movie', JSON.stringify(adminPayload));
-        const baseAdmin = (document.getElementById('adminPanelUrlInput').value || DEFAULT_ADMIN_URL).trim();
-        const sep = baseAdmin.includes('?') ? '&' : '?';
+      } catch (e) {}
 
-        const params = new URLSearchParams({
-          title: adminPayload.title,
-          rating: info.rating,
-          image: info.poster,
-          genre: info.genres,
-          language: info.languages,
-          country: info.countries,
-          releaseDate: info.releaseDate,
-          cast: info.cast,
-          trailer: info.trailerUrl,
-          category,
-          badge,
-          tmdbId: String(info.id)
-        });
-        if (info.overview) params.set('overview', info.overview.slice(0, 350));
+      const baseAdmin = (document.getElementById('adminPanelUrlInput').value || DEFAULT_ADMIN_URL).trim();
+      const sep = baseAdmin.includes('?') ? '&' : '?';
 
-        const targetUrl = `${baseAdmin}${sep}${params.toString()}`;
-        setStatus(`⚡ "${info.title}" এডমিন প্যানেলে পাঠানো হয়েছে!`, true);
+      const params = new URLSearchParams({
+        title: adminPayload.title,
+        rating: adminPayload.rating,
+        image: adminPayload.image,
+        genre: adminPayload.genre,
+        language: adminPayload.language,
+        releaseDate: adminPayload.releaseDate,
+        category: adminPayload.category,
+        mediaType: adminPayload.mediaType,
+        badge: adminPayload.badge,
+        tmdbId: String(adminPayload.tmdbId)
+      });
+      if (adminPayload.cast) params.set('cast', adminPayload.cast);
+      if (adminPayload.trailer) params.set('trailer', adminPayload.trailer);
 
-        if (popup && !popup.closed) {
-          popup.location.href = targetUrl;
-        } else {
-          openAdminFallbackModal(adminPayload.title, targetUrl);
-        }
-      } catch (e) {
-        if (popup && !popup.closed) popup.close();
-        setStatus('⚠️ এডমিন প্যানেলে পাঠাতে সমস্যা হয়েছে!', true);
+      const targetUrl = `${baseAdmin}${sep}${params.toString()}`;
+      setStatus(`⚡ "${rawTitle}" এডমিন প্যানেলে পাঠানো হচ্ছে...`, true);
+
+      const win = window.open(targetUrl, '_blank');
+      if (!win || win.closed) {
+        openAdminFallbackModal(adminPayload.title, targetUrl);
       }
     }
 
