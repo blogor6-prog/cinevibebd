@@ -246,17 +246,18 @@
         <p style="font-size:12.5px; color:var(--muted);">Dark Dashboard · Smart Checker · Multi-Admin</p>
       </div>
       <div class="login-card">
+        <div id="loginRadarNotice" style="display:none; background:rgba(245,158,11,0.16); border:1px solid #f59e0b; color:#fde68a; padding:9px 11px; border-radius:8px; font-size:12.5px; margin-bottom:12px; font-weight:700;"></div>
         <div class="form-group">
           <label>GitHub Username</label>
-          <input type="text" id="ghUser" class="wp-input" value="blogor6-prog">
+          <input type="text" id="ghUser" class="wp-input" value="blogor6-prog" autocapitalize="none" autocorrect="off">
         </div>
         <div class="form-group">
           <label>GitHub Repository</label>
-          <input type="text" id="ghRepo" class="wp-input" value="cinevibebd">
+          <input type="text" id="ghRepo" class="wp-input" value="cinevibebd" autocapitalize="none" autocorrect="off">
         </div>
         <div class="form-group">
           <label>GitHub Token (ghp_...)</label>
-          <input type="password" id="ghToken" class="wp-input" placeholder="ghp_xxxxxxxxxxxx">
+          <input type="password" id="ghToken" class="wp-input" placeholder="ghp_xxxxxxxxxxxx" autocapitalize="none" autocorrect="off">
         </div>
         <div class="two-col">
           <div class="form-group">
@@ -265,7 +266,7 @@
           </div>
           <div class="form-group">
             <label>পাসওয়ার্ড</label>
-            <input type="password" id="loginPassword" class="wp-input" placeholder="পাসওয়ার্ড">
+            <input type="password" id="loginPassword" class="wp-input" placeholder="পাসওয়ার্ড" autocapitalize="none" autocorrect="off" onkeydown="if(event.key==='Enter') handleGitHubLogin()">
           </div>
         </div>
         <button class="btn" style="width:100%; padding:10px;" id="btnLogin" onclick="handleGitHubLogin()">🔐 লগইন করুন</button>
@@ -842,10 +843,10 @@
     let currentFilter = "All", editingIndex = null, editingRadarIndex = null, selectedCategories = [], episodeCounter = 0;
     let selectedRowIndices = new Set();
     let isScanningNow = false, scanCancelled = false, autoTickerId = null, liveRefreshId = null;
+    let justCapturedRadarFromUrl = false;
 
     document.getElementById("catSelectDropdown").innerHTML = ALL_WORLD_CATEGORIES.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join("");
 
-    // র‍্যাডার / চ্যানেল হাব থেকে আসা মুভি সাথে সাথে ক্যাপচার করা
     function formatLanguageHyphen(raw) {
       if (!raw) return "";
       const parts = String(raw)
@@ -885,6 +886,7 @@
         radarId: item.tmdbId || item.id || Date.now(),
         title: String(item.title).trim(),
         category: item.category || "Trending",
+        mediaType: item.mediaType || (String(item.category || "").toLowerCase().includes("series") ? "tv" : "movie"),
         rating: item.rating || "7.5",
         image: item.image || "",
         genre: item.genre || "",
@@ -910,41 +912,68 @@
 
     function captureIncomingRadarMovies() {
       let captured = false;
-      const params = new URLSearchParams(window.location.search);
-      const urlTitle = params.get("title");
-      if (urlTitle) {
-        addRadarItemToQueue({
-          title: urlTitle,
-          rating: params.get("rating") || "",
-          image: params.get("image") || "",
-          genre: params.get("genre") || "",
-          language: params.get("language") || "",
-          country: params.get("country") || "",
-          releaseDate: params.get("releaseDate") || "",
-          cast: params.get("cast") || "",
-          trailer: params.get("trailer") || "",
-          category: params.get("category") || "Trending",
-          badge: params.get("badge") || "",
-          overview: params.get("overview") || "",
-          tmdbId: params.get("tmdbId") || ""
-        });
-        captured = true;
-        window.history.replaceState({}, document.title, window.location.pathname);
-      }
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const urlTitle = params.get("title");
+        if (urlTitle) {
+          addRadarItemToQueue({
+            title: urlTitle,
+            rating: params.get("rating") || "",
+            image: params.get("image") || "",
+            genre: params.get("genre") || "",
+            language: params.get("language") || "",
+            country: params.get("country") || "",
+            releaseDate: params.get("releaseDate") || "",
+            cast: params.get("cast") || "",
+            trailer: params.get("trailer") || "",
+            category: params.get("category") || "Trending",
+            mediaType: params.get("mediaType") || "",
+            badge: params.get("badge") || "",
+            overview: params.get("overview") || "",
+            tmdbId: params.get("tmdbId") || ""
+          });
+          captured = true;
+          justCapturedRadarFromUrl = true;
+          try { window.history.replaceState({}, document.title, window.location.pathname); } catch (e) {}
+        }
 
-      const pendingRaw = localStorage.getItem("cine_pending_admin_movie");
-      if (pendingRaw) {
-        try {
+        const pendingRaw = localStorage.getItem("cine_pending_admin_movie");
+        if (pendingRaw) {
           const pendingObj = JSON.parse(pendingRaw);
           if (pendingObj && pendingObj.title) {
             addRadarItemToQueue(pendingObj);
             captured = true;
+            justCapturedRadarFromUrl = true;
           }
-        } catch (e) {}
-        localStorage.removeItem("cine_pending_admin_movie");
-      }
+          localStorage.removeItem("cine_pending_admin_movie");
+        }
+      } catch (e) {}
 
       if (captured) sessionStorage.setItem("cine_just_sent_radar", "1");
+
+      const loginNotice = document.getElementById("loginRadarNotice");
+      if (loginNotice && radarQueue.length > 0) {
+        loginNotice.style.display = "block";
+        loginNotice.innerText = `📥 র‍্যাডার থেকে ${radarQueue.length}টি মুভি এসেছে ("${radarQueue[0].title}")! লগইন করলেই পাবলিশ করতে পারবেন।`;
+      }
+    }
+
+    async function enrichRadarItemFromTmdb(idx) {
+      const item = radarQueue[idx];
+      if (!item || !item.tmdbId) return;
+      const type = item.mediaType || (String(item.category || "").toLowerCase().includes("series") ? "tv" : "movie");
+      try {
+        const d = await (await fetch(`https://api.themoviedb.org/3/${type}/${item.tmdbId}?api_key=${TMDB_API_KEY}&append_to_response=credits,videos`)).json();
+        const langs = extractCleanLanguages(d);
+        if (langs) item.language = langs;
+        if (Array.isArray(d.genres) && d.genres.length) item.genre = d.genres.map(g => g.name).join(", ");
+        if (!item.cast && d.credits?.cast) item.cast = d.credits.cast.slice(0, 6).map(a => a.name).join(", ");
+        if (!item.trailer && d.videos?.results) {
+          const yt = d.videos.results.find(x => x.site === "YouTube" && x.type === "Trailer") || d.videos.results.find(x => x.site === "YouTube");
+          if (yt) item.trailer = `https://www.youtube.com/watch?v=${yt.key}`;
+        }
+        saveRadarQueueStorage();
+      } catch (e) {}
     }
 
     captureIncomingRadarMovies();
@@ -952,9 +981,20 @@
     window.addEventListener("storage", (e) => {
       if (e.key === "cine_pending_admin_movie" && e.newValue) {
         captureIncomingRadarMovies();
+        if (document.getElementById("adminShell").style.display === "block") {
+          renderRadarQueue();
+          renderDashboardStats();
+          enrichRadarItemFromTmdb(0);
+          showToast("📥 র‍্যাডার থেকে নতুন মুভি এসেছে!");
+        }
+      }
+    });
+
+    window.addEventListener("focus", () => {
+      captureIncomingRadarMovies();
+      if (document.getElementById("adminShell").style.display === "block") {
         renderRadarQueue();
         renderDashboardStats();
-        showToast("📥 র‍্যাডার থেকে নতুন মুভি এসেছে!");
       }
     });
 
@@ -1022,7 +1062,7 @@
       const repo = document.getElementById("ghRepo").value.trim();
       const token = document.getElementById("ghToken").value.trim();
       const admName = document.getElementById("loginAdminName").value.trim() || "Admin";
-      const pass = document.getElementById("loginPassword").value;
+      const pass = document.getElementById("loginPassword").value.trim();
       if (!user || !repo || !token || !pass) return showToast("সব ঘর পূরণ করুন!", true);
 
       ghConfig = { user, repo, token };
@@ -1041,7 +1081,7 @@
         let matchedRole = null;
         if (pass === SUPER_ADMIN_PASS) matchedRole = "Super Admin";
         else {
-          const hit = teamAdmins.find(a => a.password === pass && a.name.toLowerCase() === admName.toLowerCase()) || teamAdmins.find(a => a.password === pass);
+          const hit = teamAdmins.find(a => String(a.password).trim() === pass && a.name.toLowerCase() === admName.toLowerCase()) || teamAdmins.find(a => String(a.password).trim() === pass);
           if (hit) matchedRole = hit.role || "Moderator";
         }
         if (!matchedRole) throw new Error("পাসওয়ার্ড বা অ্যাডমিন নাম সঠিক নয়!");
@@ -1071,9 +1111,11 @@
         if (liveRefreshId) clearInterval(liveRefreshId);
         liveRefreshId = setInterval(() => refreshLiveAnalytics(false), 30000);
 
-        if (sessionStorage.getItem("cine_just_sent_radar") === "1" && radarQueue.length > 0) {
+        if ((justCapturedRadarFromUrl || sessionStorage.getItem("cine_just_sent_radar") === "1") && radarQueue.length > 0) {
           sessionStorage.removeItem("cine_just_sent_radar");
+          justCapturedRadarFromUrl = false;
           switchTab("radarQueue");
+          enrichRadarItemFromTmdb(0);
           showToast(`📥 "${radarQueue[0].title}" ইনকামিং কিউ-তে এসেছে! পাবলিশ বা এডিট করুন।`);
         }
       } catch (e) { showToast("নেটওয়ার্ক সমস্যা!", true); }
@@ -1216,7 +1258,7 @@
       checkDuplicateTitleLive();
 
       if (item.tmdbId) {
-        const type = String(item.category || "").toLowerCase().includes("series") ? "tv" : "movie";
+        const type = item.mediaType || (String(item.category || "").toLowerCase().includes("series") ? "tv" : "movie");
         fetch(`https://api.themoviedb.org/3/${type}/${item.tmdbId}/images?api_key=${TMDB_API_KEY}&include_image_language=null`)
           .then(r => r.json())
           .then(im => {
@@ -2268,4 +2310,4 @@
     }
   </script>
 </body>
-  </html>
+</html>
