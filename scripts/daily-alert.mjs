@@ -2,9 +2,10 @@ import fs from 'fs';
 
 const TMDB_KEY = '8265bd1679663a7ea12ac168da84d2e8';
 const SITE_URL = 'https://cinevibebd.pages.dev/';
-const BOT_TOKEN = process.env.TG_BOT_TOKEN;
-const ADMIN_CHAT_ID = process.env.TG_ADMIN_CHAT_ID;
-const CHANNEL_ID = process.env.TG_CHANNEL_ID;
+const BOT_TOKEN = (process.env.TG_BOT_TOKEN || '').trim();
+const ADMIN_CHAT_ID = (process.env.TG_ADMIN_CHAT_ID || '').trim();
+const rawChannel = (process.env.TG_CHANNEL_ID || '').trim();
+const CHANNEL_ID = rawChannel.replace(/^https?:\/\/(t\.me|telegram\.me)\//i, '@');
 const CACHE_FILE = './scripts/notified-cache.json';
 
 const LANG_NAMES = {
@@ -67,7 +68,10 @@ async function fetchJson(url) {
 }
 
 async function sendTelegramPhoto(chatId, photoUrl, caption) {
-  if (!BOT_TOKEN || !chatId) return false;
+  if (!BOT_TOKEN || !chatId) {
+    console.error('Missing BOT_TOKEN or chatId!', { hasToken: !!BOT_TOKEN, chatId });
+    return false;
+  }
   const safeCaption = caption.slice(0, 1000);
 
   if (photoUrl) {
@@ -82,6 +86,9 @@ async function sendTelegramPhoto(chatId, photoUrl, caption) {
       })
     });
     if (res.ok) return true;
+    const err1 = await res.text();
+    console.error(`sendPhoto failed for ${chatId}:`, res.status, err1);
+    if (res.status === 401) throw new Error('TG_BOT_TOKEN ভুল আছে (401 Unauthorized)!');
   }
 
   const fallback = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
@@ -94,7 +101,13 @@ async function sendTelegramPhoto(chatId, photoUrl, caption) {
       disable_web_page_preview: false
     })
   });
-  return fallback.ok;
+  if (!fallback.ok) {
+    const err2 = await fallback.text();
+    console.error(`sendMessage failed for ${chatId}:`, fallback.status, err2);
+    if (fallback.status === 401) throw new Error('TG_BOT_TOKEN ভুল আছে (401 Unauthorized)!');
+    return false;
+  }
+  return true;
 }
 
 async function sendTelegramText(chatId, text) {
@@ -109,7 +122,13 @@ async function sendTelegramText(chatId, text) {
       disable_web_page_preview: true
     })
   });
-  return res.ok;
+  if (!res.ok) {
+    const err = await res.text();
+    console.error(`sendTelegramText failed for ${chatId}:`, res.status, err);
+    if (res.status === 401) throw new Error('TG_BOT_TOKEN ভুল আছে (401 Unauthorized)!');
+    return false;
+  }
+  return true;
 }
 
 async function fetchBanglaMovieNews() {
@@ -129,6 +148,14 @@ async function fetchBanglaMovieNews() {
 }
 
 async function run() {
+  console.log('Config check:', {
+    tokenLength: BOT_TOKEN.length,
+    adminChatId: ADMIN_CHAT_ID || 'MISSING',
+    channelId: CHANNEL_ID || 'MISSING'
+  });
+
+  if (!BOT_TOKEN) throw new Error('TG_BOT_TOKEN Secret সেট করা হয়নি!');
+
   const cache = loadCache();
   const uploadedSet = getUploadedTitles();
 
@@ -153,6 +180,10 @@ async function run() {
     fetchBanglaMovieNews()
   ]);
 
+  let adminSentCount = 0;
+  let channelSentCount = 0;
+
+  // ১) এডমিনকে আজকের রিলিজ
   const todayReleasesMap = new Map();
   [...(releaseTodayRegional.results || []), ...(releaseTodayGlobal.results || [])].forEach(m => {
     if (m.id && m.poster_path && !todayReleasesMap.has(m.id)) todayReleasesMap.set(m.id, m);
@@ -174,10 +205,11 @@ async function run() {
       `🌐 <b>আমাদের সাইট:</b> ${SITE_URL}`;
 
     const sent = await sendTelegramPhoto(ADMIN_CHAT_ID, poster, caption);
-    if (sent) cache.adminNotified.push(`rel_${m.id}`);
+    if (sent) { cache.adminNotified.push(`rel_${m.id}`); adminSentCount++; }
     await sleep(1000);
   }
 
+  // ২) এডমিনকে ট্রেন্ডিং সাজেশন
   const adminTrending = (trendingToday.results || [])
     .filter(m => {
       const name = m.title || m.name;
@@ -201,10 +233,11 @@ async function run() {
       `🌐 <b>আমাদের সাইট:</b> ${SITE_URL}`;
 
     const sent = await sendTelegramPhoto(ADMIN_CHAT_ID, poster, caption);
-    if (sent) cache.adminNotified.push(`tr_${m.id}`);
+    if (sent) { cache.adminNotified.push(`tr_${m.id}`); adminSentCount++; }
     await sleep(1000);
   }
 
+  // ৩) চ্যানেলে আপকামিং মুভি নিউজ
   const upcomingMap = new Map();
   [...(upcomingRegional.results || []), ...(upcomingGlobal.results || [])].forEach(m => {
     if (m.id && m.poster_path && !upcomingMap.has(m.id)) upcomingMap.set(m.id, m);
@@ -226,10 +259,11 @@ async function run() {
       `🌐 <b>ওয়েবসাইট:</b> ${SITE_URL}`;
 
     const sent = await sendTelegramPhoto(CHANNEL_ID, poster, caption);
-    if (sent) cache.channelPosted.push(`up_${m.id}`);
+    if (sent) { cache.channelPosted.push(`up_${m.id}`); channelSentCount++; }
     await sleep(1200);
   }
 
+  // ৪) চ্যানেলে বাংলা মুভি নিউজ
   const freshNews = bnNews.filter(t => !cache.newsPosted.includes(t)).slice(0, 4);
   if (freshNews.length > 0) {
     let newsMsg = `📰 <b>আজকের বাংলা ও সিনেমাপাড়ার তাজা খবর</b> (${todayStr})\n\n`;
@@ -239,11 +273,14 @@ async function run() {
     newsMsg += `🎬 সব লেটেস্ট মুভি ও ওয়েব সিরিজ দেখতে ভিজিট করুন:\n🌐 ${SITE_URL}`;
 
     const sent = await sendTelegramText(CHANNEL_ID, newsMsg);
-    if (sent) freshNews.forEach(t => cache.newsPosted.push(t));
+    if (sent) { freshNews.forEach(t => cache.newsPosted.push(t)); channelSentCount++; }
   }
 
   saveCache(cache);
-  console.log('Done: Channel & Admin notifications processed!');
+  console.log('Summary:', { adminSentCount, channelSentCount });
+  if (adminSentCount === 0 && channelSentCount === 0) {
+    throw new Error('কোনো মেসেজ পাঠানো যায়নি! উপরের TG Error লাইনগুলো চেক করুন।');
+  }
 }
 
 run();
