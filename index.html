@@ -12,7 +12,7 @@
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any">
   <link rel="apple-touch-icon" href="/favicon.svg">
-
+<link rel="manifest" href="/manifest.json">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="CineVibeBD">
   <meta property="og:title" content="CineVibeBD - HD Movies & Web Series">
@@ -2075,6 +2075,11 @@
 
     fetchMoviesFromGitHub();
     loadCinePatchEngine();
+  if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch((err) => console.log('SW error:', err));
+      });
+  }
   </script>
 </body>
 </html>
