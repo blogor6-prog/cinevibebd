@@ -5,4 +5,13 @@
         "package_name": "dev.pages.cinevibebd.twa",
         "sha256_cert_fingerprints": ["39:06:39:C0:8B:BD:4E:4B:14:EF:5D:F1:E8:48:1C:66:C3:3D:B2:E8:09:22:0E:4D:E4:D8:05:F8:02:5E:64:E8"]
       }
-    }]
+},
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "dev.pages.cinevibebd.admin",
+      "sha256_cert_fingerprints": ["07:32:CB:51:B3:C3:4E:FB:92:74:73:7B:48:65:8F:48:5A:4F:BF:03:1D:FE:EE:E1:FF:4C:03:E0:F1:89:1B:D1"]
+    }
+  }
+]
