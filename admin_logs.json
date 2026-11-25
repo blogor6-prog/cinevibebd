@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795600443506,
+    "time": "25/11/2026, 15:54:03",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "House of the Dragon (2022)",
+    "details": "Published"
+  },
+  {
     "id": 1795600206842,
     "time": "25/11/2026, 15:50:06",
     "admin": "Main Admin",
