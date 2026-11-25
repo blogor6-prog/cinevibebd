@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795630124306,
+    "time": "26/11/2026, 00:08:44",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Bachelor Point (2025) S05 [Episode 01-08]",
+    "details": "Published"
+  },
+  {
     "id": 1795626433854,
     "time": "25/11/2026, 23:07:13",
     "admin": "Main Admin",
