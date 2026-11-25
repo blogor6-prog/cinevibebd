@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795607936572,
+    "time": "25/11/2026, 17:58:56",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Glory (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795607850714,
     "time": "25/11/2026, 17:57:30",
     "admin": "Main Admin",
