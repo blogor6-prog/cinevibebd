@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795630912498,
+    "time": "26/11/2026, 00:21:52",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Bachelor Point (2025) S05 [Episode 33-40]",
+    "details": "Published"
+  },
+  {
     "id": 1795630746505,
     "time": "26/11/2026, 00:19:06",
     "admin": "Main Admin",
