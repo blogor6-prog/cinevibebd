@@ -1,5 +1,15 @@
 [
   {
+    "id": 1795585707091,
+    "name": "App Download Button",
+    "enabled": true,
+    "targetSelector": "",
+    "css": "",
+    "html": "",
+    "js": "(function() {\n  var nav = document.querySelector('.bottom-nav');\n  if (!nav || document.getElementById('cineApkNavBtn')) return;\n\n  var btn = document.createElement('div');\n  btn.id = 'cineApkNavBtn';\n  btn.className = 'nav-item';\n  btn.style.color = '#22c55e';\n  btn.style.fontWeight = '700';\n  btn.innerHTML =\n    '<span class=\"nav-icon\">' +\n      '<svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\">' +\n        '<circle cx=\"12\" cy=\"12\" r=\"11\" fill=\"#22c55e\"/>' +\n        '<path d=\"M12 6.5V14.5M12 14.5L8.5 11M12 14.5L15.5 11M7.5 17.5H16.5\" stroke=\"#ffffff\" stroke-width=\"2.2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/>' +\n      '</svg>' +\n    '</span>' +\n    '<span>App</span>';\n\n  btn.onclick = function() {\n    var apkUrl = 'https://cinevibebd.pages.dev/CineVibeBD.apk';\n    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initData && window.Telegram.WebApp.openLink) {\n      window.Telegram.WebApp.openLink(apkUrl);\n      return;\n    }\n    var a = document.createElement('a');\n    a.href = '/CineVibeBD.apk';\n    a.download = 'CineVibeBD.apk';\n    document.body.appendChild(a);\n    a.click();\n    a.remove();\n  };\n\n  nav.appendChild(btn);\n})();",
+    "updatedAt": "25/11/2026, 11:48:27"
+  },
+  {
     "id": 1795530534918,
     "name": "CVBBD Brand Footer SEO",
     "enabled": true,
