@@ -1,5 +1,39 @@
 [
   {
+    "id": 1795598723251,
+    "title": "Abar Hawa Bodol (2026)",
+    "category": "Bangla, Comedy, Romance",
+    "rating": "5.0",
+    "sortOrder": 86,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/ePdQRmZLTj0ccNNLDPtAN2pimGL.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Abar.Hawa.Bodol.2026.720p.AMZN.WEB-DL.Bangla.AAC2.0.H.264--Fmxbd.com.mkv",
+        "label": "720p - 1.10GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Abar.Hawa.Bodol.2026.1080p.HEVC.AMZN.WEB-DL.Bangla.DDP5.1.H.265--Fmxbd.com.mkv",
+        "label": "1080p -3.06GB"
+      }
+    ],
+    "badge": "1080p",
+    "episodes": "",
+    "cast": "Parambrata Chatterjee, Rudranil Ghosh, Raima Sen, Anusha Viswanathan, Paayel Sarkar, Chanchal Ghosh",
+    "trailer": "https://www.youtube.com/watch?v=hYO4FsLhVdE",
+    "bgVideo": "",
+    "watchUrl": "",
+    "language": "Bangla",
+    "releaseDate": "2026-06-12",
+    "genre": "Comedy, Romance",
+    "addedDate": "2026-11-25",
+    "screenshots": [],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795598623673,
     "title": "Politics (2026)",
     "category": "Series, Bangla, Comedy",
