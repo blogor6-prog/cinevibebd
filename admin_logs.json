@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795632036029,
+    "time": "26/11/2026, 00:40:36",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Bachelor Ramadan Vibes",
+    "details": "Published"
+  },
+  {
     "id": 1795631871777,
     "time": "26/11/2026, 00:37:51",
     "admin": "Main Admin",
