@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795606998806,
+    "time": "25/11/2026, 17:43:18",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Teach You a Lesson (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795600937950,
     "time": "25/11/2026, 16:02:17",
     "admin": "Main Admin",
