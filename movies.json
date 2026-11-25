@@ -1,5 +1,39 @@
 [
   {
+    "id": 1795598891797,
+    "title": "Abhhiman (2026)",
+    "category": "Bangla, Drama, Music, Romance",
+    "rating": "4.0",
+    "sortOrder": 87,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/gLVC19LeYRJYU7RXxRdMuSqnPvd.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Abhhiman.2026.480p.HDTC.Bengali.ORG.2.0.HSubs.H.264-Fmxbd.com.mkv",
+        "label": "480p - 682MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Abhhiman.2026.720p.HDTC.Bengali.ORG.2.0.HSubs.H.264-Fmxbd.com.mkv",
+        "label": "720p - 1.19GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Prosenjit Chatterjee, Subhashree Ganguly, Jisshu Sengupta, Kanchan Mullick, Ananya Banerjee, Priya Karfa",
+    "trailer": "https://www.youtube.com/watch?v=PYDX11dtjkM",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Abhhiman.2026.720p.HDTC.Bengali.ORG.2.0.HSubs.H.264-Fmxbd.com.mkv",
+    "language": "Bangla",
+    "releaseDate": "2026-06-19",
+    "genre": "Drama, Music, Romance",
+    "addedDate": "2026-11-25",
+    "screenshots": [],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795598723251,
     "title": "Abar Hawa Bodol (2026)",
     "category": "Bangla, Comedy, Romance",
