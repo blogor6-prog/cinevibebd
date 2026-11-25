@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795608980859,
+    "time": "25/11/2026, 18:16:20",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Edit Movie",
+    "target": "Stranger Things: VHS Special Edition (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795608852609,
     "time": "25/11/2026, 18:14:12",
     "admin": "Main Admin",
