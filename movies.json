@@ -1,5 +1,45 @@
 [
   {
+    "id": 1795599467458,
+    "title": "Rakkhosh (2026)",
+    "category": "Bangla, Action, Romance",
+    "rating": "4.8",
+    "sortOrder": 90,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/a2fCCiq14zbk7VGyUAgZvqIMxr6.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Rakkhosh.2026.480p.Bangla.AAC.h264-Fmxbd.com.mkv",
+        "label": "480p - 436MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/-%20Rakkhosh%20(2026)%20WEB-DL%20[Bengali]%20720p-Fmxbd.com.mkv",
+        "label": "720p - 1.27GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Siam Ahmed, Susmita Chatterjee, Shohel Mondol, Shataf Figar, Sujata, Ali Raj",
+    "trailer": "https://www.youtube.com/watch?v=CD-kNjIw85E",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/-%20Rakkhosh%20(2026)%20WEB-DL%20[Bengali]%20720p-Fmxbd.com.mkv",
+    "language": "Bangla",
+    "releaseDate": "2026-03-21",
+    "genre": "Action, Romance",
+    "addedDate": "2026-11-25",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/ysMQNWblJEimCtKFzPwyeeFbycv.jpg",
+      "https://image.tmdb.org/t/p/w500/iWiYAHD2q8zguKToZyVeaTAYdmE.jpg",
+      "https://image.tmdb.org/t/p/w500/bwaxhNVSi0lGvsg9C5jlHipNr0C.jpg",
+      "https://image.tmdb.org/t/p/w500/kpa8z6hMK0VQL7zt1H5XElIIEtc.jpg",
+      "https://image.tmdb.org/t/p/w500/g6yeKA8rV79XJP0Mn1Xjngom29C.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795599197585,
     "title": "Bonolota Express (2026)",
     "category": "Bangla, Drama, Comedy, Family",
