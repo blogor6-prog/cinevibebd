@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795632590233,
+    "time": "26/11/2026, 00:49:50",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Bachelor Point (2018)",
+    "details": "Published"
+  },
+  {
     "id": 1795632415771,
     "time": "26/11/2026, 00:46:55",
     "admin": "Main Admin",
