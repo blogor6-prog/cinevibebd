@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795631639459,
+    "time": "26/11/2026, 00:33:59",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Bachelor Point (2026) S05 [Episode 57-64]",
+    "details": "Published"
+  },
+  {
     "id": 1795631472372,
     "time": "26/11/2026, 00:31:12",
     "admin": "Main Admin",
