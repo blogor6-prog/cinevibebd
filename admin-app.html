@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>CineVibeBD Admin Hub (4-in-1)</title>
+  <meta name="theme-color" content="#090a0f">
+  <link rel="icon" href="/icon-192.png" type="image/png">
+  <link rel="manifest" href="/admin-manifest.json">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
+    html, body { height: 100%; background: #090a0f; color: #fff; overflow: hidden; }
+    .hub-shell { display: flex; flex-direction: column; height: 100vh; height: 100dvh; }
+
+    .hub-topbar {
+      display: flex; align-items: center; gap: 6px; padding: 7px 8px;
+      background: #11131c; border-bottom: 1px solid rgba(139, 92, 246, 0.35);
+      flex-shrink: 0;
+    }
+    .hub-tabs {
+      display: flex; align-items: center; gap: 6px; flex: 1;
+      overflow-x: auto; scrollbar-width: none;
+    }
+    .hub-tabs::-webkit-scrollbar { display: none; }
+
+    .hub-btn {
+      border: 1px solid rgba(255, 255, 255, 0.14); background: #1a1d2b; color: #cbd5e1;
+      padding: 7px 11px; border-radius: 8px; font-size: 12px; font-weight: 700;
+      white-space: nowrap; cursor: pointer; transition: all 0.15s;
+    }
+    .hub-btn.active[data-site="cv"] { background: linear-gradient(135deg, #8b5cf6, #3b82f6); color: #fff; border-color: transparent; }
+    .hub-btn.active[data-site="ss"] { background: linear-gradient(135deg, #e11d48, #be123c); color: #fff; border-color: transparent; }
+    .hub-btn.active[data-site="cp"] { background: linear-gradient(135deg, #06b6d4, #2563eb); color: #fff; border-color: transparent; }
+    .hub-btn.active[data-site="al"] { background: linear-gradient(135deg, #f59e0b, #d97706); color: #111; border-color: transparent; }
+
+    .hub-action-btn {
+      background: #1e2235; border: 1px solid rgba(255, 255, 255, 0.15); color: #fff;
+      width: 34px; height: 32px; border-radius: 8px; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;
+    }
+
+    .hub-frames { position: relative; flex: 1; width: 100%; background: #090a0f; }
+    .hub-frame {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+      display: none; background: #090a0f;
+    }
+    .hub-frame.active { display: block; }
+  </style>
+</head>
+<body>
+  <div class="hub-shell">
+    <div class="hub-topbar">
+      <div class="hub-tabs">
+        <button class="hub-btn active" data-site="cv" onclick="openSite('cv')">🎬 CineVibe Admin</button>
+        <button class="hub-btn" data-site="ss" onclick="openSite('ss')">🔞 SS-Adult Admin</button>
+        <button class="hub-btn" data-site="cp" onclick="openSite('cp')">⚡ CinePulse Admin</button>
+        <button class="hub-btn" data-site="al" onclick="openSite('al')">📡 Movie Alert</button>
+      </div>
+      <button class="hub-action-btn" onclick="reloadActiveSite()" title="রিফ্রেশ">🔄</button>
+      <button class="hub-action-btn" onclick="openExternalSite()" title="ব্রাউজারে খুলুন">↗️</button>
+    </div>
+
+    <div class="hub-frames">
+      <iframe id="frame_cv" class="hub-frame active" src="https://cinevibebd.pages.dev/admin.html" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+      <iframe id="frame_ss" class="hub-frame" data-src="https://blogor6-prog.github.io/SS-Adult-Zone/admin.html" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+      <iframe id="frame_cp" class="hub-frame" data-src="https://blogor6-prog.github.io/CinePulse/admin.html" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+      <iframe id="frame_al" class="hub-frame" data-src="https://cinevibebd.pages.dev/alert" allow="clipboard-read; clipboard-write; fullscreen"></iframe>
+    </div>
+  </div>
+
+  <script>
+    const SITE_URLS = {
+      cv: 'https://cinevibebd.pages.dev/admin.html',
+      ss: 'https://blogor6-prog.github.io/SS-Adult-Zone/admin.html',
+      cp: 'https://blogor6-prog.github.io/CinePulse/admin.html',
+      al: 'https://cinevibebd.pages.dev/alert'
+    };
+    let activeSite = 'cv';
+
+    function openSite(key) {
+      activeSite = key;
+      document.querySelectorAll('.hub-btn').forEach(b => b.classList.toggle('active', b.dataset.site === key));
+      document.querySelectorAll('.hub-frame').forEach(f => f.classList.remove('active'));
+      const frame = document.getElementById('frame_' + key);
+      if (frame) {
+        if (!frame.getAttribute('src') && frame.dataset.src) {
+          frame.src = frame.dataset.src;
+        }
+        frame.classList.add('active');
+      }
+    }
+
+    function reloadActiveSite() {
+      const frame = document.getElementById('frame_' + activeSite);
+      if (frame) frame.src = SITE_URLS[activeSite];
+    }
+
+    function openExternalSite() {
+      window.open(SITE_URLS[activeSite], '_blank');
+    }
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(() => {});
+      });
+    }
+  </script>
+</body>
+</html>
