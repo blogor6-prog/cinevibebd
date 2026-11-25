@@ -2,7 +2,7 @@
       "relation": ["delegate_permission/common.handle_all_urls"],
       "target": {
         "namespace": "android_app",
-        "package_name": "io.github.pwa_builder.twa",
-        "sha256_cert_fingerprints": ["22:FB:4B:91:65:F7:AF:80:BD:BF:08:87:79:CF:29:96:26:BE:25:F7:7D:54:BE:0C:9D:0B:23:C7:B7:C3:7F:6A"]
+        "package_name": "dev.pages.cinevibebd.twa",
+        "sha256_cert_fingerprints": ["39:06:39:C0:8B:BD:4E:4B:14:EF:5D:F1:E8:48:1C:66:C3:3D:B2:E8:09:22:0E:4D:E4:D8:05:F8:02:5E:64:E8"]
       }
     }]
