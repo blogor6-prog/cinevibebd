@@ -1,5 +1,49 @@
 [
   {
+    "id": 1795607833189,
+    "title": "Citadel (2023)",
+    "category": "Series, Hollywood, Drama, Crime, Action & Adventure",
+    "rating": "6.9",
+    "sortOrder": 98,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/5MHtxPEfmN4b0rHzfEZRcm6v9WI.jpg",
+    "ad1": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
+    "ad2": "https://asiafilm.org/4/f34d3f9acbc64053abc49fb11f845025",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Citadel.S01.Secrets.In.Night.Need.Early.Rains.720p.10bit.AMZN.WEB-DL.Hindi-English.H.265-Fmxbd.com.mkv",
+        "label": "720p - S01 Completed"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Citadel.S02.1080p.10Bit.WEB-DL.Hindi.5.1-English.5.1.HEVC.x265-Fmxbd.com.mkv",
+        "label": "1080p -  S02 Completed"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Citadel.S02.720p.10Bit.WEB-DL.Hindi.5.1-English.HEVC.x265-Fmxbd.com.mkv",
+        "label": "720p - S02 Completed"
+      }
+    ],
+    "badge": "SERIES",
+    "episodes": "",
+    "cast": "Richard Madden, Priyanka Chopra Jonas, Ashleigh Cummings, Roland Møller, Lesley Manville, Stanley Tucci",
+    "trailer": "https://www.youtube.com/watch?v=saoqI5E4PIY",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Citadel.S01.Secrets.In.Night.Need.Early.Rains.720p.10bit.AMZN.WEB-DL.Hindi-English.H.265-Fmxbd.com.mkv",
+    "language": "English - Hindi",
+    "releaseDate": "2023-04-27",
+    "genre": "Drama, Crime, Action & Adventure",
+    "addedDate": "2026-11-25",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/mce2ZupMnD6fmIT5AcpriP3zNTA.jpg",
+      "https://image.tmdb.org/t/p/w500/n8BCA51w1u2CDmd3MDjSUvAcOlp.jpg",
+      "https://image.tmdb.org/t/p/w500/3gcUTqhS6F5bltcSfD1aG6Ax8vV.jpg",
+      "https://image.tmdb.org/t/p/w500/wHEbC0NZivILiEKkosIUWt4cY3R.jpg",
+      "https://image.tmdb.org/t/p/w500/9lcGnCxpg6wzrFzPzglEXVBBeNI.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795607224704,
     "title": "Inspector Avinash (2023)",
     "category": "Series, Bollywood, Hindi, Action & Adventure, Mystery",
