@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795599015926,
+    "time": "25/11/2026, 15:30:15",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Nari Choritro Bejay Jotil (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795598894478,
     "time": "25/11/2026, 15:28:14",
     "admin": "Main Admin",
