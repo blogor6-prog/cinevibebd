@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795600725271,
+    "time": "25/11/2026, 15:58:45",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Avatar: The Last Airbender ( season 1 - 2)",
+    "details": "Published"
+  },
+  {
     "id": 1795600443506,
     "time": "25/11/2026, 15:54:03",
     "admin": "Main Admin",
