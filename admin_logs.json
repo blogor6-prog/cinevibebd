@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795599469869,
+    "time": "25/11/2026, 15:37:49",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Rakkhosh (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795599254964,
     "time": "25/11/2026, 15:34:14",
     "admin": "Main Admin",
