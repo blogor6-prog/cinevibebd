@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795598625779,
+    "time": "25/11/2026, 15:23:45",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Politics (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795598467942,
     "time": "25/11/2026, 15:21:07",
     "admin": "Main Admin",
