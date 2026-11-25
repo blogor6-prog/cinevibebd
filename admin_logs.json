@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795607835561,
+    "time": "25/11/2026, 17:57:15",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Citadel (2023)",
+    "details": "Published"
+  },
+  {
     "id": 1795607235368,
     "time": "25/11/2026, 17:47:15",
     "admin": "Main Admin",
