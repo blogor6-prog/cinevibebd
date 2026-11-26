@@ -1,5 +1,42 @@
 [
   {
+    "id": 1795683429810,
+    "title": "Dhumketu (2025)",
+    "category": "Bangla, Drama, Family, Romance",
+    "rating": "6.0",
+    "sortOrder": 121,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/o9Vu4M5KiA9EuWRBxd3Xn55oVXJ.jpg",
+    "ad1": "",
+    "ad2": "",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Dhumketu.2025.720p.Bangla.AAC.WEB-DL.h264-Fmxbd.com.mkv",
+        "label": "720p - 782MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Dhumketu.2025.1080p.Bangla.AAC.WEB-DL.h264-Fmxbd.com.mkv",
+        "label": "1080p - 1.75GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Dev, Subhashree Ganguly, Rudranil Ghosh, Parambrata Chatterjee, Chiranjeet Chakraborty, Alokananda Roy",
+    "trailer": "https://www.youtube.com/watch?v=Nh-AxLlZejo",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Dhumketu.2025.720p.Bangla.AAC.WEB-DL.h264-Fmxbd.com.mkv",
+    "language": "Bangla",
+    "releaseDate": "2025-08-14",
+    "genre": "Drama, Family, Romance",
+    "addedDate": "2026-11-26",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/UQl0iMOP9vyHDdMkk8HnoZMoQg.jpg",
+      "https://image.tmdb.org/t/p/w500/x2xEFL8GX1dtc6oQQvjqdlBgQRg.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795683293761,
     "title": "Ghamasaan (2024)",
     "category": "Bollywood, Hindi, Thriller, Action",
