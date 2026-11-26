@@ -1,5 +1,41 @@
 [
   {
+    "id": 1795683732574,
+    "title": "Chandrabindoo (2025)",
+    "category": "Bangla, Drama, Fantasy",
+    "rating": "2.0",
+    "sortOrder": 124,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/hj45JNq1Y7EFSW9edUsyi57qTHG.jpg",
+    "ad1": "",
+    "ad2": "",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Chandrabindoo.2025.720p.AMZN.WEB-DL.Bengali.AAC2.0.H.264-.cam-Fmxbd.com.mkv",
+        "label": "720p - 1.39GB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Chandrabindoo.2025.480p.AMZN.WEB-DL.Bengali.AAC2.0.H.264-.cam-Fmxbd.com.mkv",
+        "label": "480p - 546MB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Ankush Hazra, Oindrila Sen, Shantilal Mukherjee, Anirban Chakrabarti, Tulika Basu, Shaheb Bhattacherjee",
+    "trailer": "",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Chandrabindoo.2025.720p.AMZN.WEB-DL.Bengali.AAC2.0.H.264-.cam-Fmxbd.com.mkv",
+    "language": "Bangla",
+    "releaseDate": "2025-05-23",
+    "genre": "Drama, Fantasy",
+    "addedDate": "2026-11-26",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/7ex2DQRiQjTwi7TxQdKgsbyHtii.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795683627614,
     "title": "Pother Pechal (2026)",
     "category": "Bangla, Drama",
