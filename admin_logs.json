@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795683734710,
+    "time": "26/11/2026, 15:02:14",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Chandrabindoo (2025)",
+    "details": "Published"
+  },
+  {
     "id": 1795683630297,
     "time": "26/11/2026, 15:00:30",
     "admin": "Main Admin",
