@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795683533044,
+    "time": "26/11/2026, 14:58:53",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Proshnouttor (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795683432074,
     "time": "26/11/2026, 14:57:12",
     "admin": "Main Admin",
