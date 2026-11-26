@@ -2,12 +2,12 @@
   "adsEnabled": true,
   "unlockWaitSec": 5,
   "preRollSec": 5,
-  "entryAdUrl": "https://directyp.org/4/4efb0f438c711d6932662cc00c8e4d56",
-  "nonSheetAd1": "https://asiafilm.org/4/a555ec6bc7d6af27618f9ba45943fffd",
-  "nonSheetAd2": "https://asiafilm.org/4/a555ec6bc7d6af27618f9ba45943fffd",
-  "backupAd1": "https://auctionr.org/4/e987faae17c1331cc1fe83762de3c190",
+  "entryAdUrl": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d",
+  "nonSheetAd1": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d",
+  "nonSheetAd2": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d",
+  "backupAd1": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d",
   "backupAd2": "https://asiafilm.org/4/c998294d6d6bf0c66ee377f41e144fa3",
-  "monetagMain": "https://uplcm.com/4/12312628",
-  "monetagBackup1": "https://uplcm.com/4/12154636",
-  "monetagBackup2": "https://uplcm.com/4/12312510"
+  "monetagMain": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d",
+  "monetagBackup1": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d",
+  "monetagBackup2": "https://directyp.org/4/c7e78de73c1a473eadfa5b2b5477313d"
 }
