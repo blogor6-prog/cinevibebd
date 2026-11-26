@@ -1,5 +1,41 @@
 [
   {
+    "id": 1795683627614,
+    "title": "Pother Pechal (2026)",
+    "category": "Bangla, Drama",
+    "rating": "7.5",
+    "sortOrder": 123,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/sBizJg4OaEqwHWMBZjXKiZnBw37.jpg",
+    "ad1": "",
+    "ad2": "",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Pother.Pechal.2026.720p.Bangla.AAC.WEB-DL.h264-Fmxbd.com.mkv",
+        "label": "480p - 333MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Pother.Pechal.2026.1080p.Bangla.AAC.WEB-DL.h264-Fmxbd.com.mkv",
+        "label": "1080p - 675MB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Yash Rohan, Bonne Hassan, Monir Khan Shimul, Ashok Bepari, Pronob Ghosh",
+    "trailer": "https://www.youtube.com/watch?v=hRPi-5LzeeA",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Pother.Pechal.2026.1080p.Bangla.AAC.WEB-DL.h264-Fmxbd.com.mkv",
+    "language": "Bangla",
+    "releaseDate": "2026-05-07",
+    "genre": "Drama",
+    "addedDate": "2026-11-26",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/egStghj20H8qlnpDUIRb47gi9m7.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795683530730,
     "title": "Proshnouttor (2026)",
     "category": "Hollywood, Drama, Romance",
