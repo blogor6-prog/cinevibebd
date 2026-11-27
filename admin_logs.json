@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795786711641,
+    "time": "27/11/2026, 19:38:31",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Delete CinePatch",
+    "target": "Download Links Card Design",
+    "details": ""
+  },
+  {
     "id": 1795786691465,
     "time": "27/11/2026, 19:38:11",
     "admin": "Main Admin",
