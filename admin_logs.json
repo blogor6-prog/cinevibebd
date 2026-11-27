@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795789833742,
+    "time": "27/11/2026, 20:30:33",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Delete CinePatch",
+    "target": "Serial + Similar + 7 Share + Home",
+    "details": ""
+  },
+  {
     "id": 1795789731751,
     "time": "27/11/2026, 20:28:51",
     "admin": "Main Admin",
