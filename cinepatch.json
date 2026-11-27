@@ -1,5 +1,15 @@
 [
   {
+    "id": 1795789730371,
+    "name": "Serial + Similar + 7 Share + Home",
+    "enabled": true,
+    "targetSelector": "",
+    "css": ".cv-extra-section {\n  margin: 14px 14px 10px 14px;\n  background: #12131a;\n  border: 1px solid rgba(255, 255, 255, 0.08);\n  border-radius: 12px;\n  padding: 13px;\n}\n.cv-extra-title {\n  font-size: 14px;\n  font-weight: 800;\n  color: #38bdf8;\n  margin-bottom: 10px;\n  display: flex;\n  align-items: center;\n  gap: 6px;\n}\n.cv-share-grid {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  gap: 8px;\n}\n.cv-share-btn {\n  flex: 0 0 calc(25% - 6px);\n  min-width: 68px;\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  justify-content: center;\n  gap: 4px;\n  padding: 9px 4px;\n  border-radius: 10px;\n  border: 1px solid rgba(255, 255, 255, 0.14);\n  color: #ffffff;\n  font-size: 10.5px;\n  font-weight: 700;\n  cursor: pointer;\n  transition: transform 0.15s ease;\n}\n.cv-share-btn:active { transform: scale(0.95); }\n.cv-sh-fb { background: linear-gradient(135deg, #1877f2, #0d5bd9); }\n.cv-sh-wa { background: linear-gradient(135deg, #25d366, #128c7e); }\n.cv-sh-tg { background: linear-gradient(135deg, #229ed9, #0284c7); }\n.cv-sh-ms { background: linear-gradient(135deg, #00b2ff, #a855f7); }\n.cv-sh-tt { background: linear-gradient(135deg, #111111, #fe2c55); }\n.cv-sh-tw { background: linear-gradient(135deg, #18181b, #3f3f46); }\n.cv-sh-cp { background: linear-gradient(135deg, #f59e0b, #d97706); color: #111; }\n.cv-bottom-home-wrap {\n  margin: 14px 14px 24px 14px;\n}\n.cv-bottom-home-btn {\n  width: 100%;\n  padding: 13px;\n  border-radius: 999px;\n  border: none;\n  background: linear-gradient(135deg, #e11d48, #f97316);\n  color: #ffffff;\n  font-size: 14px;\n  font-weight: 800;\n  cursor: pointer;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  gap: 8px;\n  box-shadow: 0 6px 20px rgba(225, 29, 72, 0.38);\n}",
+    "html": "",
+    "js": "",
+    "updatedAt": "27/11/2026, 20:28:50"
+  },
+  {
     "id": 1795785818425,
     "name": "Watch Now 1-Step Unlock",
     "enabled": true,
