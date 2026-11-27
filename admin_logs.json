@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795767704032,
+    "time": "27/11/2026, 14:21:44",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Dorothy (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795766289174,
     "time": "27/11/2026, 13:58:09",
     "admin": "Main Admin",
