@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795787151538,
+    "time": "27/11/2026, 19:45:51",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Edit Movie",
+    "target": "Ghamasaan (2024)",
+    "details": "Published"
+  },
+  {
     "id": 1795787056836,
     "time": "27/11/2026, 19:44:16",
     "admin": "Main Admin",
