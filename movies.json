@@ -1,5 +1,45 @@
 [
   {
+    "id": 1795767701374,
+    "title": "Dorothy (2026)",
+    "category": "South Indian, Crime, Drama",
+    "rating": "8.1",
+    "sortOrder": 126,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/o3r5DmWhOKdFmeIUoRJj4CvCqOP.jpg",
+    "ad1": "",
+    "ad2": "",
+    "links": [
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Dorothy.2026.480p.NF.WEB-DL.[Hindi%20+%20Tamil].AAC2.0.H.264-Fmxbd.com.mkv",
+        "label": "480p - 437MB"
+      },
+      {
+        "link": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Dorothy.2026.720p.NF.WEB-DL.[Hindi%20+%20Tamil].DDP5.1.H.264-Fmxbd.com.mkv",
+        "label": "720p - 1.11GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Sananth, Rishikanth, Keerthy Suresh, Ramachandran Durairaj, Soundara Raja, Muthazhagi",
+    "trailer": "https://www.youtube.com/watch?v=jcBG6U5iX8Y",
+    "bgVideo": "",
+    "watchUrl": "https://pub-fa1f2e87270742b197806a624ee9e6d3.r2.dev/Dorothy.2026.720p.NF.WEB-DL.[Hindi%20+%20Tamil].DDP5.1.H.264-Fmxbd.com.mkv",
+    "language": "Tamil",
+    "releaseDate": "2026-09-25",
+    "genre": "Crime, Drama",
+    "addedDate": "2026-11-27",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/wlJmF47IHYwzVpG1qA6aYA0UHj.jpg",
+      "https://image.tmdb.org/t/p/w500/fPByMSinDUlJ05pMVw2sbqYF6Ew.jpg",
+      "https://image.tmdb.org/t/p/w500/kgjEdOtvXU3UQwqQOONX74zZoag.jpg",
+      "https://image.tmdb.org/t/p/w500/j4IQNYZsp1knNr53KkHRXE824FF.jpg",
+      "https://image.tmdb.org/t/p/w500/g4xIYbElRMJCSY9pdbfWpt9VCXO.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795766228675,
     "title": "Bachelor Point (2026) Chapter 17",
     "category": "Bangla, Trending, series",
