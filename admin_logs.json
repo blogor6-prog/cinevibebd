@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795839262708,
+    "time": "28/11/2026, 10:14:22",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Gunmaaster G9 (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795789972490,
     "time": "27/11/2026, 20:32:52",
     "admin": "Main Admin",
