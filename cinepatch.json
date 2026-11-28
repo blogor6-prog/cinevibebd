@@ -1,5 +1,15 @@
 [
   {
+    "id": 1795851545525,
+    "name": "Native Banner (Unlock Box)",
+    "enabled": true,
+    "targetSelector": "",
+    "css": "#modalAd300x250Wrap {\n  display: none !important;\n}\n.cv-native-modal-wrap {\n  width: 100%;\n  min-height: 200px;\n  margin: 0 auto 10px auto;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #0a0b10;\n  border-radius: 10px;\n  border: 1px solid rgba(255, 255, 255, 0.1);\n  padding: 6px;\n  overflow: hidden;\n}\n.cv-native-modal-wrap > div {\n  width: 100%;\n}",
+    "html": "",
+    "js": "(function() {\n  if (window._cvNativeModalPatched) return;\n  window._cvNativeModalPatched = true;\n\n  var oldWrap = document.getElementById('modalAd300x250Wrap');\n  if (!oldWrap || document.getElementById('cvNativeModalWrap')) return;\n\n  var nativeWrap = document.createElement('div');\n  nativeWrap.id = 'cvNativeModalWrap';\n  nativeWrap.className = 'cv-native-modal-wrap';\n\n  var container = document.createElement('div');\n  container.id = 'container-50b841ee7b4043aa2fa294069c5f1b24';\n  nativeWrap.appendChild(container);\n\n  oldWrap.parentNode.insertBefore(nativeWrap, oldWrap.nextSibling);\n\n  var s = document.createElement('script');\n  s.async = true;\n  s.setAttribute('fetchpriority', 'high');\n  s.setAttribute('data-cfasync', 'false');\n  s.src = 'https://bancadeltempoidea.org/21/50b841ee7b4043aa2fa294069c5f1b24';\n  nativeWrap.appendChild(s);\n})();",
+    "updatedAt": "28/11/2026, 13:39:05"
+  },
+  {
     "id": 1795850688730,
     "name": "Adsterra Social Bar (5 Min)",
     "enabled": true,
