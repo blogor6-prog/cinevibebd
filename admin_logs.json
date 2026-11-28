@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795850691421,
+    "time": "28/11/2026, 13:24:51",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "CinePatch Engine",
+    "target": "Adsterra Social Bar (5 Min)",
+    "details": "Active"
+  },
+  {
     "id": 1795848333845,
     "time": "28/11/2026, 12:45:33",
     "admin": "Main Admin",
