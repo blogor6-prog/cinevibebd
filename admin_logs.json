@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795848317643,
+    "time": "28/11/2026, 12:45:17",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Update Ads",
+    "target": "ads.json",
+    "details": "ON (5s)"
+  },
+  {
     "id": 1795840287739,
     "time": "28/11/2026, 10:31:27",
     "admin": "Main Admin",
