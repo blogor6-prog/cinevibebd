@@ -1,7 +1,7 @@
 {
   "adsEnabled": true,
   "unlockWaitSec": 5,
-  "preRollSec": 5,
+  "preRollSec": 3,
   "entryAdUrl": "https://asiafilm.org/4/13ea836dfdd1e0cc3f590b100bff3fb6",
   "nonSheetAd1": "https://auctionr.org/4/65f43ffc33fe79a1323bfe7402ae52f3",
   "nonSheetAd2": "https://auctionr.org/4/e9e9b60e5e7becc2eb6a19c8f120cfdd",
