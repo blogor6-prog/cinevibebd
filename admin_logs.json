@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795839753205,
+    "time": "28/11/2026, 10:22:33",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Add Movie",
+    "target": "Jeevan Ya Bheema Con? (2026)",
+    "details": "Published"
+  },
+  {
     "id": 1795839478052,
     "time": "28/11/2026, 10:17:58",
     "admin": "Main Admin",
