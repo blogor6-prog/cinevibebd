@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795852101866,
+    "time": "28/11/2026, 13:48:21",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "Delete CinePatch",
+    "target": "Native Banner (Unlock Box)",
+    "details": ""
+  },
+  {
     "id": 1795852092679,
     "time": "28/11/2026, 13:48:12",
     "admin": "Main Admin",
