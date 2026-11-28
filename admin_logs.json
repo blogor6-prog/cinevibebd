@@ -1,5 +1,14 @@
 [
   {
+    "id": 1795852271067,
+    "time": "28/11/2026, 13:51:11",
+    "admin": "Main Admin",
+    "role": "Super Admin",
+    "action": "CinePatch Engine",
+    "target": "Hot Movie Promo Card (Unlock Box)",
+    "details": "Active"
+  },
+  {
     "id": 1795852101866,
     "time": "28/11/2026, 13:48:21",
     "admin": "Main Admin",
