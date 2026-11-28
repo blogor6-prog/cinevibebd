@@ -1,5 +1,49 @@
 [
   {
+    "id": 1795839259352,
+    "title": "Gunmaaster G9 (2026)",
+    "category": "Bollywood, Hindi, Action, Romance, Thriller",
+    "rating": "7.5",
+    "sortOrder": null,
+    "trendingOrder": null,
+    "image": "https://image.tmdb.org/t/p/w500/c1AqNNjlJEbUYo8jt6KSkip1tPp.jpg",
+    "ad1": "",
+    "ad2": "",
+    "links": [
+      {
+        "link": "https://bbbb.5051bbb2f41746a91677b0104b95cce7.r2.cloudflarestorage.com/39532d2332661cad8c28590002770944/Gunmaaster.G9.2026.480p.HDTC.Hindi.Clean.x264.mkv?response-content-disposition=attachment%3B%20filename%3D%22Gunmaaster.G9.2026.480p.HDTC.Hindi.Clean.x264.mkv%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=33b10d5adced49e5be246abf81a57d25%2F20261128%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261128T034355Z&X-Amz-SignedHeaders=host&X-Amz-Expires=14400&X-Amz-Signature=8c6fcf7739b6050b7345fe568b0b9305333c783b42d9f207f2fab27ca8ea5595",
+        "label": "480p - 469MB"
+      },
+      {
+        "link": "https://bbbb.5051bbb2f41746a91677b0104b95cce7.r2.cloudflarestorage.com/9919b2d1848eb83414b95e5b40fa4844/Gunmaaster.G9.2026.720p.HDTC.Hindi.Clean.x264.mkv?response-content-disposition=attachment%3B%20filename%3D%22Gunmaaster.G9.2026.720p.HDTC.Hindi.Clean.x264.mkv%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=33b10d5adced49e5be246abf81a57d25%2F20261128%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261128T034032Z&X-Amz-SignedHeaders=host&X-Amz-Expires=14400&X-Amz-Signature=78e6019695f2c039388248bc6ed26287033ce2aeb433c3f7bc20b7eff3765862",
+        "label": "720p - 1.13GB"
+      },
+      {
+        "link": "https://bbbb.5051bbb2f41746a91677b0104b95cce7.r2.cloudflarestorage.com/4e939c69723a7f9ac0d3368a2591011c/Gunmaaster.G9.2026.1080p.HDTC.Hindi.Clean.x264.mkv?response-content-disposition=attachment%3B%20filename%3D%22Gunmaaster.G9.2026.1080p.HDTC.Hindi.Clean.x264.mkv%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=33b10d5adced49e5be246abf81a57d25%2F20261128%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261128T034044Z&X-Amz-SignedHeaders=host&X-Amz-Expires=14400&X-Amz-Signature=d173d8bd81c36f5e34cec8b75e837c0337183c85a3a2018beb3f758604a0af78",
+        "label": "1080p - 2.57 GB"
+      }
+    ],
+    "badge": "WEB-DL",
+    "episodes": "",
+    "cast": "Emraan Hashmi, Genelia D'Souza, Aparshakti Khurana, Abhishek Singh, Snehill Dixit Mehra, Inayat Verma",
+    "trailer": "",
+    "bgVideo": "",
+    "watchUrl": "https://bbbb.5051bbb2f41746a91677b0104b95cce7.r2.cloudflarestorage.com/4e939c69723a7f9ac0d3368a2591011c/Gunmaaster.G9.2026.1080p.HDTC.Hindi.Clean.x264.mkv?response-content-disposition=attachment%3B%20filename%3D%22Gunmaaster.G9.2026.1080p.HDTC.Hindi.Clean.x264.mkv%22&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=33b10d5adced49e5be246abf81a57d25%2F20261128%2Fauto%2Fs3%2Faws4_request&X-Amz-Date=20261128T034044Z&X-Amz-SignedHeaders=host&X-Amz-Expires=14400&X-Amz-Signature=d173d8bd81c36f5e34cec8b75e837c0337183c85a3a2018beb3f758604a0af78",
+    "language": "Hindi",
+    "releaseDate": "2026-11-27",
+    "genre": "Action, Romance, Thriller",
+    "addedDate": "2026-11-28",
+    "screenshots": [
+      "https://image.tmdb.org/t/p/w500/8flf9C0icBIopZw6Un5NxvWeBAn.jpg",
+      "https://image.tmdb.org/t/p/w500/cl3cX7t2R1F8SJde25uawHJxyyq.jpg",
+      "https://image.tmdb.org/t/p/w500/zxHHCF6DGq7kV3kk9UhAQwK7K39.jpg",
+      "https://image.tmdb.org/t/p/w500/l2mK4l8DI57CMAXlERKiaJE3v0y.jpg",
+      "https://image.tmdb.org/t/p/w500/yG3npkE4KXLp2uD2Qxj4Qv6lWJr.jpg"
+    ],
+    "draft": false,
+    "expiredLinks": []
+  },
+  {
     "id": 1795787053221,
     "title": "Bachelor Point (2018)",
     "category": "Series, Bangla, Comedy, Drama, Family, Trending",
