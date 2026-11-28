@@ -1,5 +1,15 @@
 [
   {
+    "id": 1795850688730,
+    "name": "Adsterra Social Bar (5 Min)",
+    "enabled": true,
+    "targetSelector": "",
+    "css": "",
+    "html": "",
+    "js": "(function() {\n  if (window._cvSocialBarPatched) return;\n  window._cvSocialBarPatched = true;\n\n  window.injectMonetagVignette = function() { return; };\n\n  setTimeout(function() {\n    if (typeof ADS_ENABLED !== 'undefined' && !ADS_ENABLED) return;\n    try {\n      var lastSb = parseInt(localStorage.getItem('cv_sb_last') || '0', 10);\n      if (Date.now() - lastSb < 5 * 60 * 1000) return;\n      localStorage.setItem('cv_sb_last', String(Date.now()));\n      var s = document.createElement('script');\n      s.setAttribute('data-cfasync', 'false');\n      s.src = 'https://bancadeltempoidea.org/14/f3a7e393f3fc952ca0ee9eb56dcf9aeb';\n      document.body.appendChild(s);\n    } catch (e) {}\n  }, 2500);\n})();",
+    "updatedAt": "28/11/2026, 13:24:48"
+  },
+  {
     "id": 1795789970739,
     "name": "Download Links Card Design",
     "enabled": true,
